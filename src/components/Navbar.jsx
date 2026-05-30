@@ -153,19 +153,39 @@ export default function Navbar() {
       {/* Mobile menu */}
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.22 }}
-            className="fixed inset-x-0 top-[6.25rem] sm:top-[7.25rem] md:top-[8.25rem] z-40 pt-2 pb-4 border-b border-gray-200 lg:hidden"
-            style={{ background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(24px)', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
-            <div className="relative w-full max-w-7xl mx-auto px-5 sm:px-8 flex flex-col gap-0.5">
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-x-3 sm:inset-x-6 top-[5.5rem] sm:top-[6.25rem] md:top-[7.25rem] z-40 lg:hidden rounded-2xl overflow-hidden"
+            style={{
+              background: scrolled ? 'rgba(8,12,28,0.92)' : 'rgba(255,255,255,0.96)',
+              backdropFilter: 'blur(28px)',
+              WebkitBackdropFilter: 'blur(28px)',
+              border: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)',
+              boxShadow: '0 16px 48px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06)',
+            }}>
+            {/* Top accent line */}
+            <div className="h-[2px] w-full" style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.7) 30%, #A3E635 50%, rgba(163,230,53,0.7) 70%, transparent 100%)'
+            }}/>
+            <div className="px-3 py-3 flex flex-col gap-1">
               {navLinks.map((link, i) => (
-                <motion.div key={link.href} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
+                <motion.div key={link.href}
+                  initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}>
                   <button onClick={() => handleNav(link.href)}
-                    className={`w-full text-left block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    className={`w-full text-left flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                       active === link.href
-                        ? 'bg-[#A3E635]/10 border border-[#A3E635]/30 text-[#65a30d]'
-                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                        ? 'bg-[#A3E635]/15 text-[#A3E635]'
+                        : scrolled
+                          ? 'text-gray-300 hover:text-white hover:bg-white/8'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}>
+                    {active === link.href && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635] mr-2.5 shrink-0"/>
+                    )}
                     {link.label}
                   </button>
                 </motion.div>
