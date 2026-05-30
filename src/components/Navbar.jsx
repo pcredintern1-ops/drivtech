@@ -1,0 +1,179 @@
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { IconMenu2, IconX } from '@tabler/icons-react'
+import { navLinks } from '../data/content'
+
+const navItems = navLinks
+
+function scrollTo(href) {
+  const id = href.slice(1)            // '/home' → 'home'
+  const el = document.getElementById(id)
+  if (!el) return
+  const navEl = document.querySelector('nav')
+  const navHeight = navEl ? navEl.offsetHeight : 80
+  const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 12
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+  history.pushState(null, '', href)   // update URL to /home, /about, etc.
+}
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('/home')
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Scroll to section when page loads with a path like /about
+  useEffect(() => {
+    const path = window.location.pathname
+    if (path && path !== '/' && path !== '/home') {
+      setTimeout(() => {
+        const id = path.slice(1)
+        const el = document.getElementById(id)
+        if (!el) return
+        const navEl = document.querySelector('nav')
+        const navHeight = navEl ? navEl.offsetHeight : 80
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 12
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+      }, 150)
+    }
+  }, [])
+
+  useEffect(() => {
+    const ids = navLinks.map(l => l.href.slice(1))
+    const OFFSET = 120 // px below viewport top where a section becomes "active"
+
+    // Cache absolute tops — walk offsetParent chain for accuracy
+    const getTop = (el) => {
+      let top = 0, node = el
+      while (node) { top += node.offsetTop; node = node.offsetParent }
+      return top
+    }
+
+    let tops = {}
+    const cacheTops = () => {
+      tops = {}
+      ids.forEach(id => {
+        const el = document.getElementById(id)
+        if (el) tops[id] = getTop(el)
+      })
+    }
+
+    const updateActive = () => {
+      const y = window.scrollY + OFFSET
+      let current = ids[0]
+      ids.forEach(id => {
+        if (tops[id] != null && y >= tops[id]) current = id
+      })
+      setActive(`/${current}`)
+    }
+
+    // Wait one frame so all sections are painted before measuring
+    const raf = requestAnimationFrame(() => {
+      cacheTops()
+      updateActive()
+    })
+
+    const onScroll = () => updateActive()
+    const onResize = () => { cacheTops(); updateActive() }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+  const handleNav = (href) => {
+    setOpen(false)
+    scrollTo(href)
+  }
+
+  return (
+    <>
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3 md:pt-4 lg:pt-4"
+      >
+        <div
+          className={`w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-3.5 rounded-2xl border transition-all duration-500 ${
+            scrolled
+              ? 'border-white/10 bg-black/65 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
+              : 'border-gray-100 bg-white/90'
+          }`}
+          style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
+        >
+          {/* Logo */}
+          <div className="flex items-center shrink-0">
+            <img
+              src={scrolled ? '/logo-white.png' : '/logo.png'}
+              alt="DRIV"
+              className="h-11 sm:h-12 md:h-[4.25rem] lg:h-[3.75rem] w-auto object-contain transition-all duration-500 hover:scale-105"
+            />
+          </div>
+
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center justify-end gap-0.5 ml-auto">
+            {navItems.map((link) => (
+              <button key={link.href} onClick={() => handleNav(link.href)}
+                className={`nav-link relative px-3.5 py-2.5 text-[0.92rem] font-medium tracking-wide transition-all duration-200 rounded-lg whitespace-nowrap ${
+                  active === link.href
+                    ? scrolled ? 'text-[#A3E635] bg-[#A3E635]/10' : 'text-[#65a30d] bg-[#A3E635]/8'
+                    : scrolled ? 'text-gray-300 hover:text-[#A3E635] hover:bg-[#A3E635]/10' : 'text-gray-500 hover:text-[#4d7c0f] hover:bg-[#A3E635]/8'
+                }`}>
+                {active === link.href && (
+                  <motion.span layoutId="nav-pill"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-[#A3E635]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+                )}
+                <span className="relative z-10">{link.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile menu toggle */}
+          <button onClick={() => setOpen(!open)}
+            className={`lg:hidden p-3.5 sm:p-4 transition-colors rounded-lg ml-auto ${
+              scrolled ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+            }`}>
+            {open ? <IconX size={22} /> : <IconMenu2 size={22} />}
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.22 }}
+            className="fixed inset-x-0 top-[6.25rem] sm:top-[7.25rem] md:top-[8.25rem] z-40 pt-2 pb-4 border-b border-gray-200 lg:hidden"
+            style={{ background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(24px)', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+            <div className="relative w-full max-w-7xl mx-auto px-5 sm:px-8 flex flex-col gap-0.5">
+              {navLinks.map((link, i) => (
+                <motion.div key={link.href} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
+                  <button onClick={() => handleNav(link.href)}
+                    className={`w-full text-left block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                      active === link.href
+                        ? 'bg-[#A3E635]/10 border border-[#A3E635]/30 text-[#65a30d]'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                    }`}>
+                    {link.label}
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
