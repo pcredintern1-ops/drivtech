@@ -10,14 +10,14 @@
     id: 2,
     icon: 'route',
     title: 'Linehaul Logistics',
-    description: 'Intercity and outstation cargo movement solutions for businesses requiring efficient long-distance transportation at scale.',
+    description: 'Intercity and outstation cargo movement solutions for businesses requiring efficient long distance transportation at scale.',
     color: '#F97316',
   },
   {
     id: 3,
     icon: 'zap',
     title: 'Adhoc Vehicle Support',
-    description: 'On-demand fleet deployment support for peak operations, urgent movement, and enterprise backup requirements.',
+    description: 'On demand fleet deployment support for peak operations, urgent movement, and enterprise backup requirements.',
     color: '#F97316',
   },
   {
@@ -45,7 +45,7 @@ export const whyDriv = [
   {
     icon: 'shield',
     title: 'Trained Drivers',
-    description: 'Professionally vetted, onboarded, and managed drivers ensuring enterprise-grade reliability.',
+    description: 'Professionally vetted, onboarded, and managed drivers ensuring enterprise grade reliability.',
   },
   {
     icon: 'layers',
@@ -59,22 +59,22 @@ export const whyDriv = [
   },
   {
     icon: 'activity',
-    title: 'Technology-Driven',
-    description: 'Smart coordination, route optimization, and real-time tracking for maximum efficiency.',
+    title: 'Technology Driven',
+    description: 'Smart coordination, route optimization, and real time tracking for maximum efficiency.',
   },
   {
     icon: 'map-pin',
-    title: 'Mumbai-First, India-Ready',
+    title: 'Mumbai First, India Ready',
     description: 'Deep operational roots in Mumbai with expanding intercity and national logistics capabilities.',
   },
 ]
 
 export const roadmap = [
   { year: '2023', title: 'Founded', desc: 'DRIV launched operations in Mumbai with enterprise fleet partnerships.' },
-  { year: '2024', title: 'Enterprise Contracts', desc: 'Secured first-tier enterprise contracts across quick commerce and retail sectors.' },
+  { year: '2024', title: 'Enterprise Contracts', desc: 'Secured first tier enterprise contracts across quick commerce and retail sectors.' },
   { year: '2025', title: 'Bhiwandi HUB', desc: 'DRIV HUB development: centralised operations command centre in Bhiwandi.' },
   { year: '2026', title: 'EV Deployment', desc: 'Electric fleet integration for sustainable and green logistics operations.' },
-  { year: '2027', title: 'Multi-City Expansion', desc: 'Pan-India logistics network across 15+ cities with full HUB infrastructure.' },
+  { year: '2027', title: 'Multi City Expansion', desc: 'Pan India logistics network across 15+ cities with full HUB infrastructure.' },
 ]
 
 export const hubFeatures = [
@@ -90,11 +90,11 @@ export const hubFeatures = [
 ]
 
 export const openRoles = [
-  { title: 'Drivers', type: 'Full-time / Contract', location: 'Mumbai & Pan-India' },
-  { title: 'Fleet Supervisors', type: 'Full-time', location: 'Mumbai' },
-  { title: 'Operations Executives', type: 'Full-time', location: 'Mumbai' },
+  { title: 'Drivers', type: 'Full time / Contract', location: 'Mumbai & Pan India' },
+  { title: 'Fleet Supervisors', type: 'Full time', location: 'Mumbai' },
+  { title: 'Operations Executives', type: 'Full time', location: 'Mumbai' },
   { title: 'Rider Partners', type: 'Contract / Gig', location: 'Mumbai' },
-  { title: 'Vendor Partners', type: 'Partnership', location: 'Pan-India' },
+  { title: 'Vendor Partners', type: 'Partnership', location: 'Pan India' },
 ]
 
 export const trustBrands = [

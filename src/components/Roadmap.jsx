@@ -18,7 +18,7 @@ export default function Roadmap() {
           <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             The DRIV <span className="gradient-text">Roadmap</span>
           </h2>
-          <p className="text-gray-500 text-base md:text-lg max-w-lg mx-auto">
+          <p className="text-black text-base md:text-lg max-w-lg mx-auto">
             From Mumbai operations to a national logistics infrastructure.
           </p>
         </motion.div>
@@ -59,7 +59,7 @@ export default function Roadmap() {
                         {isPast && <span className="opacity-60 ml-1">✓</span>}
                       </div>
                       <h4 className="font-heading font-bold text-gray-900 text-xl mb-3">{item.title}</h4>
-                      <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                      <p className="text-black text-sm leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
 
@@ -72,7 +72,7 @@ export default function Roadmap() {
                         {isPast && <span className="opacity-60 ml-1">✓</span>}
                       </div>
                       <h4 className="font-heading font-bold text-gray-900 text-2xl mb-3">{item.title}</h4>
-                      <p className="text-gray-500 text-base md:text-base leading-relaxed">{item.desc}</p>
+                      <p className="text-black text-base md:text-base leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
 

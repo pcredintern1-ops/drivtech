@@ -47,21 +47,21 @@ const JOURNEY_STEPS = [
   {
     label: 'First Mile', step: '01', Icon: IconTruck,
     title: 'Collection & Dispatch',
-    desc: 'From origin warehouse or manufacturer to DRIV fleet hub — vehicle dispatch, load consolidation, and first-point pickup managed end-to-end.',
+    desc: 'From origin warehouse or manufacturer to DRIV fleet hub — vehicle dispatch, load consolidation, and first point pickup managed seamlessly.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
   },
   {
     label: 'Middle Mile', step: '02', Icon: IconRoute,
     title: 'Hub-to-Hub Transit',
-    desc: 'Intercity linehaul movement across DRIV hubs — high-volume corridor routing, load optimisation, and strict schedule adherence.',
+    desc: 'Intercity linehaul movement across DRIV hubs — high volume corridor routing, load optimisation, and strict schedule adherence.',
     color: '#F97316', textColor: '#c2410c',
     bg: 'rgba(249,115,22,0.05)', border: 'rgba(249,115,22,0.20)',
   },
   {
     label: 'Last Mile', step: '03', Icon: IconBike,
     title: 'Customer Delivery',
-    desc: 'From DRIV hub or dark store to the end customer doorstep — fast, accurate, SLA-backed delivery for B2B and B2C operations.',
+    desc: 'From DRIV hub or dark store to the end customer doorstep — fast, accurate, SLA backed delivery for B2B and B2C operations.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
   },
@@ -194,7 +194,7 @@ export default function ServicesSection() {
                   <h4 className="font-heading font-bold text-gray-900 text-sm leading-tight mb-0.5">
                     {step.title}
                   </h4>
-                  <p className="text-gray-500 text-[11px] md:text-xs leading-relaxed">
+                  <p className="text-black text-[11px] md:text-xs leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
@@ -304,7 +304,7 @@ export default function ServicesSection() {
                       {svc.title}
                     </h3>
                   </div>
-                  <p className="text-gray-500 text-[11px] md:text-xs leading-relaxed line-clamp-2">
+                  <p className="text-black text-[11px] md:text-xs leading-relaxed line-clamp-2">
                     {svc.description}
                   </p>
                 </div>

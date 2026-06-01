@@ -78,7 +78,7 @@ export default function StatsSection() {
           <div className="grid grid-cols-2 sm:grid-cols-4">
             {stats.map(({ Icon, target, suffix, label }, i) => (
               <div key={label}
-                className={`flex items-center justify-center sm:justify-start gap-2.5 px-4 py-5 sm:py-6 border-white/[0.06]
+                className={`flex items-center justify-center gap-2.5 px-4 py-8 sm:py-10 border-white/[0.06]
                   ${i === 0 ? 'border-r' : ''}
                   ${i === 1 ? 'sm:border-r' : ''}
                   ${i === 2 ? 'border-r border-t sm:border-t-0' : ''}

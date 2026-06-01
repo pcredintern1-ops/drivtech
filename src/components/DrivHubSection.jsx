@@ -7,7 +7,7 @@ const facilities = [
     id: 'washing',
     left: '50%', top: '6%',
     title: 'Washing Center',
-    desc: 'High-pressure fleet wash bays keeping every vehicle road-ready and spotless.',
+    desc: 'High pressure fleet wash bays keeping every vehicle road ready and spotless.',
     tip: 'bottom',
     delay: 0.25,
   },
@@ -15,7 +15,7 @@ const facilities = [
     id: 'parking',
     left: '88%', top: '34%',
     title: 'Fleet Parking',
-    desc: 'Secured multi-bay parking for 500+ vehicles, fully operational 24/7.',
+    desc: 'Secured multi bay parking for 500+ vehicles, fully operational 24/7.',
     tip: 'left',
     delay: 0.35,
   },
@@ -23,7 +23,7 @@ const facilities = [
     id: 'monitoring',
     left: '78%', top: '76%',
     title: 'Vehicle Monitoring',
-    desc: 'Live GPS tracking and real-time fleet performance dashboards.',
+    desc: 'Live GPS tracking and real time fleet performance dashboards.',
     tip: 'left',
     delay: 0.45,
   },
@@ -39,7 +39,7 @@ const facilities = [
     id: 'helpdesk',
     left: '12%', top: '34%',
     title: 'Driver Help Desk',
-    desc: 'On-site driver support, documentation, and real-time query resolution.',
+    desc: 'On site driver support, documentation, and real time query resolution.',
     tip: 'right',
     delay: 0.65,
   },
@@ -373,7 +373,7 @@ export default function DrivHubSection() {
           <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             The DRIV <span className="gradient-text">HUB</span>
           </h2>
-          <p className="text-gray-500 text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-black text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
             A centralised fleet and operations command centre in Bhiwandi, designed to power enterprise
             logistics across Mumbai and beyond.
           </p>
@@ -486,7 +486,7 @@ export default function DrivHubSection() {
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.18 }}>
                       <p className="text-[#fb923c] text-xs font-bold mb-1.5 leading-tight">{f.title}</p>
-                      <p className="text-gray-400 text-xs leading-relaxed">{f.desc}</p>
+                      <p className="text-black text-xs leading-relaxed">{f.desc}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -533,7 +533,7 @@ export default function DrivHubSection() {
             { label: '24/7 Operations',       color: 'orange' },
             { label: 'Bhiwandi, Mumbai',       color: 'green' },
             { label: 'GPS Fleet Tracking',     color: 'orange' },
-            { label: 'On-site Driver Support', color: 'green' },
+            { label: 'On site Driver Support', color: 'green' },
           ].map(({ label, color }) => (
             <span key={label}
               className={`px-4 py-2 rounded-full text-xs font-semibold ${

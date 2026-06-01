@@ -11,7 +11,7 @@ export default function Footer() {
         style={{ background: 'linear-gradient(90deg, transparent, rgba(163,230,53,0.45), transparent)' }} />
 
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-12">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-12 mb-10 md:mb-14">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-12 mb-10 md:mb-14">
 
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
@@ -65,21 +65,6 @@ export default function Footer() {
                     className="group flex items-center gap-1 text-gray-400 hover:text-[#A3E635] text-sm transition-colors duration-300">
                     <span className="link-underline">{l.label}</span>
                     <IconArrowRight size={11} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-heading font-bold text-white text-xs uppercase tracking-[0.2em] mb-5 sm:mb-7">Services</h4>
-            <ul className="space-y-3 sm:space-y-4">
-              {['Enterprise Dedicated Fleet', 'Linehaul Logistics', 'Adhoc Vehicle Support', 'Quick Commerce Riders'].map(s => (
-                <li key={s}>
-                  <a href="/services" onClick={e => { e.preventDefault(); const el=document.getElementById('services'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/services') }} className="group flex items-center gap-1 text-gray-400 hover:text-[#A3E635] text-sm transition-colors duration-300">
-                    <span className="link-underline">{s}</span>
-                    <IconArrowRight size={11} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shrink-0" />
                   </a>
                 </li>
               ))}

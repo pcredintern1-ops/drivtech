@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, Fragment } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
 
@@ -17,7 +17,7 @@ const stagCards = { hidden: {}, show: { transition: { staggerChildren: 0.18 } } 
 /* ── Feature cards ── */
 const features = [
   { icon: IconTruck,     title: 'Enterprise Focused',      desc: 'Solutions built for modern businesses.'   },
-  { icon: IconAffiliate, title: 'Tech-Driven Operations',  desc: 'Real-time visibility, smarter decisions.' },
+  { icon: IconAffiliate, title: 'Technology Driven',  desc: 'Real time visibility, smarter decisions.' },
   { icon: IconShield,    title: 'Reliable & Scalable',     desc: 'Built to deliver consistently, at scale.' },
 ]
 
@@ -71,16 +71,16 @@ export default function AboutSection() {
             </motion.div>
 
             <motion.p variants={fadeUp}
-              className="text-gray-600 text-base sm:text-lg md:text-lg leading-relaxed mb-3">
-              DRIV is a Mumbai-based logistics and fleet operations company focused on{' '}
+              className="text-black text-base sm:text-lg md:text-lg leading-relaxed mb-3">
+              DRIV is a Mumbai based logistics and fleet operations company focused on{' '}
               <span className="text-gray-900 font-semibold">enterprise transportation</span>,
               linehaul movement, adhoc fleet support, and driver management solutions.
             </motion.p>
 
             <motion.p variants={fadeUp}
-              className="text-gray-400 text-sm sm:text-base md:text-base leading-relaxed mb-6 md:mb-8">
+              className="text-black text-sm sm:text-base md:text-base leading-relaxed mb-6 md:mb-8">
               Founded in 2023, we're building a scalable logistics ecosystem designed to support
-              modern supply chains, quick commerce operations, and future-ready mobility infrastructure.
+              modern supply chains, quick commerce operations, and future ready mobility infrastructure.
             </motion.p>
 
           </motion.div>
@@ -100,8 +100,10 @@ export default function AboutSection() {
                 className="w-full h-auto"
                 draggable={false}
                 style={{
-                  maskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 88%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 82% 82% at 50% 50%, black 45%, transparent 88%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)',
+                  maskComposite: 'intersect',
+                  WebkitMaskComposite: 'source-in',
                 }}
               />
             </motion.div>
@@ -114,10 +116,10 @@ export default function AboutSection() {
           variants={stagCards} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}
           className="flex flex-col sm:flex-row sm:items-stretch mt-6 md:mt-8 max-w-2xl sm:mx-auto lg:mx-0 xl:max-w-full">
           {features.map(({ icon: Icon, title, desc }, i) => (
-            <>
-              {i > 0 && <div key={`sep-${i}`} className="hidden sm:block w-px bg-gray-300/60 shrink-0 self-stretch xl:mx-2"/>}
-              {i > 0 && <div key={`sep-mob-${i}`} className="sm:hidden h-px bg-gray-300/60 w-full my-1"/>}
-              <motion.div key={title} variants={fadeFromLeft}
+            <Fragment key={title}>
+              {i > 0 && <div className="hidden sm:block w-px bg-gray-300/60 shrink-0 self-stretch xl:mx-2"/>}
+              {i > 0 && <div className="sm:hidden h-px bg-gray-300/60 w-full my-1"/>}
+              <motion.div variants={fadeFromLeft}
                 className="flex flex-row items-center gap-2 sm:gap-3 py-3 sm:py-4 min-w-0 pl-3 pr-2 sm:pl-4 sm:pr-3 xl:pl-3 xl:pr-5 rounded-3xl cursor-default"
                 style={{ border: '1px solid transparent', transition: 'background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease' }}
                 onMouseEnter={e => {
@@ -143,10 +145,10 @@ export default function AboutSection() {
                 </motion.div>
                 <div>
                   <h4 className="font-heading font-bold text-gray-900 text-xs sm:text-sm mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
-                  <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed xl:max-w-[140px]">{desc}</p>
+                  <p className="text-black text-[10px] sm:text-xs leading-relaxed xl:max-w-[140px]">{desc}</p>
                 </div>
               </motion.div>
-            </>
+            </Fragment>
           ))}
         </motion.div>
 

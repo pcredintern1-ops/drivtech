@@ -35,7 +35,7 @@ export default function ContactSection() {
           <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             Let's Build Something <span className="gradient-text">Together</span>
           </h2>
-          <p className="text-gray-500 text-base sm:text-lg md:text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="text-black text-base sm:text-lg md:text-lg max-w-xl mx-auto leading-relaxed">
             Whether you're an enterprise client, investor, driver partner, or vendor, we'd love to hear from you.
           </p>
         </motion.div>
@@ -73,7 +73,7 @@ export default function ContactSection() {
               <p className="text-gray-400 text-xs uppercase tracking-widest mb-4">Inquiry Categories</p>
               <div className="space-y-2">
                 {inquiryTypes.map(t => (
-                  <div key={t.value} className="flex items-center gap-2 text-gray-600 text-sm">
+                  <div key={t.value} className="flex items-center gap-2 text-black text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#A3E635]/70" />
                     {t.label}
                   </div>
@@ -91,7 +91,7 @@ export default function ContactSection() {
                   <IconSend size={22} className="text-[#65a30d]" />
                 </div>
                 <h3 className="font-heading font-bold text-gray-900 text-xl mb-3">Message Received!</h3>
-                <p className="text-gray-500 text-sm max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
+                <p className="text-black text-sm max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 space-y-5 shadow-sm">

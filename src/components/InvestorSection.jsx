@@ -3,12 +3,12 @@ import { IconTrendingUp, IconShield, IconSettings, IconArrowRight, IconCircleChe
 
 const model = [
   { icon: IconTrendingUp, title: 'Fleet Asset Funding', desc: 'Investors participate in funding logistics fleet assets deployed for enterprise operations.' },
-  { icon: IconSettings, title: 'Fully Managed by DRIV', desc: 'Vehicle deployment, driver management, maintenance, and day-to-day operations handled entirely by DRIV.' },
-  { icon: IconShield, title: 'Asset-Backed Model', desc: 'Investment backed by physical vehicle assets with structured revenue-sharing opportunities.' },
+  { icon: IconSettings, title: 'Fully Managed by DRIV', desc: 'Vehicle deployment, driver management, maintenance, and daily operations handled entirely by DRIV.' },
+  { icon: IconShield, title: 'Asset Backed Model', desc: 'Investment backed by physical vehicle assets with structured revenue sharing opportunities.' },
 ]
 
 const whyInvest = [
-  { val: '₹', label: 'Asset-backed returns', desc: 'Physical vehicle assets underpin your investment.' },
+  { val: '₹', label: 'Asset backed returns', desc: 'Physical vehicle assets underpin your investment.' },
   { val: '0', label: 'Zero ops overhead', desc: 'DRIV handles everything. You just invest.' },
   { val: '∞', label: 'Scalable model', desc: 'Grow your fleet holding as DRIV expands nationally.' },
 ]
@@ -40,8 +40,8 @@ export default function InvestorSection() {
           <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
           </h2>
-          <p className="text-gray-500 text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
-            DRIV offers an asset-backed fleet investment model for individuals and partners
+          <p className="text-black text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
+            DRIV offers an asset backed fleet investment model for individuals and partners
             looking to participate in the growing logistics and mobility sector.
           </p>
         </motion.div>
@@ -57,8 +57,8 @@ export default function InvestorSection() {
           </div>
           <div className="relative">
             <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#c2410c] text-xs font-bold uppercase tracking-wider mb-2">Service</span>
-            <h3 className="font-heading font-bold text-gray-900 text-lg mb-1.5">Asset-Backed Investment</h3>
-            <p className="text-gray-500 text-sm leading-relaxed">A managed logistics investment model where DRIV handles fleet operations, maintenance, and deployment for investors. Your capital, our operations.</p>
+            <h3 className="font-heading font-bold text-gray-900 text-lg mb-1.5">Asset Backed Investment</h3>
+            <p className="text-black text-sm leading-relaxed">A managed logistics investment model where DRIV handles fleet operations, maintenance, and deployment for investors. Your capital, our operations.</p>
           </div>
         </motion.div>
 
@@ -73,7 +73,7 @@ export default function InvestorSection() {
               className="group bg-white border border-[#A3E635]/20 rounded-2xl p-5 md:p-6 text-center hover:border-[#A3E635]/45 hover:shadow-[0_8px_32px_rgba(163,230,53,0.10),0_2px_8px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow,background-color] duration-300 card-instant-pop">
               <div className="font-heading font-black text-4xl text-[#65a30d] mb-3">{w.val}</div>
               <h4 className="font-heading font-bold text-gray-900 text-sm mb-2">{w.label}</h4>
-              <p className="text-gray-400 text-xs leading-relaxed">{w.desc}</p>
+              <p className="text-black text-xs leading-relaxed">{w.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -98,7 +98,7 @@ export default function InvestorSection() {
                     </div>
                     <div>
                       <h4 className="font-heading font-semibold text-gray-900 text-sm mb-1">{m.title}</h4>
-                      <p className="text-gray-500 text-xs leading-relaxed">{m.desc}</p>
+                      <p className="text-black text-xs leading-relaxed">{m.desc}</p>
                     </div>
                   </motion.div>
                 )
@@ -111,10 +111,10 @@ export default function InvestorSection() {
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
             <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm">
               <h3 className="font-heading font-bold text-gray-900 text-xl mb-2">What's Included</h3>
-              <p className="text-gray-500 text-sm mb-7">Under the managed fleet investment model:</p>
+              <p className="text-black text-sm mb-7">Under the managed fleet investment model:</p>
               <div className="grid sm:grid-cols-1 gap-3 mb-8">
                 {features.map(f => (
-                  <div key={f} className="group flex items-start gap-3 text-gray-500 text-sm group-hover:text-gray-700 transition-colors">
+                  <div key={f} className="group flex items-start gap-3 text-black text-sm transition-colors">
                     <IconCircleCheck size={14} className="text-[#65a30d] mt-0.5 shrink-0 group-hover:scale-110 transition-transform duration-300" />
                     {f}
                   </div>

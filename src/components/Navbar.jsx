@@ -107,7 +107,7 @@ export default function Navbar() {
         <div
           className={`w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-2.5 rounded-2xl border transition-all duration-500 ${
             scrolled
-              ? 'border-white/10 bg-black/65 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
+              ? 'border-white/10 bg-black/85 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
               : 'border-gray-100 bg-white/90'
           }`}
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
