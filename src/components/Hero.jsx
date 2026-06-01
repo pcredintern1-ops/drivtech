@@ -52,7 +52,7 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p variants={up}
-            className="text-black xl:text-gray-600 text-base sm:text-base md:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+            className="text-black xl:text-gray-600 text-base sm:text-lg md:text-xl lg:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
             DRIV powers enterprise fleet operations, linehaul logistics, driver sourcing,
             and scalable mobility solutions for modern businesses across India.
           </motion.p>

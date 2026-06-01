@@ -1,6 +1,7 @@
 import Hero from '../components/Hero'
 import TrustBar from '../components/TrustBar'
 import AboutSection from '../components/AboutSection'
+import StatsSection from '../components/StatsSection'
 import ServicesSection from '../components/ServicesSection'
 import DrivHubSection from '../components/DrivHubSection'
 import InvestorSection from '../components/InvestorSection'
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <Hero />
       <AboutSection />
+      <StatsSection />
       <ServicesSection />
       <TrustBar />
       <DrivHubSection />

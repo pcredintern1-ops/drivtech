@@ -345,7 +345,7 @@ export default function DrivHubSection() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <section id="hub" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#eef0f3]">
+    <section id="hub" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#ebecf0]">
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
         style={{ backgroundImage: 'radial-gradient(circle, #A3E635 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
@@ -370,10 +370,10 @@ export default function DrivHubSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635] animate-pulse" />
             Coming 2025 · Bhiwandi, Mumbai
           </div>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-gray-900 mb-4 md:mb-6">
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             The DRIV <span className="gradient-text">HUB</span>
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-500 text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
             A centralised fleet and operations command centre in Bhiwandi, designed to power enterprise
             logistics across Mumbai and beyond.
           </p>

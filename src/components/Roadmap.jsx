@@ -7,7 +7,7 @@ export default function Roadmap() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="roadmap" ref={ref} className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#eef0f3]">
+    <section id="roadmap" ref={ref} className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#ebecf0]">
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.05 }}
@@ -15,7 +15,7 @@ export default function Roadmap() {
           <span className="inline-flex items-center gap-3 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5 block">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Growth Timeline<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-gray-900 mb-4 md:mb-6">
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             The DRIV <span className="gradient-text">Roadmap</span>
           </h2>
           <p className="text-gray-500 text-base md:text-lg max-w-lg mx-auto">
@@ -72,7 +72,7 @@ export default function Roadmap() {
                         {isPast && <span className="opacity-60 ml-1">✓</span>}
                       </div>
                       <h4 className="font-heading font-bold text-gray-900 text-2xl mb-3">{item.title}</h4>
-                      <p className="text-gray-500 text-sm md:text-base leading-relaxed">{item.desc}</p>
+                      <p className="text-gray-500 text-base md:text-base leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
 

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { IconBolt, IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
+import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
 
 /* ── Variants ── */
 const fadeUp = {
@@ -28,7 +28,7 @@ export default function AboutSection() {
   return (
     <section id="about"
       className="relative py-8 md:py-12 lg:py-14 overflow-hidden section-sep"
-      style={{ background: 'linear-gradient(160deg, #f1f1f1 0%, #f4f4f4 45%, #f1f1f1 100%)' }}>
+      style={{ background: '#ebecf0' }}>
 
       {/* Lime glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
@@ -57,10 +57,10 @@ export default function AboutSection() {
           <motion.div
             variants={stag} initial="hidden"
             whileInView="show" viewport={{ once: true, amount: 0.05 }}
-            className="flex flex-col items-center lg:items-start relative z-10">
+            className="flex flex-col items-start relative z-10">
 
             {/* Heading + green accent line */}
-            <motion.div variants={fadeUp} className="w-full lg:w-auto text-center lg:text-left mb-5 md:mb-6">
+            <motion.div variants={fadeUp} className="w-full lg:w-auto text-left mb-5 md:mb-6">
               <span className="inline-block text-left">
                 <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
                   Mumbai's Premier<br/>
@@ -71,14 +71,14 @@ export default function AboutSection() {
             </motion.div>
 
             <motion.p variants={fadeUp}
-              className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-3">
+              className="text-gray-600 text-base sm:text-lg md:text-lg leading-relaxed mb-3">
               DRIV is a Mumbai-based logistics and fleet operations company focused on{' '}
               <span className="text-gray-900 font-semibold">enterprise transportation</span>,
               linehaul movement, adhoc fleet support, and driver management solutions.
             </motion.p>
 
             <motion.p variants={fadeUp}
-              className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed mb-6 md:mb-8">
+              className="text-gray-400 text-sm sm:text-base md:text-base leading-relaxed mb-6 md:mb-8">
               Founded in 2023, we're building a scalable logistics ecosystem designed to support
               modern supply chains, quick commerce operations, and future-ready mobility infrastructure.
             </motion.p>
@@ -87,7 +87,7 @@ export default function AboutSection() {
 
           {/* RIGHT: Network image */}
           <div ref={arrowRef}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center lg:translate-x-[4%] xl:translate-x-[6%]"
             style={{ overflowX: 'clip' }}>
             <motion.div
               initial={{ x: '110%', opacity: 0 }}
@@ -95,7 +95,7 @@ export default function AboutSection() {
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
               className="shrink-0 w-full">
               <img
-                src="/about-network.webp"
+                src="/about-network-2.webp"
                 alt="DRIV Logistics Network"
                 className="w-full h-auto"
                 draggable={false}

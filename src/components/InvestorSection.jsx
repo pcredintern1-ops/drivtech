@@ -37,10 +37,10 @@ export default function InvestorSection() {
           <span className="inline-flex items-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6 block">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Investor Program<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl text-gray-900 mb-4 md:mb-6">
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
             Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-gray-500 text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
             DRIV offers an asset-backed fleet investment model for individuals and partners
             looking to participate in the growing logistics and mobility sector.
           </p>

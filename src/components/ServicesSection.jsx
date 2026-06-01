@@ -103,7 +103,7 @@ export default function ServicesSection() {
           <motion.h2
             initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.65, delay: 0.12 }}
-            className="font-heading font-black text-[1.2rem] md:text-[1.55rem] text-gray-900 mb-0.5">
+            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-0.5">
             Logistics Solutions <span className="gradient-text">Built for Enterprise</span>
           </motion.h2>
         </div>

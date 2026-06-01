@@ -11,7 +11,7 @@ function scrollTo(href) {
   if (!el) return
   const navEl = document.querySelector('nav')
   const navHeight = navEl ? navEl.offsetHeight : 80
-  const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 12
+  const top = el.getBoundingClientRect().top + window.scrollY - navHeight + 28
   window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
   history.pushState(null, '', href)   // update URL to /home, /about, etc.
 }
@@ -38,7 +38,7 @@ export default function Navbar() {
         if (!el) return
         const navEl = document.querySelector('nav')
         const navHeight = navEl ? navEl.offsetHeight : 80
-        const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 12
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight + 28
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
       }, 150)
     }
@@ -105,7 +105,7 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3 md:pt-4 lg:pt-4"
       >
         <div
-          className={`w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-3.5 rounded-2xl border transition-all duration-500 ${
+          className={`w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-2.5 rounded-2xl border transition-all duration-500 ${
             scrolled
               ? 'border-white/10 bg-black/65 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
               : 'border-gray-100 bg-white/90'
@@ -113,13 +113,13 @@ export default function Navbar() {
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
         >
           {/* Logo */}
-          <div className="flex items-center shrink-0">
+          <button onClick={() => handleNav('/home')} className="flex items-center shrink-0 cursor-pointer" aria-label="Home">
             <img
               src={scrolled ? '/logo-white.png' : '/logo.png'}
               alt="DRIV"
               className="h-11 sm:h-12 md:h-[4.25rem] lg:h-[3.75rem] w-auto object-contain transition-all duration-500 hover:scale-105"
             />
-          </div>
+          </button>
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center justify-end gap-0.5 ml-auto">
