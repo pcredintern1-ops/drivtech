@@ -196,7 +196,7 @@ export default function ServicesSection() {
                   <h4 className="font-heading font-bold text-gray-900 text-sm leading-tight mb-0.5">
                     {step.title}
                   </h4>
-                  <p className="text-black text-sm md:text-sm lg:text-xs leading-relaxed">
+                  <p className="text-black text-base md:text-base lg:text-sm leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
@@ -306,7 +306,7 @@ export default function ServicesSection() {
                       {svc.title}
                     </h3>
                   </div>
-                  <p className="text-black text-sm md:text-sm lg:text-xs leading-relaxed line-clamp-2">
+                  <p className="text-black text-base md:text-base lg:text-sm leading-relaxed line-clamp-2">
                     {svc.description}
                   </p>
                 </div>

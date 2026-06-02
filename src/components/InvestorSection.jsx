@@ -75,7 +75,7 @@ export default function InvestorSection() {
               className="group bg-white border border-[#A3E635]/20 rounded-2xl p-5 md:p-6 text-center hover:border-[#A3E635]/45 hover:shadow-[0_8px_32px_rgba(163,230,53,0.10),0_2px_8px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow,background-color] duration-300 card-instant-pop">
               <div className="font-heading font-black text-4xl text-[#65a30d] mb-3">{w.val}</div>
               <h4 className="font-heading font-bold text-gray-900 text-sm mb-2">{w.label}</h4>
-              <p className="text-black text-xs leading-relaxed">{w.desc}</p>
+              <p className="text-black text-sm leading-relaxed">{w.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -100,7 +100,7 @@ export default function InvestorSection() {
                     </div>
                     <div>
                       <h4 className="font-heading font-semibold text-gray-900 text-sm mb-1">{m.title}</h4>
-                      <p className="text-black text-xs leading-relaxed">{m.desc}</p>
+                      <p className="text-black text-sm leading-relaxed">{m.desc}</p>
                     </div>
                   </motion.div>
                 )

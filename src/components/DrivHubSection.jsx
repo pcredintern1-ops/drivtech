@@ -491,7 +491,7 @@ export default function DrivHubSection() {
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.18 }}>
                       <p className="text-[#fb923c] text-xs font-bold mb-1.5 leading-tight">{f.title}</p>
-                      <p className="text-black text-xs leading-relaxed">{f.desc}</p>
+                      <p className="text-black text-sm leading-relaxed">{f.desc}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -523,7 +523,7 @@ export default function DrivHubSection() {
               }}
               className="bg-[#0f172a] border border-[#f97316]/25 rounded-xl p-3 shadow-sm">
               <p className="text-[#fb923c] text-xs font-bold mb-1">{f.title}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{f.desc}</p>
+              <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
         </motion.div>

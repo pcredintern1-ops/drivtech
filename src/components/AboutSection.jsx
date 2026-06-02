@@ -94,7 +94,7 @@ export default function AboutSection() {
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
               className="shrink-0 w-full">
               <img
-                src="/about-network-2.webp"
+                src="/about-network-3.webp"
                 alt="DRIV Logistics Network"
                 className="w-full h-auto"
                 draggable={false}
@@ -143,8 +143,8 @@ export default function AboutSection() {
                   <Icon size={14} className="text-[#65a30d]" strokeWidth={1.6}/>
                 </motion.div>
                 <div>
-                  <h4 className="font-heading font-bold text-gray-900 text-xs sm:text-sm mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
-                  <p className="text-black text-[10px] sm:text-xs leading-relaxed xl:max-w-[140px]">{desc}</p>
+                  <h4 className="font-heading font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
+                  <p className="text-black text-sm sm:text-base leading-relaxed xl:max-w-[160px]">{desc}</p>
                 </div>
               </motion.div>
             </Fragment>
