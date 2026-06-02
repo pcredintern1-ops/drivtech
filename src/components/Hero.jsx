@@ -31,7 +31,7 @@ export default function Hero() {
       }} />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 flex-1 flex flex-col w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-24 sm:pt-28 md:pt-36 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
+      <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-24 sm:pt-28 md:pt-36 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
 
         <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col">
 
@@ -52,7 +52,7 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p variants={up}
-            className="text-black xl:text-gray-600 text-base sm:text-lg md:text-xl lg:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+            className="text-black xl:text-gray-600 text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
             DRIV powers enterprise fleet operations, linehaul logistics, driver sourcing,
             and scalable mobility solutions for modern businesses across India.
           </motion.p>
@@ -67,12 +67,12 @@ export default function Hero() {
             </a>
             <a href="/services"
               onClick={e => { e.preventDefault(); const el=document.getElementById('services'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/services') }}
-              className="gradient-border-animate flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gray-900 hover:bg-black border border-gray-700 hover:border-[#A3E635]/50 text-white hover:text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md">
+              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gray-900 border border-gray-700 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
               Explore Services
             </a>
             <a href="/investor-program"
               onClick={e => { e.preventDefault(); const el=document.getElementById('invest'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/investor-program') }}
-              className="btn-shine btn-glow-orange flex items-center justify-center gap-2.5 px-7 py-3.5 border border-[#F97316]/35 hover:border-[#F97316]/65 bg-white/70 backdrop-blur-sm hover:bg-[#F97316]/8 text-[#c2410c] font-semibold rounded-xl text-sm transition-all duration-300 whitespace-nowrap">
+              className="btn-shine btn-glow-orange flex items-center justify-center gap-2.5 px-7 py-3.5 border border-[#F97316]/35 bg-white/70 backdrop-blur-sm text-[#c2410c] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap">
               Become an Investor
             </a>
           </motion.div>
@@ -93,12 +93,12 @@ export default function Hero() {
           <div className="flex gap-3 w-full">
             <a href="/services"
               onClick={e => { e.preventDefault(); const el=document.getElementById('services'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/services') }}
-              className="gradient-border-animate flex items-center justify-center gap-2.5 px-5 py-2.5 bg-gray-900 hover:bg-black border border-gray-700 hover:border-[#A3E635]/50 text-white hover:text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md flex-1">
+              className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 bg-gray-900 border border-gray-700 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 flex-1">
               Explore Services
             </a>
             <a href="/investor-program"
               onClick={e => { e.preventDefault(); const el=document.getElementById('invest'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/investor-program') }}
-              className="btn-shine btn-glow-orange flex items-center justify-center gap-2.5 px-5 py-2.5 border border-[#F97316]/35 hover:border-[#F97316]/65 bg-white/70 backdrop-blur-sm hover:bg-[#F97316]/8 text-[#c2410c] font-semibold rounded-xl text-sm transition-all duration-300 flex-1 whitespace-nowrap">
+              className="btn-shine btn-glow-orange flex items-center justify-center gap-2.5 px-5 py-2.5 border border-[#F97316]/35 bg-white/70 backdrop-blur-sm text-[#c2410c] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 flex-1 whitespace-nowrap">
               Become an Investor
             </a>
           </div>

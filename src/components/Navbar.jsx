@@ -102,16 +102,24 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3 md:pt-4 lg:pt-4"
+        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-12 2xl:px-24 pt-2 sm:pt-3 md:pt-4 lg:pt-4"
       >
         <div
-          className={`w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-2.5 rounded-2xl border transition-all duration-500 ${
+          className={`relative overflow-hidden w-full flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-2.5 rounded-2xl border transition-all duration-500 ${
             scrolled
               ? 'border-white/10 bg-black/85 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
               : 'border-gray-100 bg-white/90'
           }`}
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
         >
+          {/* Green neon glow line at bottom */}
+          <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none" style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
+            boxShadow: scrolled
+              ? '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)'
+              : '0 0 8px rgba(163,230,53,0.45), 0 0 16px rgba(163,230,53,0.20)',
+          }} />
+
           {/* Logo */}
           <button onClick={() => handleNav('/home')} className="flex items-center shrink-0 cursor-pointer" aria-label="Home">
             <img

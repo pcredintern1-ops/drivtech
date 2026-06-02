@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(163,230,53,0.45), transparent)' }} />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-12">
+      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-8 md:pb-12">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-12 mb-10 md:mb-14">
 
           {/* Brand */}

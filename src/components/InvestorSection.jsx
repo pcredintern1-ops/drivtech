@@ -28,19 +28,21 @@ export default function InvestorSection() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.06) 0%, transparent 70%)' }} />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75 }}
           className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="inline-flex items-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6 block">
+          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Investor Program<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
-          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-4 md:mb-6">
-            Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
-          </h2>
-          <p className="text-black text-base sm:text-lg md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <div className="w-fit mx-auto mb-4 md:mb-6">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
+              Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
+            </h2>
+          </div>
+          <p className="text-black text-lg sm:text-xl md:text-xl lg:text-xl max-w-2xl mx-auto leading-relaxed">
             DRIV offers an asset backed fleet investment model for individuals and partners
             looking to participate in the growing logistics and mobility sector.
           </p>

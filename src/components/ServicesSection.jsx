@@ -89,23 +89,25 @@ export default function ServicesSection() {
       <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* ── Header ── */}
         <div className="mb-4 md:mb-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: -10 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.7 }}
-            className="inline-flex items-center justify-center gap-2 text-[#65a30d] text-xs font-bold
-                       uppercase tracking-[0.3em] mb-2 block">
+            className="flex items-center justify-center gap-2 text-[#65a30d] text-xs font-bold
+                       uppercase tracking-[0.3em] mb-2">
             <span className="w-6 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />What We Do<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-6 h-px bg-[#A3E635]/60" />
           </motion.span>
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.65, delay: 0.12 }}
-            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-0.5">
-            Logistics Solutions <span className="gradient-text">Built for Enterprise</span>
-          </motion.h2>
+            className="w-fit mx-auto">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
+              Logistics Solutions <span className="gradient-text">Built for Enterprise</span>
+            </h2>
+          </motion.div>
         </div>
 
         {/* ── 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
@@ -194,7 +196,7 @@ export default function ServicesSection() {
                   <h4 className="font-heading font-bold text-gray-900 text-sm leading-tight mb-0.5">
                     {step.title}
                   </h4>
-                  <p className="text-black text-[11px] md:text-xs leading-relaxed">
+                  <p className="text-black text-sm md:text-sm lg:text-xs leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
@@ -304,7 +306,7 @@ export default function ServicesSection() {
                       {svc.title}
                     </h3>
                   </div>
-                  <p className="text-black text-[11px] md:text-xs leading-relaxed line-clamp-2">
+                  <p className="text-black text-sm md:text-sm lg:text-xs leading-relaxed line-clamp-2">
                     {svc.description}
                   </p>
                 </div>

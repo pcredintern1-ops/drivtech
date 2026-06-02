@@ -34,7 +34,7 @@ export default function AboutSection() {
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 65%)', filter:'blur(24px)' }}/>
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* ── Section label ── */}
         <motion.div
@@ -60,25 +60,24 @@ export default function AboutSection() {
             className="flex flex-col items-start relative z-10">
 
             {/* Heading + green accent line */}
-            <motion.div variants={fadeUp} className="w-full lg:w-auto text-left mb-5 md:mb-6">
-              <span className="inline-block text-left">
+            <motion.div variants={fadeUp} className="w-full text-center lg:text-left mb-5 md:mb-6">
+              <span className="inline-block text-center lg:text-left">
                 <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
                   Mumbai's Premier<br/>
                   <span className="gradient-text">Enterprise Logistics</span>
                 </h2>
-                <div className="w-10 h-[3px] rounded-full bg-[#A3E635]"/>
               </span>
             </motion.div>
 
             <motion.p variants={fadeUp}
-              className="text-black text-base sm:text-lg md:text-lg leading-relaxed mb-3">
+              className="text-black text-lg sm:text-xl md:text-xl lg:text-xl leading-relaxed mb-3">
               DRIV is a Mumbai based logistics and fleet operations company focused on{' '}
               <span className="text-gray-900 font-semibold">enterprise transportation</span>,
               linehaul movement, adhoc fleet support, and driver management solutions.
             </motion.p>
 
             <motion.p variants={fadeUp}
-              className="text-black text-sm sm:text-base md:text-base leading-relaxed mb-6 md:mb-8">
+              className="text-black text-base sm:text-lg md:text-lg lg:text-lg leading-relaxed mb-6 md:mb-8">
               Founded in 2023, we're building a scalable logistics ecosystem designed to support
               modern supply chains, quick commerce operations, and future ready mobility infrastructure.
             </motion.p>
@@ -87,7 +86,7 @@ export default function AboutSection() {
 
           {/* RIGHT: Network image */}
           <div ref={arrowRef}
-            className="flex items-center justify-center lg:translate-x-[4%] xl:translate-x-[6%]"
+            className="flex items-center justify-center lg:translate-x-0 xl:translate-x-0"
             style={{ overflowX: 'clip' }}>
             <motion.div
               initial={{ x: '110%', opacity: 0 }}
