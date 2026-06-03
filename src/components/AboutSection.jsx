@@ -144,7 +144,7 @@ export default function AboutSection() {
                 </motion.div>
                 <div>
                   <h4 className="font-heading font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
-                  <p className="text-black text-sm sm:text-base leading-relaxed xl:max-w-[160px]">{desc}</p>
+                  <p className="text-black text-sm sm:text-base leading-relaxed xl:max-w-[185px]">{desc}</p>
                 </div>
               </motion.div>
             </Fragment>

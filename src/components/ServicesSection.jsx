@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { IconTruck, IconRoute, IconBolt, IconBike } from '@tabler/icons-react'
+import { IconTruck, IconRoute, IconBolt, IconBike, IconMapPin } from '@tabler/icons-react'
 import { services } from '../data/content'
 
 const iconMap = { truck: IconTruck, route: IconRoute, zap: IconBolt, bike: IconBike }
@@ -14,7 +14,7 @@ const HUB  = '/scenes/building-hub.webp'
 const DS   = '/scenes/dispatch-hub.webp'
 const CUST = '/scenes/customer-house.webp'
 const cardMeta = {
-  1: { img: '/vehicles/tata_ace.webp',   alt: 'Tata Ace',   dur: VEHICLE_DUR, delay: 0,                fromBg: WH,  toBg: HUB,  from: 'Warehouse',  to: 'DRIV Hub' },
+  1: { img: '/vehicles/tata_ace.webp',   alt: 'Tata Ace',   dur: VEHICLE_DUR, delay: 0,                fromBg: WH,  toBg: DS,   from: 'Warehouse',  to: 'Dark Store' },
   2: { img: '/vehicles/truck.webp',      alt: 'Eicher',     dur: VEHICLE_DUR, delay: VEHICLE_DUR*0.25,  fromBg: HUB, toBg: WH,   from: 'Mumbai',     to: 'Pune'     },
   3: { img: '/vehicles/tata_tempo.webp', alt: 'Tata Tempo', dur: VEHICLE_DUR, delay: VEHICLE_DUR*0.5,   fromBg: HUB, toBg: WH,   from: 'DRIV Hub',   to: 'Warehouse'},
   4: { img: '/vehicles/scooty.webp',     alt: 'Scooter',    dur: VEHICLE_DUR, delay: VEHICLE_DUR*0.75,  fromBg: DS,  toBg: CUST, from: 'Dark Store', to: 'Doorstep' },
@@ -47,23 +47,26 @@ const JOURNEY_STEPS = [
   {
     label: 'First Mile', step: '01', Icon: IconTruck,
     title: 'Collection & Dispatch',
-    desc: 'From origin warehouse or manufacturer to DRIV fleet hub — vehicle dispatch, load consolidation, and first point pickup managed seamlessly.',
+    desc: 'From origin warehouse or manufacturer to DRIV fleet hub. Vehicle dispatch, load consolidation, and first point pickup managed seamlessly.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
+    img: '/services/first-mile.webp',
   },
   {
     label: 'Middle Mile', step: '02', Icon: IconRoute,
     title: 'Hub-to-Hub Transit',
-    desc: 'Intercity linehaul movement across DRIV hubs — high volume corridor routing, load optimisation, and strict schedule adherence.',
+    desc: 'Intercity linehaul movement across DRIV hubs with high volume corridor routing, load optimisation, and strict schedule adherence.',
     color: '#F97316', textColor: '#c2410c',
     bg: 'rgba(249,115,22,0.05)', border: 'rgba(249,115,22,0.20)',
+    img: '/services/middle-mile.webp',
   },
   {
     label: 'Last Mile', step: '03', Icon: IconBike,
     title: 'Customer Delivery',
-    desc: 'From DRIV hub or dark store to the end customer doorstep — fast, accurate, SLA backed delivery for B2B and B2C operations.',
+    desc: 'From dark store to the end customer doorstep with fast, accurate, SLA backed delivery for B2B and B2C operations.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
+    img: '/services/last-mile.webp',
   },
 ]
 
@@ -122,37 +125,20 @@ export default function ServicesSection() {
                 whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
                 viewport={{ once: true, amount: 0.05 }}
                 transition={{ duration: 0.65, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className="relative rounded-2xl overflow-hidden flex flex-col group cursor-default"
+                className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
                 style={{
                   border: `1px solid ${step.border}`,
                   background: step.bg,
                   boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
-                  transition: 'box-shadow 0.35s ease, border-color 0.35s ease',
+                  transition: 'box-shadow 0.4s ease, border-color 0.4s ease',
                 }}>
 
-                {/* Hover — radial glow background sweep */}
-                <div className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(circle at 50% 42%, ${step.color}18 0%, transparent 68%)` }} />
-
-                {/* Shimmer sweep on hover */}
-                <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      background: `linear-gradient(115deg, transparent 30%, ${step.color}12 50%, transparent 70%)`,
-                      transform: 'translateX(-100%)',
-                      animation: 'none',
-                    }}/>
-                </div>
-
-                {/* Top accent bar — brightens on hover */}
-                <div className="h-[3px] transition-all duration-300"
-                  style={{ background: `linear-gradient(90deg, ${step.color}, ${step.color}55)`,
-                           boxShadow: 'none' }} />
-                <div className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl"
-                  style={{ background: step.color, boxShadow: `0 0 14px 2px ${step.color}90` }} />
+                {/* Hover radial glow */}
+                <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: `radial-gradient(circle at 50% 30%, ${step.color}14 0%, transparent 65%)` }} />
 
                 {/* Header row */}
-                <div className="relative flex items-center gap-2 px-4 pt-4 pb-1 z-10">
+                <div className="relative flex items-center gap-2 px-5 pt-5 z-10">
                   <span className="font-black text-[9px] uppercase tracking-[0.22em] px-2 py-0.5 rounded-md transition-all duration-300 group-hover:scale-105 origin-left"
                     style={{ color: step.textColor, background: `${step.color}22` }}>
                     {step.step}
@@ -162,48 +148,54 @@ export default function ServicesSection() {
                   </span>
                 </div>
 
-                {/* Icon display area */}
-                <div className="relative flex items-center justify-center px-4 py-6 z-10">
-                  {/* Outer ring — fades in on hover */}
-                  <div className="absolute w-28 h-28 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ border: `1px solid ${step.color}28`, animation: undefined }} />
-                  <div className="absolute w-20 h-20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                    style={{ border: `1px dashed ${step.color}40` }} />
-
-                  {/* Icon container */}
-                  <div className="relative flex items-center justify-center w-[72px] h-[72px] rounded-2xl
-                                  transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-                    style={{
-                      background: `${step.color}14`,
-                      border: `1.5px solid ${step.color}30`,
-                    }}>
-                    {/* Inner glow ring */}
+                {/* Image area with floating icon badge */}
+                <div className="relative px-5 pt-3 z-10">
+                  {/* Floating icon badge */}
+                  <div className="absolute left-7 top-5 z-20 flex items-center justify-center w-12 h-12 rounded-2xl backdrop-blur-sm
+                                  transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3"
+                    style={{ background: `${step.color}1f`, border: `1.5px solid ${step.color}45` }}>
                     <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ boxShadow: `0 0 22px ${step.color}60, inset 0 0 14px ${step.color}20` }} />
-                    {/* Pulse ring */}
-                    <div className="absolute inset-[-6px] rounded-[18px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ border: `1.5px solid ${step.color}35`, animation: 'journey-pulse 1.8s ease-out infinite' }} />
-                    <StepIcon
-                      size={34}
-                      style={{ color: step.color }}
-                      className="relative z-10 transition-transform duration-300 group-hover:scale-110"
+                      style={{ boxShadow: `0 0 20px ${step.color}55, inset 0 0 12px ${step.color}25` }} />
+                    <StepIcon size={24} style={{ color: step.color }} className="relative z-10" />
+                  </div>
+
+                  {/* Scene image */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={step.img}
+                      alt={step.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      draggable={false}
+                      onError={e => { e.currentTarget.style.opacity = '0' }}
+                      style={{
+                        transform: 'scale(1.08)',
+                        transformOrigin: '68% 38%',
+                        maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+                        maskComposite: 'intersect',
+                        WebkitMaskComposite: 'source-in',
+                      }}
                     />
                   </div>
                 </div>
 
                 {/* Text */}
-                <div className="relative px-4 pt-0 pb-6 flex flex-col gap-1 flex-1 z-10">
-                  <h4 className="font-heading font-bold text-gray-900 text-sm leading-tight mb-0.5">
+                <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1 flex-1 z-10">
+                  <h4 className="font-heading font-bold text-gray-900 text-base md:text-lg leading-tight mb-0.5">
                     {step.title}
                   </h4>
-                  <p className="text-black text-base md:text-base lg:text-sm leading-relaxed">
+                  <p className="text-black text-sm md:text-base lg:text-sm leading-relaxed">
                     {step.desc}
                   </p>
+                  {/* Progress dot line */}
+                  <div className="relative flex items-center mt-4 h-2">
+                    <div className="h-px w-full rounded-full" style={{ background: `${step.color}40` }} />
+                    <div className="absolute left-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300 group-hover:scale-125"
+                      style={{ transform: 'translateX(-50%)', background: step.color, boxShadow: `0 0 8px ${step.color}` }} />
+                  </div>
                 </div>
 
                 {/* Bottom glow line — expands on hover */}
-                <div className="absolute bottom-0 inset-x-0 h-[2px] transition-all duration-500"
-                  style={{ background: `linear-gradient(90deg, transparent, ${step.color}60, transparent)` }} />
                 <div className="absolute bottom-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-400"
                   style={{ background: `linear-gradient(90deg, transparent 10%, ${step.color} 50%, transparent 90%)`,
                            boxShadow: `0 0 10px ${step.color}80` }} />
@@ -212,10 +204,8 @@ export default function ServicesSection() {
           })}
         </div>
         <style>{`
-          @keyframes journey-pulse {
-            0%   { transform: scale(1);    opacity: 0.7; }
-            70%  { transform: scale(1.18); opacity: 0; }
-            100% { transform: scale(1.18); opacity: 0; }
+          .journey-card:hover {
+            box-shadow: 0 18px 40px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.05) !important;
           }
         `}</style>
 
@@ -317,8 +307,14 @@ export default function ServicesSection() {
 
                   {/* FROM building */}
                   <div className="absolute left-0 top-0 overflow-hidden" style={{ width: svc.id === 4 ? '55%' : '44%', height: '100%' }}>
-                    <img src={meta.fromBg} alt={meta.from} className="absolute left-0"
-                      style={{ bottom: bldBottom, height: bldH, width: '100%', objectFit: 'contain', objectPosition: 'left bottom' }} />
+                    {svc.id === 2 ? (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <IconMapPin size={44} style={{ color: svc.color }} strokeWidth={1.6} />
+                      </div>
+                    ) : (
+                      <img src={meta.fromBg} alt={meta.from} className="absolute left-0"
+                        style={{ bottom: bldBottom, height: bldH, width: '100%', objectFit: 'contain', objectPosition: 'left bottom' }} />
+                    )}
                     <div className="absolute inset-0 pointer-events-none"
                       style={{ background: 'linear-gradient(to right, transparent 55%, #000 100%)' }} />
                     <div className="absolute top-2 left-2 flex items-center gap-1.5 z-10">
@@ -331,8 +327,14 @@ export default function ServicesSection() {
                   {/* TO building */}
                   {meta.toBg && (
                     <div className="absolute right-0 top-0 overflow-hidden" style={{ width: svc.id === 4 ? '38%' : '44%', height: '100%' }}>
+                      {svc.id === 2 ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <IconMapPin size={44} style={{ color: svc.color }} strokeWidth={1.6} />
+                        </div>
+                      ) : (
                       <img src={meta.toBg} alt={meta.to} className="absolute bottom-0 right-0"
                         style={{ height: bldHTo, width: '100%', objectFit: 'contain', objectPosition: 'right bottom', transform: svc.id === 4 ? 'translateX(-2px)' : 'none' }} />
+                      )}
                       <div className="absolute inset-0 pointer-events-none"
                         style={{ background: 'linear-gradient(to left, transparent 55%, #000 100%)' }} />
                       <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
