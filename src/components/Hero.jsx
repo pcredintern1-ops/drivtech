@@ -20,15 +20,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* ── Overlays ── */}
-      {/* Desktop */}
-      <div className="absolute inset-0 hidden xl:block" style={{
-        background: 'linear-gradient(108deg, rgba(240,245,250,0.97) 0%, rgba(235,242,248,0.92) 24%, rgba(215,230,245,0.68) 42%, rgba(10,16,32,0.18) 60%, rgba(4,8,18,0.04) 100%)'
-      }} />
-      {/* Mobile/tablet including large tablet */}
-      <div className="absolute inset-0 xl:hidden" style={{
-        background: 'linear-gradient(180deg, rgba(220,232,245,0.89) 0%, rgba(210,228,244,0.78) 22%, rgba(180,215,240,0.52) 42%, rgba(10,18,36,0.14) 65%, rgba(4,8,18,0.04) 100%)'
-      }} />
 
       {/* ── Main content ── */}
       <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-24 sm:pt-28 md:pt-36 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
@@ -45,14 +36,16 @@ export default function Hero() {
 
           {/* H1 */}
           <motion.h1 variants={up}
-            className="font-heading font-black text-[2.4rem] sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] sm:leading-[1.0] tracking-tight mb-4 text-gray-900 text-center xl:text-left">
+            className="font-heading font-black text-[2.4rem] sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] sm:leading-[1.0] tracking-tight mb-4 text-gray-900 text-center xl:text-left"
+            style={{ textShadow: '0 2px 4px rgba(0,0,0,0.45)' }}>
             <span className="block">Smarter <span className="gradient-text">Fleets.</span></span>
             <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime">Delivery.</span></span>
           </motion.h1>
 
           {/* Description */}
           <motion.p variants={up}
-            className="text-black xl:text-gray-600 text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+            className="text-black text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0"
+            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}>
             DRIV powers enterprise fleet operations, linehaul logistics, driver sourcing,
             and scalable mobility solutions for modern businesses across India.
           </motion.p>
