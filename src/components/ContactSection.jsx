@@ -20,8 +20,6 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-white">
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 70%)' }} />
 
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
@@ -37,7 +35,7 @@ export default function ContactSection() {
               Let's Build Something <span className="gradient-text">Together</span>
             </h2>
           </div>
-          <p className="text-black text-lg sm:text-xl md:text-xl lg:text-xl max-w-xl mx-auto leading-relaxed">
+          <p className="text-black text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Whether you're an enterprise client, investor, driver partner, or vendor, we'd love to hear from you.
           </p>
         </motion.div>
@@ -62,25 +60,13 @@ export default function ContactSection() {
                   <div>
                     <p className="text-gray-400 text-xs uppercase tracking-wider mb-0.5">{label}</p>
                     {href ? (
-                      <a href={href} className="text-gray-700 hover:text-gray-900 text-sm transition-colors leading-relaxed">{value}</a>
+                      <a href={href} className="text-gray-700 hover:text-gray-900 text-base sm:text-lg transition-colors leading-relaxed">{value}</a>
                     ) : (
-                      <p className="text-gray-700 text-sm leading-relaxed">{value}</p>
+                      <p className="text-gray-700 text-base sm:text-lg leading-relaxed">{value}</p>
                     )}
                   </div>
                 </motion.div>
               ))}
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm">
-              <p className="text-gray-400 text-xs uppercase tracking-widest mb-4">Inquiry Categories</p>
-              <div className="space-y-2">
-                {inquiryTypes.map(t => (
-                  <div key={t.value} className="flex items-center gap-2 text-black text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#A3E635]/70" />
-                    {t.label}
-                  </div>
-                ))}
-              </div>
             </div>
           </motion.div>
 
@@ -93,7 +79,7 @@ export default function ContactSection() {
                   <IconSend size={22} className="text-[#65a30d]" />
                 </div>
                 <h3 className="font-heading font-bold text-gray-900 text-xl mb-3">Message Received!</h3>
-                <p className="text-black text-sm max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
+                <p className="text-black text-base sm:text-lg max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 space-y-5 shadow-sm">

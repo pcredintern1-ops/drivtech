@@ -159,14 +159,27 @@ export default function ServicesSection() {
                     <StepIcon size={24} style={{ color: step.color }} className="relative z-10" />
                   </div>
 
-                  {/* Scene image */}
+                  {/* Scene image (light + dark) */}
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
-                      src={step.img}
+                      src="/services/mile-light.webp"
                       alt={step.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       draggable={false}
-                      onError={e => { e.currentTarget.style.opacity = '0' }}
+                      style={{
+                        transform: 'scale(1.08)',
+                        transformOrigin: '68% 38%',
+                        maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+                        maskComposite: 'intersect',
+                        WebkitMaskComposite: 'source-in',
+                      }}
+                    />
+                    <img
+                      src="/services/mile-dark.webp"
+                      alt={step.title}
+                      className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      draggable={false}
                       style={{
                         transform: 'scale(1.08)',
                         transformOrigin: '68% 38%',
@@ -184,7 +197,7 @@ export default function ServicesSection() {
                   <h4 className="font-heading font-bold text-gray-900 text-base md:text-lg leading-tight mb-0.5">
                     {step.title}
                   </h4>
-                  <p className="text-black text-sm md:text-base lg:text-sm leading-relaxed">
+                  <p className="text-black text-base sm:text-lg leading-relaxed">
                     {step.desc}
                   </p>
                   {/* Progress dot line */}
@@ -296,7 +309,7 @@ export default function ServicesSection() {
                       {svc.title}
                     </h3>
                   </div>
-                  <p className="text-black text-base md:text-base lg:text-sm leading-relaxed line-clamp-2">
+                  <p className="text-black text-base sm:text-lg leading-relaxed line-clamp-2">
                     {svc.description}
                   </p>
                 </div>

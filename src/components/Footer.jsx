@@ -16,9 +16,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center mb-5">
-              <img src="/logo-white.png" alt="DRIV" className="h-9 sm:h-12 w-auto object-contain" />
+              <img src="/logo-white.webp" alt="DRIV" className="h-9 sm:h-12 w-auto object-contain" />
             </div>
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6 sm:mb-10 max-w-xs">
+            <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-10 max-w-xs">
               Smart Logistics. Seamless Delivery.<br />
               Enterprise fleet operations powering modern India's supply chains.
             </p>
@@ -62,7 +62,7 @@ export default function Footer() {
                       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
                       history.pushState(null, '', l.href)
                     }}
-                    className="group flex items-center gap-1 text-gray-400 hover:text-[#A3E635] text-sm transition-colors duration-300">
+                    className="group flex items-center gap-1 text-gray-400 hover:text-[#A3E635] text-sm sm:text-base transition-colors duration-300">
                     <span className="link-underline">{l.label}</span>
                     <IconArrowRight size={11} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                   </a>
@@ -77,26 +77,21 @@ export default function Footer() {
             <ul className="space-y-4 sm:space-y-5">
               <li className="flex gap-3 items-start group">
                 <IconMapPin size={13} className="text-[#A3E635] mt-0.5 shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-400 text-xs sm:text-sm leading-relaxed">169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</span>
+                <span className="text-gray-400 text-base sm:text-lg leading-relaxed">169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</span>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMail size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="mailto:contact@drivtech.in" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">contact@drivtech.in</a>
+                <a href="mailto:contact@drivtech.in" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">contact@drivtech.in</a>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconPhone size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="tel:+917738046786" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">+91 77380 46786</a>
+                <a href="tel:+917738046786" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">+91 77380 46786</a>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMessage size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="https://wa.me/917738046786" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">WhatsApp Us</a>
+                <a href="https://wa.me/917738046786" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">WhatsApp Us</a>
               </li>
             </ul>
-            <a href="/contact"
-              onClick={e => { e.preventDefault(); const el=document.getElementById('contact'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/contact') }}
-              className="btn-shine btn-glow-hover mt-5 sm:mt-8 inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 bg-[#A3E635]/10 border border-[#A3E635]/30 hover:border-[#A3E635]/60 hover:bg-[#A3E635]/18 hover:shadow-[0_4px_20px_rgba(163,230,53,0.15)] text-[#A3E635] rounded-xl text-xs font-semibold transition-all duration-300 hover:-translate-y-0.5">
-              Send an Inquiry
-            </a>
           </div>
         </div>
 

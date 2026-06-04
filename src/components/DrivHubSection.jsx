@@ -335,10 +335,10 @@ export default function DrivHubSection() {
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#65a30d]">
                     Campus layout
                   </p>
-                  <p className="text-sm sm:text-base font-semibold text-gray-900 mt-1 leading-snug">
+                  <p className="text-base sm:text-lg font-semibold text-gray-900 mt-1 leading-snug">
                     Bhiwandi Logistics Park
                   </p>
-                  <p className="text-xs sm:text-sm text-gray-500 mt-0.5 leading-relaxed">
+                  <p className="text-base sm:text-lg text-gray-500 mt-0.5 leading-relaxed">
                     Five on-site facilities connected to one central command hub
                   </p>
                 </div>
@@ -353,7 +353,7 @@ export default function DrivHubSection() {
               </div>
 
               <div className="px-5 sm:px-8 py-4 border-t border-gray-100 bg-[#fafaf8] text-center sm:text-left">
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-xl mx-auto sm:mx-0">
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto sm:mx-0">
                   <span className="font-semibold text-[#65a30d]">Green</span> — washing, monitoring
                   &amp; help desk &nbsp;·&nbsp;{' '}
                   <span className="font-semibold text-[#ea6c0a]">Orange</span> — fleet parking

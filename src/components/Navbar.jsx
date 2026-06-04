@@ -1,9 +1,34 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { IconMenu2, IconX } from '@tabler/icons-react'
+import { IconMenu2, IconX, IconSun, IconMoon } from '@tabler/icons-react'
 import { navLinks } from '../data/content'
+import { useTheme } from '../theme.jsx'
 
 const navItems = navLinks
+
+/* Theme toggle — fires circular reveal from its own center */
+function ThemeToggle({ scrolled, className = '' }) {
+  const { theme, toggleTheme } = useTheme()
+  const handleClick = (e) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    toggleTheme({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
+  }
+  return (
+    <button
+      onClick={handleClick}
+      aria-label="Toggle theme"
+      className={`relative flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-300 ${
+        scrolled
+          ? 'text-gray-300 hover:text-[#A3E635] hover:bg-white/10'
+          : 'text-gray-600 hover:text-[#65a30d] hover:bg-[#A3E635]/10'
+      } ${className}`}
+    >
+      {theme === 'dark'
+        ? <IconSun size={19} />
+        : <IconMoon size={19} />}
+    </button>
+  )
+}
 
 function scrollTo(href) {
   const id = href.slice(1)            // '/home' → 'home'
@@ -20,6 +45,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('/home')
+  const { theme } = useTheme()
+  // Use the white logo whenever the bar is dark (scrolled) or dark theme is active
+  const useWhiteLogo = scrolled || theme === 'dark'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -112,9 +140,9 @@ export default function Navbar() {
           }`}
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
         >
-          {/* Green neon glow line at bottom */}
-          <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none" style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
+          {/* Green neon glow line at bottom — ends before the rounded corners */}
+          <div className="absolute bottom-0 left-8 right-8 sm:left-10 sm:right-10 h-[3px] pointer-events-none" style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 15%, #A3E635 50%, rgba(163,230,53,0.6) 85%, transparent 100%)',
             boxShadow: scrolled
               ? '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)'
               : '0 0 8px rgba(163,230,53,0.45), 0 0 16px rgba(163,230,53,0.20)',
@@ -123,7 +151,7 @@ export default function Navbar() {
           {/* Logo */}
           <button onClick={() => handleNav('/home')} className="flex items-center shrink-0 cursor-pointer" aria-label="Home">
             <img
-              src={scrolled ? '/logo-white.png' : '/logo.png'}
+              src={useWhiteLogo ? '/logo-white.webp' : '/logo.webp'}
               alt="DRIV"
               className="h-11 sm:h-12 md:h-[4.25rem] lg:h-[3.75rem] w-auto object-contain transition-all duration-500 hover:scale-105"
             />
@@ -146,15 +174,19 @@ export default function Navbar() {
                 <span className="relative z-10">{link.label}</span>
               </button>
             ))}
+            <ThemeToggle scrolled={scrolled} className="ml-1.5" />
           </div>
 
-          {/* Mobile menu toggle */}
-          <button onClick={() => setOpen(!open)}
-            className={`lg:hidden p-3.5 sm:p-4 transition-colors rounded-lg ml-auto ${
-              scrolled ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
-            }`}>
-            {open ? <IconX size={22} /> : <IconMenu2 size={22} />}
-          </button>
+          {/* Mobile: theme toggle + menu toggle */}
+          <div className="lg:hidden flex items-center gap-1 ml-auto">
+            <ThemeToggle scrolled={scrolled} />
+            <button onClick={() => setOpen(!open)}
+              className={`p-3.5 sm:p-4 transition-colors rounded-lg ${
+                scrolled ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              }`}>
+              {open ? <IconX size={22} /> : <IconMenu2 size={22} />}
+            </button>
+          </div>
         </div>
       </motion.nav>
 

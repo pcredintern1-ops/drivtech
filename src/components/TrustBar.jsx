@@ -76,10 +76,6 @@ function BrandCard({ brand }) {
 export default function TrustBar() {
   return (
     <section className="relative py-14 md:py-20 border-y border-white/8 bg-[#111827]">
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.06) 0%, transparent 70%)' }}
-      />
 
       <div className="relative">
         {/* Header */}
