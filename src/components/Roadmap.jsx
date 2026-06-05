@@ -1,13 +1,9 @@
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { roadmap } from '../data/content'
 
 export default function Roadmap() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
   return (
-    <section id="roadmap" ref={ref} className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#ebecf0]">
+    <section id="roadmap" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#ebecf0]">
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.05 }}

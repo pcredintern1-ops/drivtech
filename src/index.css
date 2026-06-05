@@ -51,10 +51,12 @@ body {
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+  /* Crisp snapshots, no sub-pixel shimmer during the reveal */
+  backface-visibility: hidden;
 }
 /* Old theme stays put underneath; new theme is revealed over it.
    Only one layer animates → far less GPU work, no cross-fade lag. */
-::view-transition-old(root) { z-index: 1; will-change: auto; }
+::view-transition-old(root) { z-index: 1; }
 ::view-transition-new(root) { z-index: 9999; will-change: clip-path; }
 
 @keyframes circle-reveal {
@@ -62,8 +64,13 @@ body {
   to   { clip-path: circle(var(--vt-r, 150%) at var(--vt-x, 50%) var(--vt-y, 50%)); }
 }
 html.vt-active::view-transition-new(root) {
-  animation: circle-reveal 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: circle-reveal 0.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
+
+/* Freeze scrolling + interaction while the reveal plays so the
+   captured snapshot can't drift (the main source of the glitch). */
+html.vt-active { overflow: hidden; }
+html.vt-active body { pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html.vt-active::view-transition-new(root) { animation: none; }
@@ -155,10 +162,11 @@ html.dark .gradient-text-orange {
 html.dark ::-webkit-scrollbar-track { background: #0f1623; }
 html.dark ::selection { background: rgba(163,230,53,0.30); color: #f1f5f9; }
 
-/* ── Hero theme image swap ── */
-.hero-img-dark { display: none; }
-html.dark .hero-img-light { display: none; }
-html.dark .hero-img-dark  { display: block; }
+/* ── Hero theme image swap (opacity so breakpoint display classes still work) ── */
+.hero-img-dark  { opacity: 0; }
+.hero-img-light { opacity: 1; }
+html.dark .hero-img-light { opacity: 0; }
+html.dark .hero-img-dark  { opacity: 1; }
 
 /* ── About network image swap ── */
 .about-img-dark { display: none; }
@@ -172,6 +180,10 @@ html.dark .about-img-dark  { display: block; }
    controls breakpoint; opacity here controls theme. */
 html:not(.dark) .hero-overlay-dark { opacity: 0; }
 html.dark .hero-overlay-light { opacity: 0; }
+
+/* Hero description — sharp shadow in light mode only */
+html:not(.dark) .hero-desc-shadow { text-shadow: 0 1px 2px rgba(0,0,0,0.45); }
+
 
 /* ── Theme surface helper (greyish section bg) ── */
 .theme-surface { background-color: var(--bg-surface); }

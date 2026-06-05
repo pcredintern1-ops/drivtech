@@ -19,9 +19,7 @@
       (function () {
         try {
           var stored = localStorage.getItem('driv-theme');
-          var theme = stored
-            ? stored
-            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          var theme = stored ? stored : 'dark';
           if (theme === 'dark') document.documentElement.classList.add('dark');
         } catch (e) {}
       })();

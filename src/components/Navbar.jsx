@@ -140,9 +140,9 @@ export default function Navbar() {
           }`}
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
         >
-          {/* Green neon glow line at bottom — ends before the rounded corners */}
-          <div className="absolute bottom-0 left-8 right-8 sm:left-10 sm:right-10 h-[3px] pointer-events-none" style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 15%, #A3E635 50%, rgba(163,230,53,0.6) 85%, transparent 100%)',
+          {/* Green neon glow line at bottom */}
+          <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none" style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
             boxShadow: scrolled
               ? '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)'
               : '0 0 8px rgba(163,230,53,0.45), 0 0 16px rgba(163,230,53,0.20)',

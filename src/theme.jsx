@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback } from 'react'
 
 const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} })
 
@@ -12,7 +12,7 @@ export function ThemeProvider({ children }) {
     const root = document.documentElement
     if (next === 'dark') root.classList.add('dark')
     else root.classList.remove('dark')
-    try { localStorage.setItem('driv-theme', next) } catch (e) {}
+    try { localStorage.setItem('driv-theme', next) } catch { /* ignore */ }
     setTheme(next)
   }, [])
 
@@ -21,7 +21,13 @@ export function ThemeProvider({ children }) {
    * Uses the View Transitions API when available; falls back to instant swap.
    */
   const toggleTheme = useCallback((origin) => {
-    const next = theme === 'dark' ? 'light' : 'dark'
+    const root = document.documentElement
+    // Ignore clicks while a transition is mid-flight (overlapping
+    // View Transitions are the main source of the glitch).
+    if (root.classList.contains('vt-active')) return
+
+    // Read the live DOM state instead of a possibly-stale closure value.
+    const next = root.classList.contains('dark') ? 'light' : 'dark'
 
     const x = origin?.x ?? window.innerWidth - 40
     const y = origin?.y ?? 40
@@ -31,7 +37,6 @@ export function ThemeProvider({ children }) {
       Math.max(y, window.innerHeight - y)
     )
 
-    const root = document.documentElement
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (!document.startViewTransition || reduce) {
@@ -51,18 +56,6 @@ export function ThemeProvider({ children }) {
     transition.finished.finally(() => {
       root.classList.remove('vt-active')
     })
-  }, [theme, applyTheme])
-
-  // Respond to system changes only if user hasn't explicitly chosen
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = (e) => {
-      if (!localStorage.getItem('driv-theme')) {
-        applyTheme(e.matches ? 'dark' : 'light')
-      }
-    }
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
   }, [applyTheme])
 
   return (

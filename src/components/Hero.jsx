@@ -11,17 +11,32 @@ export default function Hero() {
 
       {/* ── Background image (light + dark) ── */}
       <div className="absolute inset-0">
+        {/* Mobile images (< sm) */}
+        <img
+          src="/hero-light-mobile.webp"
+          alt=""
+          className="hero-img-light sm:hidden absolute inset-0 w-full h-full object-cover object-center"
+          draggable={false}
+          fetchPriority="high"
+        />
+        <img
+          src="/hero-dark-mobile.webp"
+          alt=""
+          className="hero-img-dark sm:hidden absolute inset-0 w-full h-full object-cover object-center"
+          draggable={false}
+        />
+        {/* Tablet / desktop images (sm+) */}
         <img
           src="/hero-light.webp"
           alt=""
-          className="hero-img-light w-full h-full object-cover [object-position:64%_58%] sm:[object-position:65%_48%] md:[object-position:68%_40%] lg:[object-position:68%_40%]"
+          className="hero-img-light hidden sm:block w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
           draggable={false}
           fetchPriority="high"
         />
         <img
           src="/hero-dark.webp"
           alt=""
-          className="hero-img-dark absolute inset-0 w-full h-full object-cover [object-position:64%_58%] sm:[object-position:65%_48%] md:[object-position:68%_40%] lg:[object-position:68%_40%]"
+          className="hero-img-dark hidden sm:block absolute inset-0 w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
           draggable={false}
         />
       </div>
@@ -69,7 +84,7 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p variants={up}
-            className="text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+            className="hero-desc-shadow text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
             DRIV powers enterprise fleet operations, linehaul logistics, driver sourcing,
             and scalable mobility solutions for modern businesses across India.
           </motion.p>

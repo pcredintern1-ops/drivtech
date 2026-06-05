@@ -37,9 +37,9 @@ export default function StatsSection() {
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.06) 0%, transparent 70%)' }} />
 
       {/* Green neon glow line at section bottom */}
-      <div className="absolute bottom-0 inset-x-0 h-[3px] pointer-events-none z-10" style={{
+      <div className="absolute bottom-0 inset-x-0 h-[2px] pointer-events-none z-10" style={{
         background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
-        boxShadow: '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)',
+        boxShadow: '0 0 8px rgba(163,230,53,0.5)',
       }} />
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
