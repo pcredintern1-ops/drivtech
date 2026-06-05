@@ -86,7 +86,7 @@ export default function AboutSection() {
             className="flex items-center justify-center lg:translate-x-0 xl:translate-x-0"
             style={{ overflowX: 'clip' }}>
             <div className="shrink-0 w-full grid">
-              <img
+              <img loading="lazy" decoding="async"
                 src="/about-network-3.webp"
                 alt="DRIV Logistics Network"
                 className="about-img-light w-full h-auto"
@@ -99,7 +99,7 @@ export default function AboutSection() {
                   WebkitMaskComposite: 'source-in',
                 }}
               />
-              <img
+              <img loading="lazy" decoding="async"
                 src="/about-network-dark.webp"
                 alt="DRIV Logistics Network"
                 className="about-img-dark w-full h-auto"

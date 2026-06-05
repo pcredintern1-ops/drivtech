@@ -161,7 +161,7 @@ export default function ServicesSection() {
 
                   {/* Scene image (light + dark) */}
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src="/services/mile-light.webp"
                       alt={step.title}
                       className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -175,7 +175,7 @@ export default function ServicesSection() {
                         WebkitMaskComposite: 'source-in',
                       }}
                     />
-                    <img
+                    <img loading="lazy" decoding="async"
                       src="/services/mile-dark.webp"
                       alt={step.title}
                       className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
