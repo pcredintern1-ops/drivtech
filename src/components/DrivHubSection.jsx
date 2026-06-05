@@ -250,10 +250,10 @@ function OrbitDiagram() {
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#A3E635]/25 mb-2">
                 <IconMapPin size={20} className="text-[#65a30d]" stroke={2} />
               </span>
-              <p className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
+              <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
                 Bhiwandi Logistics Park
               </p>
-              <p className="text-xs sm:text-sm text-gray-600 mt-1 font-medium">
+              <p className="text-base sm:text-lg text-gray-600 mt-1 font-medium">
                 Bhiwandi, Maharashtra, India
               </p>
             </div>
@@ -289,7 +289,7 @@ export default function DrivHubSection() {
   return (
     <section
       id="hub"
-      className="relative py-10 sm:py-14 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#f6f7f4]"
+      className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-10 sm:pb-14 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-[#f6f7f4]"
     >
       <div
         className="absolute left-0 top-1/4 w-[min(520px,55vw)] h-[420px] rounded-full pointer-events-none"
@@ -317,7 +317,7 @@ export default function DrivHubSection() {
             Operations Hub
             <span className="w-6 h-px bg-[#A3E635]/60" />
           </span>
-          <h2 className="font-heading font-black text-2xl sm:text-4xl md:text-5xl text-gray-900 leading-[1.1] mb-2">
+          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
             The DRIV <span className="gradient-text-orange">HUB</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -335,7 +335,7 @@ export default function DrivHubSection() {
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#65a30d]">
                     Campus layout
                   </p>
-                  <p className="text-base sm:text-lg font-semibold text-gray-900 mt-1 leading-snug">
+                  <p className="text-xs sm:text-sm font-semibold text-gray-900 mt-1 leading-snug">
                     Bhiwandi Logistics Park
                   </p>
                   <p className="text-base sm:text-lg text-gray-500 mt-0.5 leading-relaxed">

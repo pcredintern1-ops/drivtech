@@ -25,7 +25,7 @@ export default function AboutSection() {
 
   return (
     <section id="about"
-      className="theme-surface relative py-8 md:py-12 lg:py-14 overflow-hidden section-sep">
+      className="theme-surface relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-8 md:pb-12 lg:pb-14 overflow-hidden section-sep">
 
       {/* Lime glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
@@ -150,7 +150,7 @@ export default function AboutSection() {
                   <Icon size={22} className="text-[#65a30d]" strokeWidth={1.6}/>
                 </motion.div>
                 <div>
-                  <h4 className="font-heading font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
+                  <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-1 leading-snug xl:whitespace-nowrap">{title}</h4>
                   <p className="text-black text-base sm:text-lg leading-relaxed xl:max-w-[185px]">{desc}</p>
                 </div>
               </motion.div>

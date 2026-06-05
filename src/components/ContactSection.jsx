@@ -19,7 +19,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-white">
+    <section id="contact" className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
 
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
@@ -45,7 +45,7 @@ export default function ContactSection() {
           {/* Contact info */}
           <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
-            <h3 className="font-heading font-bold text-xl sm:text-2xl md:text-3xl text-gray-900 mb-5 md:mb-8">Contact Information</h3>
+            <h3 className="font-heading font-bold text-sm sm:text-base text-gray-900 mb-5 md:mb-8">Contact Information</h3>
             <div className="space-y-5 mb-10">
               {[
                 { icon: IconMapPin, label: 'Location', value: '169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064' },
@@ -78,12 +78,12 @@ export default function ContactSection() {
                 <div className="w-14 h-14 rounded-2xl bg-[#A3E635]/12 flex items-center justify-center mb-5">
                   <IconSend size={22} className="text-[#65a30d]" />
                 </div>
-                <h3 className="font-heading font-bold text-gray-900 text-xl mb-3">Message Received!</h3>
+                <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-3">Message Received!</h3>
                 <p className="text-black text-base sm:text-lg max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 space-y-5 shadow-sm">
-                <h3 className="font-heading font-bold text-gray-900 text-lg mb-2">Send an Inquiry</h3>
+                <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-2">Send an Inquiry</h3>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
@@ -98,15 +98,21 @@ export default function ContactSection() {
                     <input type="email" required value={form.email}
                       onChange={e => setForm({ ...form, email: e.target.value })}
                       placeholder="your@email.com"
+                      pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                      title="Enter a valid email address (e.g. name@example.com)"
                       className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#A3E635]/60 focus:bg-white transition-colors input-tech" />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">Phone</label>
-                  <input type="tel" value={form.phone}
-                    onChange={e => setForm({ ...form, phone: e.target.value })}
-                    placeholder="+91 XXXXX XXXXX"
+                  <input type="tel" inputMode="numeric" value={form.phone}
+                    onChange={e => setForm({ ...form, phone: e.target.value.replace(/\D/g, '').slice(0, 12) })}
+                    placeholder="91 XXXXXXXXXX"
+                    pattern="[0-9]{10,12}"
+                    minLength={10}
+                    maxLength={12}
+                    title="Enter 10 to 12 digits"
                     className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#A3E635]/60 focus:bg-white transition-colors input-tech" />
                 </div>
 

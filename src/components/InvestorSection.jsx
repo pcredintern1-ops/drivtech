@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { IconTrendingUp, IconShield, IconSettings, IconArrowRight, IconCircleCheck } from '@tabler/icons-react'
 
@@ -23,8 +24,9 @@ const features = [
 ]
 
 export default function InvestorSection() {
+  const navigate = useNavigate()
   return (
-    <section id="invest" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-white">
+    <section id="invest" className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
 
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
@@ -57,7 +59,7 @@ export default function InvestorSection() {
           </div>
           <div className="relative">
             <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#c2410c] text-xs font-bold uppercase tracking-wider mb-2">Service</span>
-            <h3 className="font-heading font-bold text-gray-900 text-lg mb-1.5">Asset Backed Investment</h3>
+            <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-1.5">Asset Backed Investment</h3>
             <p className="text-black text-base sm:text-lg leading-relaxed">A managed logistics investment model where DRIV handles fleet operations, maintenance, and deployment for investors. Your capital, our operations.</p>
           </div>
         </motion.div>
@@ -72,7 +74,7 @@ export default function InvestorSection() {
               whileHover={{ y: -8, scale: 1.03, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
               className="group bg-white border border-[#A3E635]/20 rounded-2xl p-5 md:p-6 text-center hover:border-[#A3E635]/45 hover:shadow-[0_8px_32px_rgba(163,230,53,0.10),0_2px_8px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow,background-color] duration-300 card-instant-pop">
               <div className="font-heading font-black text-4xl text-[#65a30d] mb-3">{w.val}</div>
-              <h4 className="font-heading font-bold text-gray-900 text-sm mb-2">{w.label}</h4>
+              <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-2">{w.label}</h4>
               <p className="text-black text-base sm:text-lg leading-relaxed">{w.desc}</p>
             </motion.div>
           ))}
@@ -83,7 +85,7 @@ export default function InvestorSection() {
 
           {/* How it works */}
           <div>
-            <h3 className="font-heading font-bold text-gray-900 text-xl md:text-2xl mb-8">How the Model Works</h3>
+            <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-8">How the Model Works</h3>
             <div className="space-y-4">
               {model.map((m, i) => {
                 const Icon = m.icon
@@ -97,7 +99,7 @@ export default function InvestorSection() {
                       <Icon size={18} className="text-[#65a30d]" />
                     </div>
                     <div>
-                      <h4 className="font-heading font-semibold text-gray-900 text-sm mb-1">{m.title}</h4>
+                      <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-1">{m.title}</h4>
                       <p className="text-black text-base sm:text-lg leading-relaxed">{m.desc}</p>
                     </div>
                   </motion.div>
@@ -110,7 +112,7 @@ export default function InvestorSection() {
           <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
             <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm">
-              <h3 className="font-heading font-bold text-gray-900 text-xl mb-2">What's Included</h3>
+              <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-2">What's Included</h3>
               <p className="text-black text-base sm:text-lg mb-7">Under the managed fleet investment model:</p>
               <div className="grid sm:grid-cols-1 gap-3 mb-8">
                 {features.map(f => (
@@ -127,8 +129,8 @@ export default function InvestorSection() {
                 </p>
               </div>
 
-              <a href="/investor-program"
-                onClick={e => { e.preventDefault(); const el=document.getElementById('contact'); if(el){const nav=document.querySelector('nav');const top=el.getBoundingClientRect().top+window.scrollY-(nav?nav.offsetHeight:80)-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'})} history.pushState(null,'','/investor-program') }}
+              <a href="/contact"
+                onClick={e => { e.preventDefault(); navigate('/contact') }}
                 className="btn-shine btn-glow-hover group inline-flex items-center gap-2 px-7 py-3.5 bg-[#A3E635] hover:bg-[#bef264] text-black font-bold rounded-xl text-sm glow-lime transition-all duration-300 hover:scale-105">
                 Express Investor Interest
                 <IconArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />

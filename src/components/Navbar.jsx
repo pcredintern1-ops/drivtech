@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IconMenu2, IconX, IconSun, IconMoon } from '@tabler/icons-react'
 import { navLinks } from '../data/content'
@@ -30,21 +31,13 @@ function ThemeToggle({ scrolled, className = '' }) {
   )
 }
 
-function scrollTo(href) {
-  const id = href.slice(1)            // '/home' → 'home'
-  const el = document.getElementById(id)
-  if (!el) return
-  const navEl = document.querySelector('nav')
-  const navHeight = navEl ? navEl.offsetHeight : 80
-  const top = el.getBoundingClientRect().top + window.scrollY - navHeight + 28
-  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
-  history.pushState(null, '', href)   // update URL to /home, /about, etc.
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState('/home')
+  const navigate = useNavigate()
+  const location = useLocation()
+  // Active link from current route ('/' counts as '/home')
+  const active = location.pathname === '/' ? '/home' : location.pathname
   const { theme } = useTheme()
   // Use the white logo whenever the bar is dark (scrolled) or dark theme is active
   const useWhiteLogo = scrolled || theme === 'dark'
@@ -56,72 +49,9 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scroll to section when page loads with a path like /about
-  useEffect(() => {
-    const path = window.location.pathname
-    if (path && path !== '/' && path !== '/home') {
-      setTimeout(() => {
-        const id = path.slice(1)
-        const el = document.getElementById(id)
-        if (!el) return
-        const navEl = document.querySelector('nav')
-        const navHeight = navEl ? navEl.offsetHeight : 80
-        const top = el.getBoundingClientRect().top + window.scrollY - navHeight + 28
-        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
-      }, 150)
-    }
-  }, [])
-
-  useEffect(() => {
-    const ids = navLinks.map(l => l.href.slice(1))
-    const OFFSET = 120 // px below viewport top where a section becomes "active"
-
-    // Cache absolute tops — walk offsetParent chain for accuracy
-    const getTop = (el) => {
-      let top = 0, node = el
-      while (node) { top += node.offsetTop; node = node.offsetParent }
-      return top
-    }
-
-    let tops = {}
-    const cacheTops = () => {
-      tops = {}
-      ids.forEach(id => {
-        const el = document.getElementById(id)
-        if (el) tops[id] = getTop(el)
-      })
-    }
-
-    const updateActive = () => {
-      const y = window.scrollY + OFFSET
-      let current = ids[0]
-      ids.forEach(id => {
-        if (tops[id] != null && y >= tops[id]) current = id
-      })
-      setActive(`/${current}`)
-    }
-
-    // Wait one frame so all sections are painted before measuring
-    const raf = requestAnimationFrame(() => {
-      cacheTops()
-      updateActive()
-    })
-
-    const onScroll = () => updateActive()
-    const onResize = () => { cacheTops(); updateActive() }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onResize, { passive: true })
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onResize)
-    }
-  }, [])
-
   const handleNav = (href) => {
     setOpen(false)
-    scrollTo(href)
+    navigate(href)
   }
 
   return (

@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import { IconMail, IconPhone, IconMapPin, IconMessage, IconArrowRight } from '@tabler/icons-react'
 
 export default function Footer() {
+  const navigate = useNavigate()
   return (
     <footer className="relative border-t border-white/8 bg-[#111827]">
       {/* Subtle dot pattern */}
@@ -51,17 +53,7 @@ export default function Footer() {
               ].map(l => (
                 <li key={l.href}>
                   <a href={l.href}
-                    onClick={e => {
-                      e.preventDefault()
-                      const id = l.href.slice(1)
-                      const el = document.getElementById(id)
-                      if (!el) return
-                      const nav = document.querySelector('nav')
-                      const navH = nav ? nav.offsetHeight : 80
-                      const top = el.getBoundingClientRect().top + window.scrollY - navH - 12
-                      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
-                      history.pushState(null, '', l.href)
-                    }}
+                    onClick={e => { e.preventDefault(); navigate(l.href) }}
                     className="group flex items-center gap-1 text-gray-400 hover:text-[#A3E635] text-sm sm:text-base transition-colors duration-300">
                     <span className="link-underline">{l.label}</span>
                     <IconArrowRight size={11} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
@@ -81,15 +73,15 @@ export default function Footer() {
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMail size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="mailto:contact@drivtech.in" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">contact@drivtech.in</a>
+                <a href="mailto:contact@drivtech.in" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">contact@drivtech.in</a>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconPhone size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="tel:+917738046786" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">+91 77380 46786</a>
+                <a href="tel:+917738046786" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">+91 77380 46786</a>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMessage size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="https://wa.me/917738046786" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">WhatsApp Us</a>
+                <a href="https://wa.me/917738046786" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">WhatsApp Us</a>
               </li>
             </ul>
           </div>

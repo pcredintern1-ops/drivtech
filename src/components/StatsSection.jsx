@@ -65,7 +65,7 @@ export default function StatsSection() {
                 <div className="font-heading font-black text-white text-2xl sm:text-3xl lg:text-4xl leading-none whitespace-nowrap">
                   <PanelCounter target={target} suffix={suffix} inView={statsInView} />
                 </div>
-                <div className="text-gray-500 text-xs sm:text-sm mt-1 font-medium leading-tight lg:whitespace-nowrap">{label}</div>
+                <div className="text-gray-500 text-base sm:text-lg mt-1 font-medium leading-tight lg:whitespace-nowrap">{label}</div>
               </div>
             </div>
             </Fragment>

@@ -11,27 +11,32 @@ const brands = [
   { name: 'Shadowfax',    domain: 'shadowfax.in',       initials: 'Sf', color: '#4f46e5' },
   { name: 'Porter',       domain: 'porter.in',          initials: 'P',  color: '#ff6b35' },
   { name: 'Rivigo',       domain: 'rivigo.com',         initials: 'R',  color: '#e63946' },
-  { name: 'Loadshare',    domain: 'loadshare.network',  initials: 'L',  color: '#2563eb' },
+  { name: 'Loadshare',    domain: 'loadshare.in',       initials: 'L',  color: '#2563eb' },
   { name: 'Ecom Express', domain: 'ecomexpress.in',     initials: 'EE', color: '#dc2626' },
   { name: 'XpressBees',   domain: 'xpressbees.com',     initials: 'XB', color: '#f97316' },
 ]
 
-const loopBrands = [...brands, ...brands]
+const half = Math.ceil(brands.length / 2)
+const rowOne = brands.slice(0, half)
+const rowTwo = brands.slice(half)
+const loopRowOne = [...rowOne, ...rowOne, ...rowOne]
+const loopRowTwo = [...rowTwo, ...rowTwo, ...rowTwo]
 
 function BrandLogo({ brand }) {
+  // Source chain: Google favicon (256) → Clearbit → Google favicon (128) → initials
+  const sources = [
+    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=256`,
+    `https://logo.clearbit.com/${brand.domain}?size=128`,
+    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`,
+  ]
   const [stage, setStage] = useState(0)
-  const [src, setSrc]     = useState(`https://logo.clearbit.com/${brand.domain}?size=80`)
+  const src = sources[stage]
 
   const next = () => {
-    if (stage === 0) {
-      setSrc(`https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`)
-      setStage(1)
-    } else {
-      setStage(2)
-    }
+    setStage(s => s + 1)
   }
 
-  if (stage === 2) {
+  if (stage >= sources.length) {
     return (
       <div
         className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-white text-[11px] font-black leading-none shrink-0"
@@ -95,14 +100,25 @@ export default function TrustBar() {
         </motion.div>
 
         <div
-          className="relative marquee-wrap py-5"
+          className="relative marquee-wrap py-3 flex flex-col gap-3 sm:gap-4"
           style={{ overflowX: 'clip' }}
         >
+          {/* Row 1 — scrolls left */}
           <div
             className="flex animate-marquee"
             style={{ willChange: 'transform', width: 'max-content' }}
           >
-            {loopBrands.map((brand, i) => (
+            {loopRowOne.map((brand, i) => (
+              <BrandCard key={i} brand={brand} />
+            ))}
+          </div>
+
+          {/* Row 2 — scrolls right */}
+          <div
+            className="flex animate-marquee-reverse"
+            style={{ willChange: 'transform', width: 'max-content' }}
+          >
+            {loopRowTwo.map((brand, i) => (
               <BrandCard key={i} brand={brand} />
             ))}
           </div>

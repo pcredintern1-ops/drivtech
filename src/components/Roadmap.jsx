@@ -56,7 +56,7 @@ export default function Roadmap() {
                         {isCurrent && <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />}
                         {isPast && <span className="opacity-60 ml-1">✓</span>}
                       </div>
-                      <h4 className="font-heading font-bold text-gray-900 text-xl mb-3">{item.title}</h4>
+                      <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-3">{item.title}</h4>
                       <p className="text-black text-base sm:text-lg leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
@@ -69,7 +69,7 @@ export default function Roadmap() {
                         {isCurrent && <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />}
                         {isPast && <span className="opacity-60 ml-1">✓</span>}
                       </div>
-                      <h4 className="font-heading font-bold text-gray-900 text-2xl mb-3">{item.title}</h4>
+                      <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-3">{item.title}</h4>
                       <p className="text-black text-base sm:text-lg leading-relaxed">{item.desc}</p>
                     </div>
                   </div>

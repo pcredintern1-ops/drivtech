@@ -47,7 +47,7 @@ const JOURNEY_STEPS = [
   {
     label: 'First Mile', step: '01', Icon: IconTruck,
     title: 'Collection & Dispatch',
-    desc: 'From origin warehouse or manufacturer to DRIV fleet hub. Vehicle dispatch, load consolidation, and first point pickup managed seamlessly.',
+    desc: 'Seamless transportation from manufacturing units to warehouses and distribution centres.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
     img: '/services/first-mile.webp',
@@ -55,7 +55,7 @@ const JOURNEY_STEPS = [
   {
     label: 'Middle Mile', step: '02', Icon: IconRoute,
     title: 'Hub-to-Hub Transit',
-    desc: 'Intercity linehaul movement across DRIV hubs with high volume corridor routing, load optimisation, and strict schedule adherence.',
+    desc: 'Efficient movement of goods between warehouses, retail outlets, and restaurants.',
     color: '#F97316', textColor: '#c2410c',
     bg: 'rgba(249,115,22,0.05)', border: 'rgba(249,115,22,0.20)',
     img: '/services/middle-mile.webp',
@@ -63,7 +63,7 @@ const JOURNEY_STEPS = [
   {
     label: 'Last Mile', step: '03', Icon: IconBike,
     title: 'Customer Delivery',
-    desc: 'From dark store to the end customer doorstep with fast, accurate, SLA backed delivery for B2B and B2C operations.',
+    desc: 'Reliable and timely delivery of goods directly to customers.',
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
     img: '/services/last-mile.webp',
@@ -87,7 +87,7 @@ export default function ServicesSection() {
 
   return (
     <section id="services"
-      className="relative pt-3 md:pt-5 pb-1 md:pb-2 overflow-x-clip section-sep bg-white">
+      className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-1 md:pb-2 overflow-x-clip section-sep bg-white">
 
       <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
@@ -194,7 +194,7 @@ export default function ServicesSection() {
 
                 {/* Text */}
                 <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1 flex-1 z-10">
-                  <h4 className="font-heading font-bold text-gray-900 text-base md:text-lg leading-tight mb-0.5">
+                  <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl leading-tight mb-0.5">
                     {step.title}
                   </h4>
                   <p className="text-black text-base sm:text-lg leading-relaxed">
@@ -305,7 +305,7 @@ export default function ServicesSection() {
                       style={{ background: `${svc.color}15`, border: `1px solid ${svc.color}30` }}>
                       <Icon size={15} style={{ color: svc.id === 1 || svc.id === 4 ? '#65a30d' : svc.color }} />
                     </div>
-                    <h3 className="font-heading font-bold text-gray-900 text-sm md:text-base leading-tight">
+                    <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl leading-tight">
                       {svc.title}
                     </h3>
                   </div>
