@@ -122,6 +122,11 @@ html.dark .bg-gray-900 { background-color: #060b14 !important; }
 /* Text */
 html.dark .text-gray-900 { color: var(--text-primary) !important; }
 html.dark .text-black     { color: var(--text-primary) !important; }
+/* Keep text black on lime-filled buttons in dark mode */
+html.dark a.bg-\[\#A3E635\],
+html.dark button.bg-\[\#A3E635\],
+html.dark .bg-\[\#A3E635\].text-black,
+html.dark .bg-\[\#A3E635\].text-black * { color: #000 !important; }
 html.dark .text-gray-700  { color: var(--text-secondary) !important; }
 html.dark .text-gray-600  { color: var(--text-secondary) !important; }
 html.dark .text-gray-500  { color: var(--text-muted) !important; }
