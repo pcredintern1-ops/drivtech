@@ -84,11 +84,7 @@ export default function TrustBar() {
 
       <div className="relative">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.75 }}
-          className="text-center mb-11 px-6"
-        >
+        <div className="text-center mb-11 px-6">
           <span className="flex items-center justify-center gap-3 text-[#A3E635] text-xs font-bold uppercase tracking-[0.3em] mb-3">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Trusted Partners<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
@@ -97,7 +93,7 @@ export default function TrustBar() {
               Powering India's <span className="gradient-text-lime-light">Fastest Growing Enterprises</span>
             </h3>
           </div>
-        </motion.div>
+        </div>
 
         <div
           className="relative marquee-wrap py-3 flex flex-col gap-3 sm:gap-4"

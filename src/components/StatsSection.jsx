@@ -44,12 +44,8 @@ export default function StatsSection() {
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* Stats */}
-        <motion.div
+        <div
           ref={statsRef}
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-wrap lg:flex-nowrap items-stretch justify-center">
           <div className="hidden lg:block w-px self-stretch bg-white/10 my-2"/>
           {stats.map(({ Icon, target, suffix, label }, i) => (
@@ -70,7 +66,7 @@ export default function StatsSection() {
             </div>
             </Fragment>
           ))}
-        </motion.div>
+        </div>
 
       </div>
     </section>

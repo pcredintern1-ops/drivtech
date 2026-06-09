@@ -317,9 +317,9 @@ export default function DrivHubSection() {
             Operations Hub
             <span className="w-6 h-px bg-[#A3E635]/60" />
           </span>
-          <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
+          <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
             The DRIV <span className="gradient-text-orange">HUB</span>
-          </h2>
+          </h1>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             India&apos;s fleet operations, unified at one address —{' '}
             <span className="font-semibold text-gray-800">Bhiwandi Logistics Park</span>, where

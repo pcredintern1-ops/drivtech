@@ -3,28 +3,28 @@
     id: 1,
     icon: 'truck',
     title: 'Enterprise Dedicated Fleet',
-    description: 'Dedicated fleet solutions for enterprise clients with operational reliability, trained drivers, and scalable vehicle deployment across all corridors.',
+    description: 'Dedicated vehicles and trained drivers assigned to your corridors — scheduled, monitored, and managed entirely by DRIV. Reliability built in, not bolted on.',
     color: '#A3E635',
   },
   {
     id: 2,
     icon: 'route',
     title: 'Linehaul Logistics',
-    description: 'Intercity and outstation cargo movement solutions for businesses requiring efficient long distance transportation at scale.',
+    description: 'Full-load and part-load intercity movement across key trade corridors. Built for businesses that ship at volume and need consistent transit times, every time.',
     color: '#F97316',
   },
   {
     id: 3,
     icon: 'zap',
     title: 'Adhoc Vehicle Support',
-    description: 'On demand fleet deployment support for peak operations, urgent movement, and enterprise backup requirements.',
+    description: 'Surge coverage, emergency dispatch, and peak-season backup fleet — deployed fast when your primary capacity runs short.',
     color: '#F97316',
   },
   {
     id: 4,
     icon: 'bike',
     title: 'Quick Commerce Riders',
-    description: 'Rider sourcing and delivery operations support for quick commerce and hyperlocal delivery businesses.',
+    description: 'Rider sourcing, onboarding, and day-to-day operations management for hyperlocal delivery businesses running last-mile at volume.',
     color: '#A3E635',
   },
 ]
@@ -70,11 +70,11 @@ export const whyDriv = [
 ]
 
 export const roadmap = [
-  { year: '2023', title: 'Founded', desc: 'DRIV launched operations in Mumbai with enterprise fleet partnerships.' },
-  { year: '2024', title: 'Enterprise Contracts', desc: 'Secured first tier enterprise contracts across quick commerce and retail sectors.' },
-  { year: '2025', title: 'Bhiwandi HUB', desc: 'DRIV HUB development: centralised operations command centre in Bhiwandi.' },
-  { year: '2026', title: 'EV Deployment', desc: 'Electric fleet integration for sustainable and green logistics operations.' },
-  { year: '2027', title: 'Multi City Expansion', desc: 'Pan India logistics network across 15+ cities with full HUB infrastructure.' },
+  { year: '2023', title: 'Founded', desc: 'Launched in Mumbai with our first enterprise fleet partnerships and a purpose-built operations team.' },
+  { year: '2024', title: 'Enterprise Contracts', desc: 'Secured anchor contracts across quick commerce and organised retail — proving the model under real operational load.' },
+  { year: '2025', title: 'Bhiwandi HUB', desc: 'Centralised operations command opens at Bhiwandi Logistics Park — fleet parking, dispatch, washing, and driver support under one roof.' },
+  { year: '2026', title: 'EV Deployment', desc: 'Phased integration of electric vehicles across urban corridors for cleaner, cost-efficient last-mile operations.' },
+  { year: '2027', title: 'Pan India Network', desc: 'Full national logistics coverage across 15+ cities, each anchored by a DRIV HUB and dedicated operations command.' },
 ]
 
 export const hubFeatures = [

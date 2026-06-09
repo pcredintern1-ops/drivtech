@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { IconArrowRight } from '@tabler/icons-react'
 
-/* ── Animation variants ── */
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.35 } } }
-const up = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } } }
+/* ── TextReveal handles all text — only badge + CTA buttons use Framer ── */
+const up = {
+  hidden: { opacity: 0, y: 30, scale: 0.8, filter: 'blur(10px)' },
+  show:   { opacity: 1, y: 0,  scale: 1,   filter: 'blur(0px)', transition: { duration: 0.8, ease: 'easeOut' } },
+}
 
 export default function Hero() {
   const navigate = useNavigate()
@@ -67,32 +69,22 @@ export default function Hero() {
       {/* ── Main content ── */}
       <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-24 sm:pt-28 md:pt-36 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
 
-        <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col">
+        <div className="flex flex-col">
 
-          {/* Badge */}
-          <motion.div variants={up} className="mb-4 flex justify-center xl:justify-start">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/70 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em] text-gray-700 shadow-sm">
-              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#A3E635] animate-pulse shrink-0" />
-              Enterprise Logistics Operations
-            </span>
-          </motion.div>
-
-          {/* H1 */}
-          <motion.h1 variants={up}
-            className="font-heading font-black text-[2.4rem] sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-[1.05] sm:leading-[1.0] tracking-tight mb-4 text-gray-900 text-center xl:text-left">
+          {/* H1 — TextReveal splits words */}
+          <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] leading-[1.08] mb-4 text-gray-900 text-center xl:text-left">
             <span className="block">Smarter <span className="gradient-text">Fleets.</span></span>
             <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime">Delivery.</span></span>
-          </motion.h1>
+          </h1>
 
-          {/* Description */}
-          <motion.p variants={up}
-            className="hero-desc-shadow text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
-            DRIV powers enterprise fleet operations, linehaul logistics, driver sourcing,
-            and scalable mobility solutions for modern businesses across India.
-          </motion.p>
+          {/* Description — TextReveal splits words */}
+          <p className="hero-desc-shadow text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+            Enterprise fleet operations, linehaul logistics, and driver management —
+            built for businesses that keep India's supply chain moving.
+          </p>
 
           {/* CTA buttons — desktop only inline */}
-          <motion.div variants={up} className="hidden xl:flex flex-row flex-wrap gap-3 items-start mt-5">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5, ease: 'easeOut' }} className="hidden xl:flex flex-row flex-wrap gap-3 items-start mt-5">
             <a href="/contact"
               onClick={e => { e.preventDefault(); navigate('/contact') }}
               className="btn-shine btn-glow-hover group flex items-center justify-center gap-2.5 px-7 py-3.5 bg-[#A3E635] hover:bg-[#bef264] text-black font-bold rounded-xl text-sm glow-lime transition-all duration-300 hover:scale-105">
@@ -111,12 +103,12 @@ export default function Hero() {
             </a>
           </motion.div>
 
-        </motion.div>
+        </div>
 
         {/* CTA buttons — mobile/tablet only, pinned to bottom */}
         <motion.div
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8, ease: [0.22,1,0.36,1] }}
+          transition={{ duration: 0.7, delay: 0.6, ease: 'easeOut' }}
           className="xl:hidden flex flex-col gap-3 w-full mt-auto">
           <a href="/contact"
             onClick={e => { e.preventDefault(); navigate('/contact') }}

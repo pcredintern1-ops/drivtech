@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import Seo from './components/Seo'
+import TextReveal from './components/TextReveal'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -18,10 +20,7 @@ function ScrollToTop() {
   return null
 }
 
-/* Footer on every page except Home */
 function ConditionalFooter() {
-  const { pathname } = useLocation()
-  if (pathname === '/' || pathname === '/home') return null
   return <Footer />
 }
 
@@ -29,6 +28,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <Seo />
+      <TextReveal />
       <Navbar />
       <main className="min-h-screen w-full overflow-x-clip">
         <Routes>

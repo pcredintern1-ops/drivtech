@@ -57,8 +57,8 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 lg:px-12 2xl:px-24 pt-2 sm:pt-3 md:pt-4 lg:pt-4"
       >

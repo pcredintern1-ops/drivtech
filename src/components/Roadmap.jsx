@@ -5,9 +5,7 @@ export default function Roadmap() {
   return (
     <section id="roadmap" className="relative py-12 md:py-20 lg:py-24 overflow-x-clip section-sep bg-[#ebecf0]">
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.7 }} className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-10 md:mb-14">
           <span className="flex items-center justify-center gap-3 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Growth Timeline<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
@@ -19,7 +17,7 @@ export default function Roadmap() {
           <p className="text-black text-base sm:text-lg max-w-lg mx-auto">
             From Mumbai operations to a national logistics infrastructure.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
           <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block"
@@ -37,8 +35,7 @@ export default function Roadmap() {
 
               return (
                 <motion.div key={item.year}
-                  initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.05 }}
                   transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                   className="relative flex md:items-center">

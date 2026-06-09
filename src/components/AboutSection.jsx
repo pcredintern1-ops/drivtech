@@ -3,16 +3,14 @@ import { motion } from 'framer-motion'
 import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
 
 /* ── Variants ── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
+const wa = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.7, ease: 'easeOut' } },
 }
-const fadeFromLeft = {
-  hidden: { opacity: 0, x: -32 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
-}
-const stag      = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } }
-const stagCards = { hidden: {}, show: { transition: { staggerChildren: 0.18 } } }
+const fadeUp     = wa
+const fadeFromLeft = wa
+const stag      = { hidden: {}, show: { transition: { staggerChildren: 0.13 } } }
+const stagCards = { hidden: {}, show: { transition: { staggerChildren: 0.15 } } }
 
 /* ── Feature cards ── */
 const features = [
@@ -34,10 +32,7 @@ export default function AboutSection() {
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* ── Section label ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75 }}
-          className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-6 md:mb-8">
           <span className="inline-flex items-center gap-2.5 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em]">
             <span className="w-8 h-px bg-[#A3E635]/60"/>
             <span className="w-2 h-2 rounded-full bg-[#A3E635]"/>
@@ -45,41 +40,36 @@ export default function AboutSection() {
             <span className="w-2 h-2 rounded-full bg-[#A3E635]"/>
             <span className="w-8 h-px bg-[#A3E635]/60"/>
           </span>
-        </motion.div>
+        </div>
 
         {/* ── Main grid: LEFT text · RIGHT arrow ── */}
         <div className="grid lg:grid-cols-[38%_62%] gap-6 xl:gap-8 items-center">
 
           {/* LEFT: Text */}
-          <motion.div
-            variants={stag} initial="hidden"
-            whileInView="show" viewport={{ once: true, amount: 0.05 }}
-            className="flex flex-col items-start relative z-10">
+          <div className="flex flex-col items-start relative z-10">
 
-            {/* Heading + green accent line */}
-            <motion.div variants={fadeUp} className="w-full text-center lg:text-left mb-5 md:mb-6">
+            {/* Heading */}
+            <div className="w-full text-center lg:text-left mb-5 md:mb-6">
               <span className="inline-block text-center lg:text-left">
-                <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
+                <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
                   Mumbai's Premier<br/>
                   <span className="gradient-text">Enterprise Logistics</span>
-                </h2>
+                </h1>
               </span>
-            </motion.div>
+            </div>
 
-            <motion.p variants={fadeUp}
-              className="text-black text-base sm:text-lg leading-relaxed mb-3">
-              DRIV is a Mumbai based logistics and fleet operations company focused on{' '}
-              <span className="text-gray-900 font-semibold">enterprise transportation</span>,
-              linehaul movement, adhoc fleet support, and driver management solutions.
-            </motion.p>
+            <p className="text-black text-base sm:text-lg leading-relaxed mb-3">
+              DRIV is a Mumbai-based fleet operations and logistics company built for{' '}
+              <span className="text-gray-900 font-semibold">enterprise clients</span>.
+              We manage dedicated transportation, linehaul movement, on-demand fleet deployment, and end-to-end driver operations.
+            </p>
 
-            <motion.p variants={fadeUp}
-              className="text-black text-base sm:text-lg leading-relaxed mb-6 md:mb-8">
-              Founded in 2023, we're building a scalable logistics ecosystem designed to support
-              modern supply chains, quick commerce operations, and future ready mobility infrastructure.
-            </motion.p>
+            <p className="text-black text-base sm:text-lg leading-relaxed mb-6 md:mb-8">
+              Founded in 2023, we're building India's logistics backbone — serving quick commerce operators,
+              enterprise supply chains, and the businesses powering India's fastest-growing cities.
+            </p>
 
-          </motion.div>
+          </div>
 
           {/* RIGHT: Network image */}
           <div

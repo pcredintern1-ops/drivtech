@@ -96,21 +96,14 @@ export default function ServicesSection() {
 
         {/* ── Header ── */}
         <div className="mb-4 md:mb-6 text-center">
-          <motion.span
-            initial={{ opacity: 0, y: -10 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.7 }}
-            className="flex items-center justify-center gap-2 text-[#65a30d] text-xs font-bold
-                       uppercase tracking-[0.3em] mb-2">
+          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-xs font-bold uppercase tracking-[0.3em] mb-2">
             <span className="w-6 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />What We Do<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-6 h-px bg-[#A3E635]/60" />
-          </motion.span>
-          <motion.div
-            initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.65, delay: 0.12 }}
-            className="w-fit mx-auto">
-            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
+          </span>
+          <div className="w-fit mx-auto">
+            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
               Logistics Solutions <span className="gradient-text">Built for Enterprise</span>
-            </h2>
-          </motion.div>
+            </h1>
+          </div>
         </div>
 
         {/* ── 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
@@ -120,11 +113,11 @@ export default function ServicesSection() {
             return (
               <motion.div
                 key={step.label}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
                 viewport={{ once: true, amount: 0.05 }}
-                transition={{ duration: 0.65, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: 'easeOut' }}
                 className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
                 style={{
                   border: `1px solid ${step.border}`,
@@ -281,10 +274,10 @@ export default function ServicesSection() {
             return (
               <div key={svc.id} className="group rounded-2xl" {...tilt}>
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.05 }}
-                transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
                 className="relative bg-white border border-gray-200 rounded-2xl
                            group-hover:border-[#A3E635]/40 group-hover:shadow-[0_8px_32px_rgba(0,0,0,0.10),0_2px_8px_rgba(163,230,53,0.07)]
                            transition-[border-color,box-shadow] duration-300 overflow-hidden cursor-default h-full card-instant-pop">

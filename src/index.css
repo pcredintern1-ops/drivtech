@@ -36,7 +36,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--bg-page);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -77,7 +77,12 @@ html.vt-active body { pointer-events: none; }
 }
 
 #root { width: 100%; min-height: 100vh; }
-h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', sans-serif; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Urbanist', sans-serif; }
+
+/* Tailwind v4 — makes font-heading utility class use Urbanist */
+@theme {
+  --font-heading: 'Urbanist', sans-serif;
+}
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
@@ -457,4 +462,18 @@ html.dark .bg-white\/95 { background-color: rgba(17,24,38,0.92) !important; }
 .input-tech { transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important; }
 .input-tech:focus {
   box-shadow: 0 0 0 3px rgba(163,230,53,0.13), 0 1px 4px rgba(0,0,0,0.06) !important;
+}
+
+/* ── Word-appear: blur fade, CSS-scheduled stagger, will-change pre-promotes layers ── */
+@keyframes word-appear {
+  from { opacity: 0; filter: blur(4px); }
+  to   { opacity: 1; filter: blur(0);   }
+}
+/* Adding .wa-go to the parent triggers all child word spans via CSS animation-delay */
+.wa-go [data-wa-i] {
+  animation: word-appear 0.65s ease-out both;
+  animation-delay: var(--wa-d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-go [data-wa-i] { animation: none !important; opacity: 1 !important; filter: none !important; }
 }

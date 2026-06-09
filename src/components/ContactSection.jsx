@@ -24,27 +24,24 @@ export default function ContactSection() {
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75 }}
-          className="text-center mb-8 md:mb-12 lg:mb-16">
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
           <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Get In Touch<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
           <div className="w-fit mx-auto mb-4 md:mb-6">
-            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
+            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
               Let's Build Something <span className="gradient-text">Together</span>
-            </h2>
+            </h1>
           </div>
           <p className="text-black text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Whether you're an enterprise client, investor, driver partner, or vendor, we'd love to hear from you.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-16">
 
           {/* Contact info */}
-          <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
+          <div>
             <h3 className="font-heading font-bold text-sm sm:text-base text-gray-900 mb-5 md:mb-8">Contact Information</h3>
             <div className="space-y-5 mb-10">
               {[
@@ -68,11 +65,10 @@ export default function ContactSection() {
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Form */}
-          <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.14 }}>
+          <div>
             {submitted ? (
               <div className="bg-white border border-[#A3E635]/25 rounded-3xl p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px] shadow-sm">
                 <div className="w-14 h-14 rounded-2xl bg-[#A3E635]/12 flex items-center justify-center mb-5">
@@ -142,7 +138,7 @@ export default function ContactSection() {
                 </button>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

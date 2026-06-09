@@ -31,27 +31,24 @@ export default function InvestorSection() {
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75 }}
-          className="text-center mb-8 md:mb-12 lg:mb-16">
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
           <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Investor Program<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
           <div className="w-fit mx-auto mb-4 md:mb-6">
-            <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
+            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
               Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
-            </h2>
+            </h1>
           </div>
           <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             DRIV offers an asset backed fleet investment model for individuals and partners
             looking to participate in the growing logistics and mobility sector.
           </p>
-        </motion.div>
+        </div>
 
         {/* Asset-backed highlight */}
-        <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="group relative bg-white border border-[#F97316]/20 rounded-2xl p-5 md:p-6 mb-10 flex gap-5 items-start hover:border-[#F97316]/45 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] transition-all duration-300 overflow-hidden">
+        <div
+          className="group relative bg-white border border-[#F97316]//20 rounded-2xl p-5 md:p-6 mb-10 flex gap-5 items-start hover:border-[#F97316]/45 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] transition-all duration-300 overflow-hidden">
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
             style={{ background: 'radial-gradient(circle at 0% 50%, rgba(249,115,22,0.04) 0%, transparent 60%)' }} />
           <div className="w-12 h-12 rounded-2xl bg-[#F97316]/10 border border-[#F97316]/20 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#F97316]/18 transition-all duration-300 relative">
@@ -62,15 +59,14 @@ export default function InvestorSection() {
             <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-1.5">Asset Backed Investment</h3>
             <p className="text-black text-base sm:text-lg leading-relaxed">A managed logistics investment model where DRIV handles fleet operations, maintenance, and deployment for investors. Your capital, our operations.</p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Why invest — 3 highlight cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-5 mb-8 md:mb-12">
           {whyInvest.map((w, i) => (
             <motion.div key={w.label}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.65, delay: i * 0.11, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -8, scale: 1.03, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
               className="group bg-white border border-[#A3E635]/20 rounded-2xl p-5 md:p-6 text-center hover:border-[#A3E635]/45 hover:shadow-[0_8px_32px_rgba(163,230,53,0.10),0_2px_8px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow,background-color] duration-300 card-instant-pop">
               <div className="font-heading font-black text-4xl text-[#65a30d] mb-3">{w.val}</div>
@@ -91,8 +87,8 @@ export default function InvestorSection() {
                 const Icon = m.icon
                 return (
                   <motion.div key={m.title}
-                    initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.65, delay: i * 0.11 }}
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.6, delay: i * 0.1 }}
                     whileHover={{ x: 4, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
                     className="group bg-white border border-[#A3E635]/18 rounded-2xl p-5 flex gap-4 hover:border-[#A3E635]/40 hover:shadow-[0_4px_20px_rgba(163,230,53,0.08)] transition-[border-color,box-shadow,background-color] duration-300 card-instant-pop">
                     <div className="w-11 h-11 rounded-xl bg-[#A3E635]/10 border border-[#A3E635]/20 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#A3E635]/20 group-hover:border-[#A3E635]/40 transition-all duration-300">
@@ -109,8 +105,7 @@ export default function InvestorSection() {
           </div>
 
           {/* What's included + CTA */}
-          <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.05 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
+          <div>
             <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm">
               <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-2">What's Included</h3>
               <p className="text-black text-base sm:text-lg mb-7">Under the managed fleet investment model:</p>
@@ -136,7 +131,7 @@ export default function InvestorSection() {
                 <IconArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
