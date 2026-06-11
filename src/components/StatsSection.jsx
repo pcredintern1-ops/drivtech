@@ -23,7 +23,7 @@ function PanelCounter({ target, suffix, inView }) {
 
 const stats = [
   { Icon: IconTruck,    target: 150,   suffix: '+', label: 'Active Fleet'       },
-  { Icon: IconRoute,    target: 12000, suffix: '+', label: 'Trips Completed'    },
+  { Icon: IconRoute,    target: 20000, suffix: '+', label: 'Trips Completed'    },
   { Icon: IconBuilding, target: 25,    suffix: '+', label: 'Enterprise Clients' },
   { Icon: IconMapPin,   target: 2,     suffix: '+', label: 'Cities'             },
 ]

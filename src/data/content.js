@@ -31,7 +31,7 @@
 
 export const stats = [
   { value: 150, suffix: '+', label: 'Active Fleet', sublabel: 'Vehicles deployed' },
-  { value: 12000, suffix: '+', label: 'Trips Completed', sublabel: 'Successful deliveries' },
+  { value: 20000, suffix: '+', label: 'Trips Completed', sublabel: 'Successful deliveries' },
   { value: 25, suffix: '+', label: 'Enterprise Clients', sublabel: 'Businesses served' },
   { value: 2, suffix: '+', label: 'Operational Cities', sublabel: 'Mumbai & Kolkata' },
 ]
@@ -103,7 +103,6 @@ export const trustBrands = [
 
 export const navLinks = [
   { label: 'Home', href: '/home' },
-  { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'DRIV HUB', href: '/hub' },
   { label: 'Investor Program', href: '/invest' },

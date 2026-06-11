@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { IconBrandWhatsapp } from '@tabler/icons-react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Seo from './components/Seo'
@@ -44,6 +45,18 @@ export default function App() {
         </Routes>
       </main>
       <ConditionalFooter />
+
+      {/* Floating WhatsApp button */}
+      <a
+        href="https://wa.me/917738046786"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:bg-[#20bf5a] hover:scale-110 hover:shadow-[0_6px_28px_rgba(37,211,102,0.6)] transition-all duration-300"
+      >
+        <IconBrandWhatsapp size={26} className="text-white sm:hidden" />
+        <IconBrandWhatsapp size={30} className="text-white hidden sm:block" />
+      </a>
     </BrowserRouter>
   )
 }
