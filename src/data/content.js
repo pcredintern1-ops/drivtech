@@ -31,7 +31,7 @@
 
 export const stats = [
   { value: 150, suffix: '+', label: 'Active Fleet', sublabel: 'Vehicles deployed' },
-  { value: 20000, suffix: '+', label: 'Trips Completed', sublabel: 'Successful deliveries' },
+  { value: 20, suffix: 'Lakhs+', label: 'Trips Completed', sublabel: 'Successful deliveries' },
   { value: 25, suffix: '+', label: 'Enterprise Clients', sublabel: 'Businesses served' },
   { value: 2, suffix: '+', label: 'Operational Cities', sublabel: 'Mumbai & Kolkata' },
 ]

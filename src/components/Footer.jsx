@@ -45,7 +45,6 @@ export default function Footer() {
             <ul className="space-y-3 sm:space-y-4">
               {[
                 { label: 'Home', href: '/home' },
-                { label: 'About', href: '/about' },
                 { label: 'Services', href: '/services' },
                 { label: 'DRIV HUB', href: '/hub' },
                 { label: 'Investor Program', href: '/invest' },

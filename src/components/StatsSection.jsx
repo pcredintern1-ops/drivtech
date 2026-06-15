@@ -23,7 +23,7 @@ function PanelCounter({ target, suffix, inView }) {
 
 const stats = [
   { Icon: IconTruck,    target: 150,   suffix: '+', label: 'Active Fleet'       },
-  { Icon: IconRoute,    target: 20000, suffix: '+', label: 'Trips Completed'    },
+  { Icon: IconRoute,    target: 20,    suffix: 'Lakhs+', label: 'Trips Completed'    },
   { Icon: IconBuilding, target: 25,    suffix: '+', label: 'Enterprise Clients' },
   { Icon: IconMapPin,   target: 2,     suffix: '+', label: 'Cities'             },
 ]
@@ -47,10 +47,9 @@ export default function StatsSection() {
         <div
           ref={statsRef}
           className="flex flex-wrap lg:flex-nowrap items-stretch justify-center">
-          <div className="hidden lg:block w-px self-stretch bg-white/10 my-2"/>
           {stats.map(({ Icon, target, suffix, label }, i) => (
             <Fragment key={label}>
-              {i > 0 && <div className="hidden lg:block w-px self-stretch bg-white/10 my-2"/>}
+
               <div
               className="flex items-center justify-start lg:justify-start gap-3 lg:gap-3 pl-4 pr-1 sm:pl-16 md:pl-24 lg:pl-16 lg:pr-2 py-6 sm:py-8 flex-1 min-w-[50%] lg:min-w-0">
               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0"

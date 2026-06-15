@@ -67,7 +67,7 @@ export default function Hero() {
       }} />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-24 sm:pt-28 md:pt-36 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
+      <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-28 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
 
         <div className="flex flex-col">
 
@@ -79,8 +79,8 @@ export default function Hero() {
 
           {/* Description — TextReveal splits words */}
           <p className="hero-desc-shadow text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
-            Enterprise fleet operations, linehaul logistics, and driver management —
-            built for businesses that keep India's supply chain moving.
+            Enterprise fleet operations, linehaul logistics, and driver management.
+            Built for businesses that keep India's supply chain moving.
           </p>
 
           {/* CTA buttons — desktop only inline */}

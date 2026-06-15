@@ -289,7 +289,7 @@ export default function DrivHubSection() {
   return (
     <section
       id="hub"
-      className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-10 sm:pb-14 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-[#f6f7f4]"
+      className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-10 sm:pb-14 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-[#f6f7f4]"
     >
       <div
         className="absolute left-0 top-1/4 w-[min(520px,55vw)] h-[420px] rounded-full pointer-events-none"
@@ -310,12 +310,10 @@ export default function DrivHubSection() {
         }}
       />
 
-      <div className="relative w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 2xl:px-24">
-        <div className="text-center mb-8 sm:mb-10">
-          <span className="inline-flex items-center gap-2 text-[#65a30d] text-xs sm:text-sm font-bold uppercase tracking-[0.25em] mb-3">
-            <span className="w-6 h-px bg-[#A3E635]/60" />
-            Operations Hub
-            <span className="w-6 h-px bg-[#A3E635]/60" />
+      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
+          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
+            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Operations Hub<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
           <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
             The DRIV <span className="gradient-text-orange">HUB</span>

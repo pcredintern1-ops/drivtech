@@ -19,13 +19,13 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
+    <section id="contact" className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
 
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* Header */}
         <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-6">
+          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Get In Touch<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
           <div className="w-fit mx-auto mb-4 md:mb-6">

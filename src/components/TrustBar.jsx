@@ -85,7 +85,7 @@ export default function TrustBar() {
       <div className="relative">
         {/* Header */}
         <div className="text-center mb-11 px-6">
-          <span className="flex items-center justify-center gap-3 text-[#A3E635] text-xs font-bold uppercase tracking-[0.3em] mb-3">
+          <span className="flex items-center justify-center gap-3 text-[#A3E635] text-sm font-bold uppercase tracking-[0.3em] mb-3">
             <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Trusted Partners<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
           <div className="w-fit mx-auto mt-3">

@@ -23,7 +23,7 @@ export default function AboutSection() {
 
   return (
     <section id="about"
-      className="theme-surface relative pt-24 sm:pt-26 md:pt-28 lg:pt-32 pb-8 md:pb-12 lg:pb-14 overflow-hidden section-sep">
+      className="theme-surface relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-8 md:pb-12 lg:pb-14 overflow-hidden section-sep">
 
       {/* Lime glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
@@ -32,13 +32,9 @@ export default function AboutSection() {
       <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
 
         {/* ── Section label ── */}
-        <div className="text-center mb-6 md:mb-8">
-          <span className="inline-flex items-center gap-2.5 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em]">
-            <span className="w-8 h-px bg-[#A3E635]/60"/>
-            <span className="w-2 h-2 rounded-full bg-[#A3E635]"/>
-            About DRIV
-            <span className="w-2 h-2 rounded-full bg-[#A3E635]"/>
-            <span className="w-8 h-px bg-[#A3E635]/60"/>
+        <div className="text-center mb-8 md:mb-12 lg:mb-16">
+          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
+            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />About DRIV<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
           </span>
         </div>
 
@@ -52,8 +48,8 @@ export default function AboutSection() {
             <div className="w-full text-center lg:text-left mb-5 md:mb-6">
               <span className="inline-block text-center lg:text-left">
                 <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
-                  Mumbai's Premier<br/>
-                  <span className="gradient-text">Enterprise Logistics</span>
+                  Powering Enterprise<br/>
+                  <span className="gradient-text">Logistics End-to-End</span>
                 </h1>
               </span>
             </div>
@@ -65,7 +61,7 @@ export default function AboutSection() {
             </p>
 
             <p className="text-black text-base sm:text-lg leading-relaxed mb-6 md:mb-8">
-              Founded in 2023, we're building India's logistics backbone — serving quick commerce operators,
+              Founded in 2023, we're building India's logistics backbone. Serving quick commerce operators,
               enterprise supply chains, and the businesses powering India's fastest-growing cities.
             </p>
 
