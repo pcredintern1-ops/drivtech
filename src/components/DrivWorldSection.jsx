@@ -18,9 +18,9 @@ gsap.registerPlugin(ScrollTrigger)
 // Road runs from 20% to 28% from bottom (8% thick).
 // Vehicle bottom = 28% = road top → vehicle sits ON road surface.
 // Buildings anchor at 28% and rise 63% up.
-const GROUND = 28   // ground plane (road top / building base)
-const ROAD_B = 20   // road bottom edge
-const ROAD_H = 8    // road height
+const GROUND = 15  // ground plane (road top / building base)
+const ROAD_B = 10   // road bottom edge
+const ROAD_H = 8  // road height
 
 /* ─── Zone data ──────────────────────────────────────────────────────────── */
 const ZONES = [
@@ -74,10 +74,12 @@ const ROUTE_STYLE = `
 `
 
 /* ─── ZoneScene ──────────────────────────────────────────────────────────── */
-function ZoneScene({ zone, status, isDark }) {
+function ZoneScene({ zone, status, isDark, scrollProgress, activeZone }) {
   const c = zone.color
   const gr = zone.glowRgb
   const isActive = status === 'current'
+  const zoneProgress = activeZone - zone.index
+  const translateY = zoneProgress * -35
 
   /* vehicle dimensions — linehaul truck biggest, scooty smallest */
   const vW = zone.id === 'linehaul' ? 'clamp(190px, 28vw, 410px)'
@@ -95,11 +97,9 @@ function ZoneScene({ zone, status, isDark }) {
            current  → in place, fully visible
            next     → parked just below the viewport, waiting to rise in
            prev     → already slid out above the viewport                */
-        transform: status === 'current' ? 'translateY(0)'
-          : status === 'prev' ? 'translateY(-100%)'
-            : 'translateY(100%)',
-        opacity: isActive ? 1 : 0,
-        transition: 'transform 0.7s cubic-bezier(0.16,1,0.3,1), opacity 0.55s ease',
+        transform: `translateY(${translateY}%)`,
+        opacity: Math.max(0, 1 - Math.abs(zoneProgress) * 0.6),
+        transition: 'transform 0.18s linear, opacity 0.18s linear',
         zIndex: isActive ? 2 : 1,
         pointerEvents: isActive ? 'auto' : 'none',
         willChange: 'transform, opacity',
@@ -339,64 +339,7 @@ function ZoneScene({ zone, status, isDark }) {
             />
           </div>
 
-          {/* ── 5 · Content — title & description ───────────────────────────── */}
 
-          <div
-            className="absolute z-40 pointer-events-none
-    left-3 right-3 bottom-[30%]
-    sm:left-1/2 sm:right-auto sm:bottom-auto sm:top-[17%]
-    sm:-translate-x-1/2 sm:w-[min(50%,460px)] sm:text-center"
-          >
-            <AnimatePresence mode="wait">
-              {isActive && (
-                <motion.div
-                  key={zone.id}
-                  initial={{
-                    y: -80,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    y: 0,
-                    opacity: 1,
-                  }}
-                  exit={{
-                    y: -80,
-                    opacity: 0,
-                  }}
-                  transition={{
-                    duration: 0.7,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-heading, inherit)',
-                      fontWeight: 800,
-                      fontSize: 'clamp(15px, 1.7vw, 21px)',
-                      lineHeight: 1.2,
-                      letterSpacing: '-0.01em',
-                      color: isDark ? '#ffffff' : '#0f172a',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    {zone.title}
-                  </h3>
-
-                  <p
-                    style={{
-                      fontSize: 'clamp(11px, 0.95vw, 13px)',
-                      lineHeight: 1.68,
-                      color: isDark
-                        ? 'rgba(255,255,255,0.52)'
-                        : 'rgba(15,23,42,0.56)',
-                    }}
-                  >
-                    {zone.desc}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
           {/* ── 6 · Edge vignettes (zone separation) ────────────────────────── */}
           <div className="absolute inset-y-0 left-0 pointer-events-none" style={{
             width: '5.5%', zIndex: 45,
@@ -432,6 +375,7 @@ function ZoneScene({ zone, status, isDark }) {
 export default function DrivWorldSection() {
   const viewportRef = useRef(null)
   const [activeZone, setActiveZone] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [isDark, setIsDark] = useState(false)
 
   /* ── Theme detection ─────────────────────────────────────────────────── */
@@ -463,14 +407,11 @@ export default function DrivWorldSection() {
         pinSpacing: true,
         start: 'top top',
         end: () => `+=${steps * window.innerHeight}`,
-        snap: {
-          snapTo: 1 / steps,
-          duration: 0.5,
-          ease: 'power1.inOut',
-        },
+        scrub: 0.35,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate(self) {
+          setScrollProgress(self.progress)
           const idx = Math.min(steps, Math.round(self.progress * steps))
           setActiveZone(idx)
         },
@@ -503,8 +444,72 @@ export default function DrivWorldSection() {
               zone={zone}
               status={i === activeZone ? 'current' : i < activeZone ? 'prev' : 'next'}
               isDark={isDark}
+              scrollProgress={scrollProgress}
+              activeZone={activeZone}
             />
           ))}
+        </div>
+
+        {/* FLOATING TEXT GOES HERE */}
+
+        <div
+          className="
+    absolute
+    inset-0
+    z-[999]
+    pointer-events-none
+    flex
+    items-start
+    justify-center
+    pt-[18vh]
+  "
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeZone}
+              initial={{
+                y: -80,
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                opacity: 1,
+              }}
+              exit={{
+                y: -40,
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="max-w-[460px] px-6 text-center"
+            >
+              <h3
+                style={{
+                  fontWeight: 800,
+                  fontSize: 'clamp(18px, 2vw, 28px)',
+                  lineHeight: 1.15,
+                  color: isDark ? '#fff' : '#0f172a',
+                  marginBottom: '12px',
+                }}
+              >
+                {ZONES[activeZone].title}
+              </h3>
+
+              <p
+                style={{
+                  fontSize: 'clamp(12px,1vw,14px)',
+                  lineHeight: 1.7,
+                  color: isDark
+                    ? 'rgba(255,255,255,0.65)'
+                    : 'rgba(15,23,42,0.65)',
+                }}
+              >
+                {ZONES[activeZone].desc}
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* ── Vertical progress rail — techy section indicator ────────── */}
