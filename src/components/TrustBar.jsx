@@ -1,19 +1,19 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 
+/* Verified, locally-hosted logos (sourced from Wikimedia Commons, checked
+   against each brand's actual mark — see /public/brands/).
+   Westside & Zudio have no verified freely-licensed logo file available;
+   they render as a clean text/initials badge until a real asset is supplied. */
 const brands = [
-  { name: 'Zepto',        domain: 'zeptonow.com',       initials: 'Z',  color: '#8b5cf6' },
-  { name: 'Zomato',       domain: 'zomato.com',         initials: 'Zo', color: '#e23744' },
-  { name: 'Blinkit',      domain: 'blinkit.com',        initials: 'B',  color: '#f9c22e' },
-  { name: 'Swiggy',       domain: 'swiggy.com',         initials: 'Sw', color: '#fc8019' },
-  { name: 'Meesho',       domain: 'meesho.com',         initials: 'M',  color: '#9b2a8f' },
-  { name: 'Delhivery',    domain: 'delhivery.com',      initials: 'D',  color: '#d2232a' },
-  { name: 'Shadowfax',    domain: 'shadowfax.in',       initials: 'Sf', color: '#4f46e5' },
-  { name: 'Porter',       domain: 'porter.in',          initials: 'P',  color: '#ff6b35' },
-  { name: 'Rivigo',       domain: 'rivigo.com',         initials: 'R',  color: '#e63946' },
-  { name: 'Loadshare',    domain: 'loadshare.in',       initials: 'L',  color: '#2563eb' },
-  { name: 'Ecom Express', domain: 'ecomexpress.in',     initials: 'EE', color: '#dc2626' },
-  { name: 'XpressBees',   domain: 'xpressbees.com',     initials: 'XB', color: '#f97316' },
+  { name: 'Zepto',     logo: '/brands/zepto.svg',     initials: 'Z',  color: '#950EDB' },
+  { name: 'Amazon',    logo: '/brands/amazon.svg',    initials: 'A',  color: '#FF9900' },
+  { name: 'Flipkart',  logo: '/brands/flipkart.svg',  initials: 'F',  color: '#2874F0' },
+  { name: 'Blinkit',   logo: '/brands/blinkit.svg',   initials: 'B',  color: '#F8CB46' },
+  { name: 'DMart',     logo: '/brands/dmart.png',     initials: 'D',  color: '#F47820' },
+  { name: 'Meesho',    logo: '/brands/meesho.png',    initials: 'M',  color: '#5F0A87' },
+  { name: 'Westside',  logo: null,                    initials: 'W',  color: '#1f2937' },
+  { name: 'Zudio',     logo: null,                    initials: 'Zu', color: '#dc2626' },
+  { name: 'BigBasket', logo: '/brands/bigbasket.png', initials: 'BB', color: '#84BD00' },
 ]
 
 const half = Math.ceil(brands.length / 2)
@@ -23,20 +23,9 @@ const loopRowOne = [...rowOne, ...rowOne, ...rowOne]
 const loopRowTwo = [...rowTwo, ...rowTwo, ...rowTwo]
 
 function BrandLogo({ brand }) {
-  // Source chain: Google favicon (256) → Clearbit → Google favicon (128) → initials
-  const sources = [
-    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=256`,
-    `https://logo.clearbit.com/${brand.domain}?size=128`,
-    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`,
-  ]
-  const [stage, setStage] = useState(0)
-  const src = sources[stage]
-
-  const next = () => {
-    setStage(s => s + 1)
-  }
-
-  if (stage >= sources.length) {
+  // Verified local logo file. No logo asset yet → clean initials badge
+  // (never a guessed/unverified image).
+  if (!brand.logo) {
     return (
       <div
         className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-white text-[11px] font-black leading-none shrink-0"
@@ -48,12 +37,13 @@ function BrandLogo({ brand }) {
   }
 
   return (
-    <img
-      src={src}
-      alt={brand.name}
-      onError={next}
-      className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-xl shrink-0"
-    />
+    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white flex items-center justify-center shrink-0 p-1.5">
+      <img
+        src={brand.logo}
+        alt={brand.name}
+        className="w-full h-full object-contain"
+      />
+    </div>
   )
 }
 

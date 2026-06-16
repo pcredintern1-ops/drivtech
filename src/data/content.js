@@ -98,7 +98,7 @@ export const openRoles = [
 ]
 
 export const trustBrands = [
-  'Zepto', 'BigBasket', 'Blinkit', 'DMart', 'Meesho', 'Zudio',
+  'Zepto', 'Amazon', 'Flipkart', 'Blinkit', 'DMart', 'Meesho', 'Westside', 'Zudio', 'BigBasket',
 ]
 
 export const navLinks = [

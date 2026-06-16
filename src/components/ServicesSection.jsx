@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { IconTruck, IconRoute, IconBike } from '@tabler/icons-react'
 import DrivWorldSection from './DrivWorldSection'
 
@@ -30,6 +31,183 @@ const JOURNEY_STEPS = [
   },
 ]
 
+/* ── Shared card body (used by both desktop grid + mobile carousel) ── */
+function JourneyCardBody({ step }) {
+  const StepIcon = step.Icon
+  return (
+    <>
+      {/* Hover radial glow */}
+      <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `radial-gradient(circle at 50% 30%, ${step.color}14 0%, transparent 65%)` }} />
+
+      {/* Header row */}
+      <div className="relative flex items-center gap-2 px-5 pt-5 z-10">
+        <span className="font-black text-xs sm:text-sm uppercase tracking-[0.14em] text-gray-700">
+          {step.label}
+        </span>
+      </div>
+
+      {/* Image area with floating icon badge */}
+      <div className="relative px-5 pt-3 z-10">
+        {/* Floating icon badge */}
+        <div className="absolute left-7 top-5 z-20 flex items-center justify-center w-12 h-12 sm:w-[72px] sm:h-[72px] xl:w-16 xl:h-16 rounded-2xl backdrop-blur-sm
+                        transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3"
+          style={{ background: `${step.color}1f`, border: `1.5px solid ${step.color}45` }}>
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ boxShadow: `0 0 20px ${step.color}55, inset 0 0 12px ${step.color}25` }} />
+          <StepIcon style={{ color: step.color }} className="relative z-10 w-6 h-6 sm:w-9 sm:h-9 xl:w-8 xl:h-8" />
+        </div>
+
+        {/* Scene image (light + dark) */}
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <img loading="lazy" decoding="async"
+            src={step.label === 'First Mile' ? '/services/first-mile.webp' : '/services/mile-light.webp'}
+            alt={step.title}
+            className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            draggable={false}
+            style={{
+              transform: 'scale(1.03)',
+              transformOrigin: '68% 38%',
+              maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
+          />
+          <img loading="lazy" decoding="async"
+            src={step.label === 'First Mile' ? '/services/first-mile-dark.webp' : '/services/mile-dark.webp'}
+            alt={step.title}
+            className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            draggable={false}
+            style={{
+              transform: 'scale(1.03)',
+              transformOrigin: '68% 38%',
+              maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Text */}
+      <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1 flex-1 z-10">
+        <p className="text-black text-base sm:text-lg leading-relaxed">
+          {step.desc}
+        </p>
+        {/* Progress dot line */}
+        <div className="relative flex items-center mt-auto pt-4 h-2">
+          <div className="h-px w-full rounded-full" style={{ background: `${step.color}40` }} />
+          <div className="absolute left-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300 group-hover:scale-125"
+            style={{ transform: 'translateX(-50%)', background: step.color, boxShadow: `0 0 8px ${step.color}` }} />
+        </div>
+      </div>
+
+      {/* Bottom glow line — expands on hover */}
+      <div className="absolute bottom-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        style={{ background: `linear-gradient(90deg, transparent 10%, ${step.color} 50%, transparent 90%)`,
+                 boxShadow: `0 0 10px ${step.color}80` }} />
+    </>
+  )
+}
+
+const slideVariants = {
+  enter: (dir) => ({ x: dir > 0 ? 48 : -48, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir) => ({ x: dir > 0 ? -48 : 48, opacity: 0 }),
+}
+
+/* ── Mobile carousel: tabs + arrows + slide + dots ── */
+function JourneyCarousel() {
+  const [active, setActive] = useState(0)
+  const [dir, setDir] = useState(1)
+
+  const goTo = (idx) => {
+    setDir(idx > active ? 1 : idx < active ? -1 : dir)
+    setActive(idx)
+  }
+  const next = () => goTo((active + 1) % JOURNEY_STEPS.length)
+  const prev = () => goTo((active - 1 + JOURNEY_STEPS.length) % JOURNEY_STEPS.length)
+
+  const current = JOURNEY_STEPS[active]
+
+  return (
+    <div className="xl:hidden mb-5">
+
+      {/* Tabs */}
+      <div className="flex items-center justify-center gap-2 mb-4">
+        {JOURNEY_STEPS.map((step, i) => (
+          <button
+            key={step.label}
+            onClick={() => goTo(i)}
+            className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-black uppercase tracking-[0.14em] transition-all duration-300"
+            style={{
+              background: i === active ? `${step.color}1f` : 'transparent',
+              border: `1px solid ${i === active ? step.color : 'rgba(0,0,0,0.14)'}`,
+              color: i === active ? step.textColor : '#6b7280',
+            }}
+          >
+            {step.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Swipeable card — finger drag left/right to navigate, bigger card, widens further on tablet */}
+      <div className="relative max-w-[420px] sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto">
+        <div className="overflow-hidden relative">
+          <AnimatePresence mode="wait" custom={dir} initial={false}>
+            <motion.div
+              key={current.label}
+              custom={dir}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              dragTransition={{ bounceStiffness: 420, bounceDamping: 32 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -60 || info.velocity.x < -500) next()
+                else if (info.offset.x > 60 || info.velocity.x > 500) prev()
+              }}
+              className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-grab active:cursor-grabbing"
+              style={{
+                border: `1px solid ${current.border}`,
+                background: current.bg,
+                backgroundClip: 'padding-box',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
+                touchAction: 'pan-y',
+              }}
+            >
+              <JourneyCardBody step={current} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Dots */}
+      <div className="flex items-center justify-center gap-2 mt-4">
+        {JOURNEY_STEPS.map((step, i) => (
+          <button
+            key={step.label}
+            onClick={() => goTo(i)}
+            aria-label={`Go to ${step.label}`}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === active ? 18 : 7,
+              height: 7,
+              background: i === active ? step.color : '#d1d5db',
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function ServicesSection() {
   return (
     <section id="services"
@@ -52,101 +230,30 @@ export default function ServicesSection() {
           </div>
         </div>
 
-        {/* ── 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 md:mb-7">
-          {JOURNEY_STEPS.map((step, i) => {
-            const StepIcon = step.Icon
-            return (
-              <motion.div
-                key={step.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
-                viewport={{ once: true, amount: 0.05 }}
-                transition={{ duration: 0.6, delay: i * 0.12, ease: 'easeOut' }}
-                className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
-                style={{
-                  border: `1px solid ${step.border}`,
-                  background: step.bg,
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
-                  transition: 'box-shadow 0.4s ease, border-color 0.4s ease',
-                }}>
+        {/* ── Mobile: carousel (tabs + arrows + slide + dots) ── */}
+        <JourneyCarousel />
 
-                {/* Hover radial glow */}
-                <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(circle at 50% 30%, ${step.color}14 0%, transparent 65%)` }} />
-
-                {/* Header row */}
-                <div className="relative flex items-center gap-2 px-5 pt-5 z-10">
-                  <span className="font-black text-xs sm:text-sm uppercase tracking-[0.14em] text-gray-700">
-                    {step.label}
-                  </span>
-                </div>
-
-                {/* Image area with floating icon badge */}
-                <div className="relative px-5 pt-3 z-10">
-                  {/* Floating icon badge */}
-                  <div className="absolute left-7 top-5 z-20 flex items-center justify-center w-16 h-16 rounded-2xl backdrop-blur-sm
-                                  transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3"
-                    style={{ background: `${step.color}1f`, border: `1.5px solid ${step.color}45` }}>
-                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ boxShadow: `0 0 20px ${step.color}55, inset 0 0 12px ${step.color}25` }} />
-                    <StepIcon size={32} style={{ color: step.color }} className="relative z-10" />
-                  </div>
-
-                  {/* Scene image (light + dark) */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img loading="lazy" decoding="async"
-                      src="/services/mile-light.webp"
-                      alt={step.title}
-                      className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      draggable={false}
-                      style={{
-                        transform: 'scale(1.08)',
-                        transformOrigin: '68% 38%',
-                        maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-                        maskComposite: 'intersect',
-                        WebkitMaskComposite: 'source-in',
-                      }}
-                    />
-                    <img loading="lazy" decoding="async"
-                      src="/services/mile-dark.webp"
-                      alt={step.title}
-                      className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      draggable={false}
-                      style={{
-                        transform: 'scale(1.08)',
-                        transformOrigin: '68% 38%',
-                        maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-                        maskComposite: 'intersect',
-                        WebkitMaskComposite: 'source-in',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Text */}
-                <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1 flex-1 z-10">
-                  <p className="text-black text-base sm:text-lg leading-relaxed">
-                    {step.desc}
-                  </p>
-                  {/* Progress dot line */}
-                  <div className="relative flex items-center mt-auto pt-4 h-2">
-                    <div className="h-px w-full rounded-full" style={{ background: `${step.color}40` }} />
-                    <div className="absolute left-1/2 w-2.5 h-2.5 rounded-full transition-all duration-300 group-hover:scale-125"
-                      style={{ transform: 'translateX(-50%)', background: step.color, boxShadow: `0 0 8px ${step.color}` }} />
-                  </div>
-                </div>
-
-                {/* Bottom glow line — expands on hover */}
-                <div className="absolute bottom-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                  style={{ background: `linear-gradient(90deg, transparent 10%, ${step.color} 50%, transparent 90%)`,
-                           boxShadow: `0 0 10px ${step.color}80` }} />
-              </motion.div>
-            )
-          })}
+        {/* ── Desktop only: 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
+        <div className="hidden xl:grid xl:grid-cols-3 gap-4 mb-5 md:mb-7">
+          {JOURNEY_STEPS.map((step, i) => (
+            <motion.div
+              key={step.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
+              viewport={{ once: true, amount: 0.05 }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: 'easeOut' }}
+              className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
+              style={{
+                border: `1px solid ${step.border}`,
+                background: step.bg,
+                backgroundClip: 'padding-box',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
+                transition: 'box-shadow 0.4s ease, border-color 0.4s ease',
+              }}>
+              <JourneyCardBody step={step} />
+            </motion.div>
+          ))}
         </div>
         <style>{`
           .journey-card:hover {
