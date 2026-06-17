@@ -28,41 +28,49 @@ const ZONES = [
     id: 'fleet', index: 0,
     Icon: IconTruck, color: '#A3E635', glowRgb: '163,230,53',
     title: 'Enterprise Dedicated Fleet',
-    desc: 'Dedicated vehicles and trained drivers assigned to your corridors — scheduled, monitored, and managed entirely by DRIV. Reliability built in, not bolted on.',
+    desc: 'Dedicated fleet solutions tailored to your business with reliable vehicles, drivers, and end-to-end operational support.',
     vehicle: '/vehicles/tata_ace.webp',
     fromBg: '/scenes/building-warehouse.webp', toBg: '/scenes/dispatch-hub.webp',
     from: 'Warehouse', to: 'Dark Store',
     vehicleDur: 5.5, vehicleDelay: 0,
+    /* TODO: replace with each service's own image (light + dark) */
+    img: '/services/service-card.png', imgDark: '/services/service-card.png',
   },
   {
     id: 'linehaul', index: 1,
     Icon: IconRoute, color: '#F97316', glowRgb: '249,115,22',
     title: 'Linehaul Logistics',
-    desc: 'Full-load and part-load intercity movement across key trade corridors. Built for businesses that ship at volume and need consistent transit times, every time.',
+    desc: 'Efficient intercity and hub-to-hub transportation designed for seamless long-distance freight movement.',
     vehicle: '/vehicles/truck.webp',
     fromBg: '/scenes/building-hub.webp', toBg: '/scenes/building-warehouse.webp',
     from: 'Mumbai', to: 'Pune',
     vehicleDur: 4.5, vehicleDelay: 1.2,
+    /* TODO: replace with each service's own image (light + dark) */
+    img: '/services/service-card.png', imgDark: '/services/service-card.png',
   },
   {
     id: 'adhoc', index: 2,
     Icon: IconBolt, color: '#F97316', glowRgb: '249,115,22',
     title: 'Adhoc Vehicle Support',
-    desc: 'Surge coverage, emergency dispatch, and peak-season backup fleet — deployed fast when your primary capacity runs short.',
+    desc: 'On-demand vehicle availability to handle urgent deliveries, peak demand, and temporary logistics requirements.',
     vehicle: '/vehicles/tata_tempo.webp',
     fromBg: '/scenes/building-hub.webp', toBg: '/scenes/building-warehouse.webp',
     from: 'DRIV Hub', to: 'On Demand',
     vehicleDur: 4.0, vehicleDelay: 0.7,
+    /* TODO: replace with each service's own image (light + dark) */
+    img: '/services/service-card.png', imgDark: '/services/service-card.png',
   },
   {
     id: 'quick', index: 3,
     Icon: IconBike, color: '#A3E635', glowRgb: '163,230,53',
     title: 'Quick Commerce Riders',
-    desc: 'Rider sourcing, onboarding, and day-to-day operations management for hyperlocal delivery businesses running last-mile at volume.',
+    desc: 'Fast and dependable rider network for hyperlocal, same-day, and instant deliveries.',
     vehicle: '/vehicles/scooty.webp',
     fromBg: '/scenes/dispatch-hub.webp', toBg: '/scenes/customer-house.webp',
     from: 'Dark Store', to: 'Doorstep',
     vehicleDur: 3.8, vehicleDelay: 0.3,
+    /* TODO: replace with each service's own image (light + dark) */
+    img: '/services/service-card.png', imgDark: '/services/service-card.png',
   },
 ]
 
@@ -74,299 +82,121 @@ const ROUTE_STYLE = `
 `
 
 /* ─── ZoneScene ──────────────────────────────────────────────────────────── */
-function ZoneScene({ zone, status, isDark, scrollProgress, activeZone }) {
-  const c = zone.color
-  const gr = zone.glowRgb
-  const isActive = status === 'current'
-  const zoneProgress = activeZone - zone.index
-  const translateY = zoneProgress * -35
+/* `pos` is the CONTINUOUS scroll position in zone-space (0 → ZONES.length-1).
+   Everything is derived from `offset = zone.index - pos`, so the motion tracks
+   the scrollbar 1:1 instead of snapping to a rounded active index — that's what
+   removes the "tap" feel and turns it into a real parallax.
+     offset > 0  → zone is still below  (upcoming) → card sits low, text high
+     offset = 0  → zone is centered     (active)
+     offset < 0  → zone has passed      (above)    → card sits high, text low
+   The card (rising from below) and the text (descending from above) move on
+   OPPOSITE axes and at DIFFERENT rates → parallax depth. Reverse scroll simply
+   runs the same maths backwards. */
+function ZoneScene({ zone, isDark, pos }) {
+  const offset = zone.index - pos
+  const dist = Math.abs(offset)
+  const cd = Math.min(dist, 1)                   // clamped distance for depth effects
 
-  /* vehicle dimensions — linehaul truck biggest, scooty smallest */
-  const vW = zone.id === 'linehaul' ? 'clamp(190px, 28vw, 410px)'
-    : zone.id === 'quick' ? 'clamp(120px, 17vw, 230px)'
-      : 'clamp(160px, 23vw, 340px)'
-  const vH = zone.id === 'linehaul' ? 'clamp(90px, 16vh, 210px)'
-    : zone.id === 'quick' ? 'clamp(85px, 17vh, 200px)'
-      : 'clamp(80px, 15vh, 195px)'
+  /* Eased crossfade — softer than linear, so cards "resolve" into focus */
+  const opacity = Math.max(0, 1 - cd * cd * (3 - 2 * cd))   // smoothstep
+
+  /* Card: rises from below + recedes in 3D — scales down, blurs out of
+     focus, and arrives TILTED (rotateZ), straightening to 0° as it locks. */
+  const cardY = offset * 56                      // vh — vertical travel
+  const cardScale = 1 - cd * 0.14                // shrinks with depth
+  const cardRot = offset * 14                    // deg — in-plane tilt → straight at centre
+  const cardBlur = cd * 4                         // px — depth-of-field
+
+  /* Text: descends from above, opposite axis + gentle scale/blur, and the
+     same tilt-to-straight (opposite lean to the card for a layered feel). */
+  const textY = -offset * 40                      // vh
+  const textScale = 1 - cd * 0.06
+  const textBlur = cd * 2.5
+  const textRot = offset * -16                     // deg — tilt that resolves to straight
+
+  const z = Math.round(100 - dist * 10)           // nearer zone overlaps on top
 
   return (
     <div
       className="absolute inset-0 select-none"
-      style={{
-        /* Discrete stacked overlay, not a continuous pan:
-           current  → in place, fully visible
-           next     → parked just below the viewport, waiting to rise in
-           prev     → already slid out above the viewport                */
-        transform: `translateY(${translateY}%)`,
-        opacity: Math.max(0, 1 - Math.abs(zoneProgress) * 0.6),
-        transition: 'transform 0.18s linear, opacity 0.18s linear',
-        zIndex: isActive ? 2 : 1,
-        pointerEvents: isActive ? 'auto' : 'none',
-        willChange: 'transform, opacity',
-      }}
+      style={{ zIndex: z, pointerEvents: dist < 0.5 ? 'auto' : 'none' }}
     >
-      {/* Inset padding — keeps the card off the viewport edges */}
-      <div className="absolute inset-0 p-3 sm:p-5 md:p-7 lg:p-9">
-        {/* The card itself — same internal layout, just framed and clipped */}
+      {/* Card layer — appears from below, recedes in 3D */}
+      <div
+        className="absolute inset-0 flex items-center justify-center px-4 pt-[38vh] sm:pt-[36vh]"
+        style={{
+          perspective: '1400px',
+          transform: `translate3d(0, ${cardY}vh, 0)`,
+          opacity,
+          willChange: 'transform, opacity',
+        }}
+      >
         <div
-          className="relative w-full h-full rounded-2xl sm:rounded-[28px] overflow-hidden"
+          className="relative w-[min(94%,920px)] aspect-[1857/847] rounded-2xl sm:rounded-[28px] overflow-hidden"
           style={{
+            transform: `rotate(${cardRot}deg) scale(${cardScale})`,
+            filter: cardBlur > 0.05 ? `blur(${cardBlur}px)` : 'none',
+            transformStyle: 'preserve-3d',
             border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.07)',
             boxShadow: isDark
               ? '0 24px 60px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.35)'
               : '0 20px 48px rgba(15,23,42,0.14), 0 4px 14px rgba(15,23,42,0.06)',
+            willChange: 'transform, filter',
           }}
         >
+          {/* Light + dark image — theme swap via global .about-img-* CSS.
+             Card aspect matches the image, so the full image shows uncropped. */}
+          <img
+            src={zone.img} alt={zone.title} draggable={false}
+            className="about-img-light absolute inset-0 w-full h-full object-cover"
+          />
+          <img
+            src={zone.imgDark} alt={zone.title} draggable={false}
+            className="about-img-dark absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
+      </div>
 
-          {/* ── 0 · Sky ─────────────────────────────────────────────────────── */}
-          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-            {/* Base sky */}
-            <div className="absolute inset-0" style={{
-              background: isDark
-                ? 'linear-gradient(180deg, #010b18 0%, #020e1e 45%, #031224 80%, #03131f 100%)'
-                : 'linear-gradient(180deg, #f0f5fb 0%, #e5edf6 45%, #dce6f0 80%, #d5e0eb 100%)',
-            }} />
-            {/* Zone-color bloom from top */}
-            <div className="absolute inset-x-0 top-0 pointer-events-none" style={{
-              height: '55%',
-              background: `radial-gradient(ellipse 85% 60% at 50% -10%, rgba(${gr},${isDark ? '0.13' : '0.15'}) 0%, transparent 65%)`,
-            }} />
-            {/* Horizon atmosphere glow */}
-            <div className="absolute inset-x-0 pointer-events-none" style={{
-              bottom: `${GROUND - 3}%`, height: '18%',
-              background: isDark
-                ? `linear-gradient(to top, rgba(${gr},0.055) 0%, rgba(${gr},0.016) 55%, transparent 100%)`
-                : `linear-gradient(to top, rgba(${gr},0.09) 0%, rgba(${gr},0.025) 55%, transparent 100%)`,
-            }} />
-          </div>
-
-          {/* ── 1 · Sub-ground ──────────────────────────────────────────────── */}
-          <div className="absolute bottom-0 inset-x-0 pointer-events-none" style={{
-            height: `${GROUND}%`, zIndex: 1,
-            background: isDark
-              ? 'linear-gradient(to bottom, #020c19 0%, #010810 100%)'
-              : 'linear-gradient(to bottom, #bfcfde 0%, #afc0d2 100%)',
-          }} />
-          {/* Horizon line */}
-          <div className="absolute inset-x-0 pointer-events-none" style={{
-            bottom: `${GROUND}%`, height: '1.5px', zIndex: 2,
-            background: `linear-gradient(90deg,
-          transparent 0%,
-          rgba(${gr},${isDark ? '0.22' : '0.35'}) 15%,
-          rgba(${gr},${isDark ? '0.32' : '0.50'}) 50%,
-          rgba(${gr},${isDark ? '0.22' : '0.35'}) 85%,
-          transparent 100%)`,
-          }} />
-
-          {/* ── 2 · Buildings ───────────────────────────────────────────────── */}
-          {/* LEFT building */}
-          <div className="absolute pointer-events-none" style={{
-            left: 0, bottom: `${GROUND}%`,
-            width: 'clamp(130px, 23%, 28%)', height: '63%',
-            zIndex: 10,
+      {/* Text layer — appears from above, tilted, and straightens as it locks */}
+      <div
+        className="absolute inset-0 flex items-start justify-center px-6 pt-[30vh] pointer-events-none"
+        style={{
+          transform: `translate3d(0, ${textY}vh, 0) rotate(${textRot}deg) scale(${textScale})`,
+          filter: textBlur > 0.05 ? `blur(${textBlur}px)` : 'none',
+          opacity,
+          willChange: 'transform, opacity, filter',
+        }}
+      >
+        <div className="max-w-[460px] text-center">
+          <h3 style={{
+            fontFamily: 'var(--font-heading, inherit)',
+            fontWeight: 800,
+            fontSize: 'clamp(20px, 2.2vw, 30px)',
+            lineHeight: 1.2,
+            letterSpacing: '-0.01em',
+            color: isDark ? '#fff' : '#0f172a',
+            marginBottom: '12px',
+            /* Contrast halo so the title reads cleanly over the busy image */
+            textShadow: isDark
+              ? '0 2px 4px rgba(0,0,0,0.9), 0 4px 22px rgba(0,0,0,0.7)'
+              : '0 1px 2px rgba(255,255,255,0.9), 0 2px 14px rgba(255,255,255,0.7)',
           }}>
-            <img
-              src={zone.fromBg} alt={zone.from} draggable={false}
-              className="w-full h-full object-contain object-left-bottom"
-              style={{
-                filter: isDark
-                  ? 'brightness(0.82) drop-shadow(0 0 22px rgba(0,0,0,0.55))'
-                  : 'brightness(0.95) drop-shadow(0 8px 20px rgba(0,0,0,0.10))',
-              }}
-            />
-            {/* Origin label — sits inside the building's top edge, never clips */}
-            <div className="absolute top-2 left-2 flex items-center gap-1 pointer-events-none"
-              style={{ opacity: isActive ? 1 : 0, transition: 'opacity 0.6s 0.2s' }}>
-              <IconMapPin size={9} color={c} strokeWidth={2.5} />
-              <span style={{
-                fontSize: '7.5px', fontWeight: 900,
-                textTransform: 'uppercase', letterSpacing: '0.28em',
-                color: c,
-                textShadow: isDark ? '0 1px 6px rgba(0,0,0,0.8)' : '0 1px 6px rgba(255,255,255,0.8)',
-              }}>{zone.from}</span>
-            </div>
-          </div>
-          {/* RIGHT building */}
-          <div className="absolute pointer-events-none" style={{
-            right: 0, bottom: `${GROUND}%`,
-            width: 'clamp(130px, 23%, 28%)', height: '63%',
-            zIndex: 10,
+            {zone.title}
+          </h3>
+
+          <p style={{
+            fontSize: 'clamp(14px, 1.1vw, 16px)',
+            lineHeight: 1.7,
+            fontWeight: 500,
+            color: isDark ? 'rgba(255,255,255,0.9)' : 'rgba(15,23,42,0.82)',
+            textShadow: isDark
+              ? '0 1px 3px rgba(0,0,0,0.85), 0 2px 16px rgba(0,0,0,0.6)'
+              : '0 1px 2px rgba(255,255,255,0.85), 0 2px 12px rgba(255,255,255,0.6)',
           }}>
-            <img
-              src={zone.toBg} alt={zone.to} draggable={false}
-              className="w-full h-full object-contain object-right-bottom"
-              style={{
-                filter: isDark
-                  ? 'brightness(0.82) drop-shadow(0 0 22px rgba(0,0,0,0.55))'
-                  : 'brightness(0.95) drop-shadow(0 8px 20px rgba(0,0,0,0.10))',
-              }}
-            />
-            {/* Destination label — sits inside the building's top edge, never clips */}
-            <div className="absolute top-2 right-2 flex items-center justify-end gap-1 pointer-events-none"
-              style={{ opacity: isActive ? 1 : 0, transition: 'opacity 0.6s 0.2s' }}>
-              <span style={{
-                fontSize: '7.5px', fontWeight: 900,
-                textTransform: 'uppercase', letterSpacing: '0.28em',
-                color: c,
-                textShadow: isDark ? '0 1px 6px rgba(0,0,0,0.8)' : '0 1px 6px rgba(255,255,255,0.8)',
-              }}>{zone.to}</span>
-              <IconMapPin size={9} color={c} strokeWidth={2.5} />
-            </div>
-          </div>
-
-          {/* ── 3 · Road + Route SVG (visual centerpiece) ───────────────────── */}
-          <div className="absolute inset-x-0 pointer-events-none" style={{
-            bottom: `${ROAD_B}%`, height: `${ROAD_H}%`, zIndex: 20,
-            overflow: 'visible',
-          }}>
-            {/* Tarmac surface */}
-            <div className="absolute inset-0" style={{
-              background: isDark
-                ? 'linear-gradient(180deg, #060f1b 0%, #07101d 55%, #050c17 100%)'
-                : 'linear-gradient(180deg, #8da2b5 0%, #96acbf 55%, #8499ac 100%)',
-              boxShadow: isDark
-                ? '0 -1px 0 #0f2235, 0 2px 0 #020810'
-                : '0 -1px 0 #6e8aa0, 0 2px 0 #92a9bc',
-            }} />
-
-            {/* SVG route — the visual heart of the scene */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 1000 100"
-              preserveAspectRatio="none"
-              style={{ overflow: 'visible' }}
-            >
-              {/* Deep outer glow */}
-              <path
-                d="M 0 52 L 1000 52"
-                stroke={c} strokeWidth="22" fill="none"
-                opacity={isDark ? 0.055 : 0.04}
-                style={{ animation: 'driv-shimmer 4s ease-in-out infinite' }}
-              />
-              {/* Mid glow */}
-              <path
-                d="M 0 52 L 1000 52"
-                stroke={c} strokeWidth="9" fill="none"
-                opacity={isDark ? 0.13 : 0.09}
-              />
-              {/* Animated dashed centerline */}
-              <path
-                d="M 0 52 L 1000 52"
-                stroke={c} strokeWidth="2.5" fill="none"
-                strokeDasharray="28 14"
-                style={{
-                  opacity: isActive ? 0.75 : 0.30,
-                  animation: isActive ? 'driv-dash 0.65s linear infinite' : 'none',
-                  transition: 'opacity 0.5s',
-                }}
-              />
-              {/* Bright sweep highlight */}
-              <path
-                d="M 0 52 L 1000 52"
-                stroke="white" strokeWidth="1.5" fill="none"
-                strokeDasharray="8 280"
-                style={{
-                  opacity: 0.22,
-                  animation: isActive ? 'driv-sweep 3.2s linear infinite' : 'none',
-                }}
-              />
-
-              {/* ── Waypoint: LEFT (x=240 ≈ 24% = right edge of left building) */}
-              <circle cx="240" cy="52" r="5.5" fill={c} opacity="0.92" />
-              <circle cx="240" cy="52" r="5.5" fill="none" stroke={c} strokeWidth="1.5"
-                opacity={isActive ? 0.35 : 0}
-                style={{ transition: 'opacity 0.5s' }}>
-                {isActive && <>
-                  <animate attributeName="r" values="5.5;15;5.5" dur="2.8s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.35;0;0.35" dur="2.8s" repeatCount="indefinite" />
-                </>}
-              </circle>
-
-              {/* ── Waypoint: RIGHT (x=760 ≈ 76% = left edge of right building) */}
-              <circle cx="760" cy="52" r="5.5" fill={c} opacity="0.92" />
-              <circle cx="760" cy="52" r="5.5" fill="none" stroke={c} strokeWidth="1.5"
-                opacity={isActive ? 0.35 : 0}
-                style={{ transition: 'opacity 0.5s' }}>
-                {isActive && <>
-                  <animate attributeName="r" values="5.5;15;5.5" dur="2.8s" begin="1.4s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.35;0;0.35" dur="2.8s" begin="1.4s" repeatCount="indefinite" />
-                </>}
-              </circle>
-            </svg>
-
-            {/* Road shimmer sweep */}
-            {isActive && (
-              <motion.div className="absolute inset-0 pointer-events-none" style={{ overflow: 'hidden' }}>
-                <motion.div
-                  className="absolute inset-y-0"
-                  style={{
-                    width: '22%',
-                    background: `linear-gradient(90deg, transparent 0%, rgba(${gr},0.06) 50%, transparent 100%)`,
-                  }}
-                  animate={{ x: ['-22%', '550%'] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'linear', delay: 0.5 }}
-                />
-              </motion.div>
-            )}
-          </div>
-
-          {/* ── 4 · Vehicle — hero of the scene, parked on the route ─────────── */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              bottom: `${GROUND}%`,   /* sits exactly on road top surface    */
-              left: '50%',
-              transform: 'translateX(-50%)',  /* static — centered on the route, no movement */
-              width: vW,
-              height: vH,
-              zIndex: 30,
-            }}
-          >
-            {/* Vehicle image */}
-            <img
-              src={zone.vehicle}
-              alt={zone.title}
-              draggable={false}
-              className="w-full h-full object-contain object-bottom"
-              style={{
-                filter: isDark
-                  ? 'drop-shadow(0 5px 18px rgba(0,0,0,0.70))'
-                  : 'drop-shadow(0 4px 12px rgba(0,0,0,0.30))',
-                /* fade top edge so vehicle blends with sky */
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 14%, black 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 14%, black 100%)',
-              }}
-            />
-          </div>
-
-
-          {/* ── 6 · Edge vignettes (zone separation) ────────────────────────── */}
-          <div className="absolute inset-y-0 left-0 pointer-events-none" style={{
-            width: '5.5%', zIndex: 45,
-            background: isDark
-              ? 'linear-gradient(to right, rgba(1,8,20,0.94) 0%, rgba(1,8,20,0.30) 60%, transparent 100%)'
-              : 'linear-gradient(to right, rgba(240,245,251,0.94) 0%, rgba(240,245,251,0.30) 60%, transparent 100%)',
-          }} />
-          <div className="absolute inset-y-0 right-0 pointer-events-none" style={{
-            width: '5.5%', zIndex: 45,
-            background: isDark
-              ? 'linear-gradient(to left, rgba(1,8,20,0.94) 0%, rgba(1,8,20,0.30) 60%, transparent 100%)'
-              : 'linear-gradient(to left, rgba(240,245,251,0.94) 0%, rgba(240,245,251,0.30) 60%, transparent 100%)',
-          }} />
-
-          {/* ── 7 · Zone counter ─────────────────────────────────────────────── */}
-          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 pointer-events-none" style={{ zIndex: 46 }}>
-            <span style={{
-              fontSize: '7px', fontWeight: 800,
-              textTransform: 'uppercase', letterSpacing: '0.38em',
-              color: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.18)',
-            }}>
-              {String(zone.index + 1).padStart(2, '0')} / {String(ZONES.length).padStart(2, '0')}
-            </span>
-          </div>
-
-        </div>{/* /card */}
-      </div>{/* /inset padding */}
+            {zone.desc}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
@@ -374,7 +204,6 @@ function ZoneScene({ zone, status, isDark, scrollProgress, activeZone }) {
 /* ─── DrivWorldSection ───────────────────────────────────────────────────── */
 export default function DrivWorldSection() {
   const viewportRef = useRef(null)
-  const [activeZone, setActiveZone] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isDark, setIsDark] = useState(false)
 
@@ -387,13 +216,14 @@ export default function DrivWorldSection() {
     return () => mo.disconnect()
   }, [])
 
-  /* ── Pinned + snapped scroll ─────────────────────────────────────────
-     The section sticks in the viewport for the full scroll range. Each
-     scroll step snaps cleanly to one of the 4 services — there is no
-     drag-along pan, no in-between half state. ZoneScene reacts to the
-     resulting `status` prop (prev/current/next) with its own discrete
-     slide-up transition, so the swap is driven by React state, not by
-     scrubbing an animation to scroll position.                        */
+  /* ── Pinned + continuous parallax scroll ─────────────────────────────
+     The section pins for the full scroll range. Instead of snapping to a
+     rounded index, we keep the RAW scroll progress and feed each zone a
+     continuous `pos` (0 → ZONES.length-1). Each zone derives its own
+     card/text transforms from that — so the cards rise from below and the
+     text descends from above in lock-step with the scrollbar (true
+     parallax), reversing perfectly on scroll-up. `scrub` adds a touch of
+     inertia so the motion feels smooth rather than twitchy.            */
   useEffect(() => {
     const ctx = gsap.context(() => {
       const viewport = viewportRef.current
@@ -406,20 +236,37 @@ export default function DrivWorldSection() {
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: () => `+=${steps * window.innerHeight}`,
-        scrub: 0.35,
+        /* Pin distance per service — trimmed so the section doesn't hold
+           you for as long before releasing */
+        end: () => `+=${steps * window.innerHeight * 1.1}`,
+        /* Higher scrub = more inertia → glides to rest instead of tracking
+           the scrollbar 1:1, which is what makes it feel premium & smooth */
+        scrub: 1.6,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate(self) {
           setScrollProgress(self.progress)
-          const idx = Math.min(steps, Math.round(self.progress * steps))
-          setActiveZone(idx)
         },
       })
     }, viewportRef)
 
     return () => ctx.revert()
   }, [])
+
+  /* Continuous position in zone-space with a small DWELL on each service:
+     the active card holds briefly at the start of its segment, then eases to
+     the next over the REST of the segment. A short hold keeps a touch of
+     "settle" without locking you in, and spreading the transition across most
+     of the scroll makes each card's animation slow and clearly visible. */
+  const steps = ZONES.length - 1
+  const seg = scrollProgress * steps
+  const i = Math.min(steps - 1, Math.floor(seg))
+  const f = seg - i                                 // 0→1 within current segment
+  const HOLD = 0.18                                 // fraction of segment spent holding
+  const t = f <= HOLD ? 0 : (f - HOLD) / (1 - HOLD)
+  const eased = t * t * t * (t * (t * 6 - 15) + 10) // smootherstep — gentler ease in/out
+  const pos = scrollProgress >= 1 ? steps : i + eased
+  const activeZone = Math.round(pos)
 
   return (
     <>
@@ -436,80 +283,34 @@ export default function DrivWorldSection() {
           background: isDark ? '#0a0f1a' : '#eef2f7',
         }}
       >
-        {/* ── Zone stack — 4 full-bleed overlays, one "current" at a time ── */}
+        {/* Persistent section header — lives at the top of the pinned world so
+            the whole 4-service experience is one cohesive section (no stacked
+            block above → no empty gap). */}
+        <div className="absolute top-0 inset-x-0 z-50 text-center px-6 pt-[8vh] sm:pt-[7vh] pointer-events-none">
+          <h2
+            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl leading-[1.08]"
+            style={{ color: isDark ? '#ffffff' : '#0f172a' }}
+          >
+            Logistics Solutions That <span className="gradient-text">Move Business Forward</span>
+          </h2>
+          <p
+            className="max-w-2xl mx-auto mt-3 sm:mt-4 text-base sm:text-lg leading-relaxed"
+            style={{ color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(15,23,42,0.6)' }}
+          >
+            Flexible, scalable, and technology-driven logistics solutions for enterprises across every stage of the supply chain.
+          </p>
+        </div>
+
+        {/* ── Zone stack — continuous parallax, driven by `pos` ─────────── */}
         <div className="relative w-full h-full">
-          {ZONES.map((zone, i) => (
+          {ZONES.map((zone) => (
             <ZoneScene
               key={zone.id}
               zone={zone}
-              status={i === activeZone ? 'current' : i < activeZone ? 'prev' : 'next'}
               isDark={isDark}
-              scrollProgress={scrollProgress}
-              activeZone={activeZone}
+              pos={pos}
             />
           ))}
-        </div>
-
-        {/* FLOATING TEXT GOES HERE */}
-
-        <div
-          className="
-    absolute
-    inset-0
-    z-[999]
-    pointer-events-none
-    flex
-    items-start
-    justify-center
-    pt-[18vh]
-  "
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeZone}
-              initial={{
-                y: -80,
-                opacity: 0,
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
-              exit={{
-                y: -40,
-                opacity: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="max-w-[460px] px-6 text-center"
-            >
-              <h3
-                style={{
-                  fontWeight: 800,
-                  fontSize: 'clamp(18px, 2vw, 28px)',
-                  lineHeight: 1.15,
-                  color: isDark ? '#fff' : '#0f172a',
-                  marginBottom: '12px',
-                }}
-              >
-                {ZONES[activeZone].title}
-              </h3>
-
-              <p
-                style={{
-                  fontSize: 'clamp(12px,1vw,14px)',
-                  lineHeight: 1.7,
-                  color: isDark
-                    ? 'rgba(255,255,255,0.65)'
-                    : 'rgba(15,23,42,0.65)',
-                }}
-              >
-                {ZONES[activeZone].desc}
-              </p>
-            </motion.div>
-          </AnimatePresence>
         </div>
 
         {/* ── Vertical progress rail — techy section indicator ────────── */}

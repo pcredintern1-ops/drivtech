@@ -2,25 +2,35 @@ import { motion } from 'framer-motion'
 
 /* Verified, locally-hosted logos (sourced from Wikimedia Commons, checked
    against each brand's actual mark — see /public/brands/).
-   Westside & Zudio have no verified freely-licensed logo file available;
-   they render as a clean text/initials badge until a real asset is supplied. */
+   Hyperpure, Truemeds & Yulu have no verified freely-licensed logo file
+   available; they render as a clean text/initials badge until a real asset
+   is supplied. */
 const brands = [
-  { name: 'Zepto',     logo: '/brands/zepto.svg',     initials: 'Z',  color: '#950EDB' },
-  { name: 'Amazon',    logo: '/brands/amazon.svg',    initials: 'A',  color: '#FF9900' },
-  { name: 'Flipkart',  logo: '/brands/flipkart.svg',  initials: 'F',  color: '#2874F0' },
-  { name: 'Blinkit',   logo: '/brands/blinkit.svg',   initials: 'B',  color: '#F8CB46' },
-  { name: 'DMart',     logo: '/brands/dmart.png',     initials: 'D',  color: '#F47820' },
-  { name: 'Meesho',    logo: '/brands/meesho.png',    initials: 'M',  color: '#5F0A87' },
-  { name: 'Westside',  logo: null,                    initials: 'W',  color: '#1f2937' },
-  { name: 'Zudio',     logo: null,                    initials: 'Zu', color: '#dc2626' },
-  { name: 'BigBasket', logo: '/brands/bigbasket.png', initials: 'BB', color: '#84BD00' },
+  /* Row 1 — 7 clients */
+  { name: 'Hyperpure',  logo: null,                     initials: 'HP', color: '#E23744' },
+  { name: 'Blinkit',    logo: '/brands/blinkit.svg',    initials: 'B',  color: '#F8CB46' },
+  { name: 'BigBasket',  logo: '/brands/bigbasket.png',  initials: 'BB', color: '#84BD00' },
+  { name: 'ElasticRun', logo: '/brands/elasticrun.svg', initials: 'ER', color: '#2563eb' },
+  { name: 'DMart',      logo: '/brands/dmart.png',      initials: 'D',  color: '#F47820' },
+  { name: 'Flipkart',   logo: '/brands/flipkart.svg',   initials: 'F',  color: '#2874F0' },
+  { name: 'Meesho',     logo: '/brands/meesho.png',     initials: 'M',  color: '#5F0A87' },
+  /* Row 2 — 6 clients */
+  { name: 'Delhivery',  logo: '/brands/delhivery.png',  initials: 'D',  color: '#E53935' },
+  { name: 'Amazon',     logo: '/brands/amazon.svg',     initials: 'A',  color: '#FF9900' },
+  { name: 'Truemeds',   logo: null,                     initials: 'TM', color: '#1AAE9F' },
+  { name: 'Yulu',       logo: '/brands/yulu.svg',       initials: 'Y',  color: '#00BCD4' },
+  { name: 'Dunzo',      logo: '/brands/dunzo.svg',      initials: 'D',  color: '#00D26A' },
+  { name: 'Zepto',      logo: '/brands/zepto.svg',      initials: 'Z',  color: '#950EDB' },
 ]
 
 const half = Math.ceil(brands.length / 2)
 const rowOne = brands.slice(0, half)
 const rowTwo = brands.slice(half)
-const loopRowOne = [...rowOne, ...rowOne, ...rowOne]
-const loopRowTwo = [...rowTwo, ...rowTwo, ...rowTwo]
+/* Exactly 2 copies — the marquee keyframe translates -50%, so two identical
+   copies make the loop seamless (3 copies caused the -50% restart to land
+   mid-pattern → the visible jump). */
+const loopRowOne = [...rowOne, ...rowOne]
+const loopRowTwo = [...rowTwo, ...rowTwo]
 
 function BrandLogo({ brand }) {
   // Verified local logo file. No logo asset yet → clean initials badge
@@ -28,7 +38,7 @@ function BrandLogo({ brand }) {
   if (!brand.logo) {
     return (
       <div
-        className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-white text-[11px] font-black leading-none shrink-0"
+        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center text-white text-[11px] lg:text-[13px] font-black leading-none shrink-0"
         style={{ background: brand.color }}
       >
         {brand.initials}
@@ -37,7 +47,7 @@ function BrandLogo({ brand }) {
   }
 
   return (
-    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white flex items-center justify-center shrink-0 p-1.5">
+    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-white flex items-center justify-center shrink-0 p-1.5">
       <img
         src={brand.logo}
         alt={brand.name}
@@ -51,7 +61,7 @@ function BrandCard({ brand }) {
   return (
     <div
       className="
-        inline-flex items-center gap-2 sm:gap-3 mx-1.5 sm:mx-3 px-3 sm:px-5 py-2.5 sm:py-3.5 shrink-0 w-[140px] sm:w-[208px]
+        inline-flex items-center gap-2 sm:gap-3 lg:gap-4 mx-1.5 sm:mx-3 px-3 sm:px-5 lg:px-7 py-2.5 sm:py-3.5 lg:py-5 shrink-0 w-[140px] sm:w-[208px] lg:w-[330px]
         bg-white/8 border border-white/12 rounded-2xl
         cursor-default select-none
         transition-all duration-300
@@ -61,7 +71,7 @@ function BrandCard({ brand }) {
       "
     >
       <BrandLogo brand={brand} />
-      <span className="font-heading font-bold text-[12px] sm:text-[13.5px] text-gray-300 group-hover:text-white tracking-wide whitespace-nowrap overflow-hidden text-ellipsis transition-colors duration-300">
+      <span className="font-heading font-bold text-[12px] sm:text-[13.5px] lg:text-[17px] text-gray-300 group-hover:text-white tracking-wide whitespace-nowrap overflow-hidden text-ellipsis transition-colors duration-300">
         {brand.name}
       </span>
     </div>
@@ -108,16 +118,6 @@ export default function TrustBar() {
               <BrandCard key={i} brand={brand} />
             ))}
           </div>
-
-          {/* Edge fades — dark background */}
-          <div
-            className="absolute left-0 top-0 bottom-0 w-20 sm:w-32 md:w-48 pointer-events-none z-10"
-            style={{ background: 'linear-gradient(to right, #111827 15%, transparent)' }}
-          />
-          <div
-            className="absolute right-0 top-0 bottom-0 w-20 sm:w-32 md:w-48 pointer-events-none z-10"
-            style={{ background: 'linear-gradient(to left, #111827 15%, transparent)' }}
-          />
         </div>
       </div>
     </section>

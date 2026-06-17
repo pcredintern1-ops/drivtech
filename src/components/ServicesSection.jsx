@@ -61,7 +61,7 @@ function JourneyCardBody({ step }) {
         {/* Scene image (light + dark) */}
         <div className="relative aspect-[4/3] overflow-hidden">
           <img loading="lazy" decoding="async"
-            src={step.label === 'First Mile' ? '/services/first-mile.webp' : '/services/mile-light.webp'}
+            src={step.label === 'First Mile' ? '/services/first-mile.webp' : step.label === 'Middle Mile' ? '/services/middle-mile.webp' : '/services/mile-light.webp'}
             alt={step.title}
             className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
@@ -75,7 +75,7 @@ function JourneyCardBody({ step }) {
             }}
           />
           <img loading="lazy" decoding="async"
-            src={step.label === 'First Mile' ? '/services/first-mile-dark.webp' : '/services/mile-dark.webp'}
+            src={step.label === 'First Mile' ? '/services/first-mile-dark.webp' : step.label === 'Middle Mile' ? '/services/middle-mile-dark.webp' : '/services/mile-dark.webp'}
             alt={step.title}
             className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
@@ -211,7 +211,7 @@ function JourneyCarousel() {
 export default function ServicesSection() {
   return (
     <section id="services"
-      className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-1 md:pb-2 overflow-x-clip section-sep bg-white">
+      className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-0 overflow-x-clip section-sep bg-white">
 
       <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
