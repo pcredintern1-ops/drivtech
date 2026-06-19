@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
+import { IconShield, IconTruck, IconAffiliate, IconArrowRight } from '@tabler/icons-react'
 
 /* ── Variants ── */
 const wa = {
@@ -20,6 +21,7 @@ const features = [
 ]
 
 export default function AboutSection() {
+  const navigate = useNavigate()
 
   return (
     <section id="about"
@@ -47,10 +49,10 @@ export default function AboutSection() {
             {/* Heading */}
             <div className="w-full text-center lg:text-left mb-5 md:mb-6">
               <span className="inline-block text-center lg:text-left">
-                <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
+                <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
                   Powering Enterprise<br/>
                   <span className="gradient-text">Logistics End-to-End</span>
-                </h1>
+                </h2>
               </span>
             </div>
 
@@ -64,6 +66,17 @@ export default function AboutSection() {
               Founded in 2023, we're building India's logistics backbone. Serving quick commerce operators,
               enterprise supply chains, and the businesses powering India's fastest-growing cities.
             </p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+              <a href="/services"
+                onClick={e => { e.preventDefault(); navigate('/services') }}
+                className="group btn-shine btn-glow-hover inline-flex items-center gap-2 px-6 py-3 bg-[#A3E635] hover:bg-[#bef264] text-black font-bold rounded-xl text-sm glow-lime transition-all duration-300 hover:scale-105">
+                Explore Services
+                <IconArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </motion.div>
 
           </div>
 

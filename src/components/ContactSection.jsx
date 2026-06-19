@@ -42,7 +42,7 @@ export default function ContactSection() {
 
           {/* Contact info */}
           <div>
-            <h3 className="font-heading font-bold text-sm sm:text-base text-gray-900 mb-5 md:mb-8">Contact Information</h3>
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-gray-900 mb-5 md:mb-8">Contact Information</h3>
             <div className="space-y-5 mb-10">
               {[
                 { icon: IconMapPin, label: 'Location', value: '169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064' },

@@ -48,7 +48,7 @@ export default function InvestorSection() {
 
         {/* Asset-backed highlight */}
         <div
-          className="group relative bg-white border border-[#F97316]//20 rounded-2xl p-5 md:p-6 mb-10 flex gap-5 items-start hover:border-[#F97316]/45 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] transition-all duration-300 overflow-hidden">
+          className="group relative bg-white border border-[#F97316]/20 rounded-2xl p-5 md:p-6 mb-10 flex gap-5 items-start hover:border-[#F97316]/45 hover:shadow-[0_8px_32px_rgba(249,115,22,0.08)] transition-all duration-300 overflow-hidden">
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
             style={{ background: 'radial-gradient(circle at 0% 50%, rgba(249,115,22,0.04) 0%, transparent 60%)' }} />
           <div className="w-12 h-12 rounded-2xl bg-[#F97316]/10 border border-[#F97316]/20 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#F97316]/18 transition-all duration-300 relative">

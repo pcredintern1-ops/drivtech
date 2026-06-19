@@ -40,9 +40,14 @@ function JourneyCardBody({ step }) {
       <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{ background: `radial-gradient(circle at 50% 30%, ${step.color}14 0%, transparent 65%)` }} />
 
-      {/* Header row */}
-      <div className="relative flex items-center gap-2 px-5 pt-5 z-10">
-        <span className="font-black text-xs sm:text-sm uppercase tracking-[0.14em] text-gray-700">
+      {/* Header row — step number + label */}
+      <div className="relative flex items-center gap-2.5 px-5 pt-5 z-10">
+        <span className="font-black text-[10px] sm:text-xs tabular-nums"
+          style={{ color: step.color, letterSpacing: '0.1em' }}>
+          {step.step}
+        </span>
+        <span className="w-px h-3.5 rounded-full" style={{ background: `${step.color}50` }} />
+        <span className="font-black text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gray-700">
           {step.label}
         </span>
       </div>
@@ -59,7 +64,7 @@ function JourneyCardBody({ step }) {
         </div>
 
         {/* Scene image (light + dark) */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[16/10] overflow-hidden">
           <img loading="lazy" decoding="async"
             src={step.label === 'First Mile' ? '/services/first-mile.webp' : step.label === 'Middle Mile' ? '/services/middle-mile.webp' : '/services/mile-light.webp'}
             alt={step.title}
@@ -92,8 +97,11 @@ function JourneyCardBody({ step }) {
       </div>
 
       {/* Text */}
-      <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1 flex-1 z-10">
-        <p className="text-black text-base sm:text-lg leading-relaxed">
+      <div className="relative px-5 pt-4 pb-5 flex flex-col gap-1.5 flex-1 z-10">
+        <h3 className="font-heading font-black text-lg sm:text-xl leading-snug text-gray-900 mb-0.5">
+          {step.title}
+        </h3>
+        <p className="text-black text-sm sm:text-base leading-relaxed">
           {step.desc}
         </p>
         {/* Progress dot line */}
@@ -225,9 +233,12 @@ export default function ServicesSection() {
           </span>
           <div className="w-fit mx-auto">
             <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
-              Logistics Solutions <span className="gradient-text">Built for Enterprise</span>
+              Our <span className="gradient-text">Logistics Solutions</span>
             </h1>
           </div>
+          <p className="max-w-2xl mx-auto mt-4 text-base sm:text-lg text-gray-600 leading-relaxed text-center">
+            From pickup to final delivery, DRIV powers every stage of the supply chain with scalable, technology-driven logistics solutions.
+          </p>
         </div>
 
         {/* ── Mobile: carousel (tabs + arrows + slide + dots) ── */}

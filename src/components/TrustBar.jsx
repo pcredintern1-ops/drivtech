@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
    is supplied. */
 const brands = [
   /* Row 1 — 7 clients */
-  { name: 'Hyperpure',  logo: null,                     initials: 'HP', color: '#E23744' },
+  { name: 'Hyperpure',  logo: '/brands/hyperpure.webp',  initials: 'HP', color: '#E23744' },
   { name: 'Blinkit',    logo: '/brands/blinkit.svg',    initials: 'B',  color: '#F8CB46' },
   { name: 'BigBasket',  logo: '/brands/bigbasket.png',  initials: 'BB', color: '#84BD00' },
   { name: 'ElasticRun', logo: '/brands/elasticrun.svg', initials: 'ER', color: '#2563eb' },
@@ -17,7 +17,7 @@ const brands = [
   /* Row 2 — 6 clients */
   { name: 'Delhivery',  logo: '/brands/delhivery.png',  initials: 'D',  color: '#E53935' },
   { name: 'Amazon',     logo: '/brands/amazon.svg',     initials: 'A',  color: '#FF9900' },
-  { name: 'Truemeds',   logo: null,                     initials: 'TM', color: '#1AAE9F' },
+  { name: 'Truemeds',   logo: '/brands/truemeds.webp',   initials: 'TM', color: '#1AAE9F' },
   { name: 'Yulu',       logo: '/brands/yulu.svg',       initials: 'Y',  color: '#00BCD4' },
   { name: 'Dunzo',      logo: '/brands/dunzo.svg',      initials: 'D',  color: '#00D26A' },
   { name: 'Zepto',      logo: '/brands/zepto.svg',      initials: 'Z',  color: '#950EDB' },

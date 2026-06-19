@@ -49,20 +49,24 @@ export default function StatsSection() {
           className="flex flex-wrap lg:flex-nowrap items-stretch justify-center">
           {stats.map(({ Icon, target, suffix, label }, i) => (
             <Fragment key={label}>
+              {/* Vertical divider between stat blocks — desktop only */}
+              {i > 0 && (
+                <div className="hidden lg:block w-px self-stretch my-4 shrink-0"
+                  style={{ background: 'linear-gradient(to bottom, transparent, rgba(163,230,53,0.20) 30%, rgba(163,230,53,0.20) 70%, transparent)' }} />
+              )}
 
-              <div
-              className="flex items-center justify-start lg:justify-start gap-3 lg:gap-3 pl-4 pr-1 sm:pl-16 md:pl-24 lg:pl-16 lg:pr-2 py-6 sm:py-8 flex-1 min-w-[50%] lg:min-w-0">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(163,230,53,0.10)', border: '1px solid rgba(163,230,53,0.18)' }}>
-                <Icon size={24} style={{ color: '#A3E635' }} />
-              </div>
-              <div>
-                <div className="font-heading font-black text-white text-2xl sm:text-3xl lg:text-4xl leading-none whitespace-nowrap">
-                  <PanelCounter target={target} suffix={suffix} inView={statsInView} />
+              <div className="flex items-center justify-start lg:justify-start gap-3 lg:gap-3 pl-4 pr-1 sm:pl-16 md:pl-24 lg:pl-16 lg:pr-2 py-6 sm:py-8 flex-1 min-w-[50%] lg:min-w-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(163,230,53,0.10)', border: '1px solid rgba(163,230,53,0.18)' }}>
+                  <Icon size={24} style={{ color: '#A3E635' }} />
                 </div>
-                <div className="text-gray-500 text-base sm:text-lg mt-1 font-medium leading-tight lg:whitespace-nowrap">{label}</div>
+                <div>
+                  <div className="font-heading font-black text-white text-2xl sm:text-3xl lg:text-4xl leading-none whitespace-nowrap">
+                    <PanelCounter target={target} suffix={suffix} inView={statsInView} />
+                  </div>
+                  <div className="text-gray-500 text-base sm:text-lg mt-1 font-medium leading-tight lg:whitespace-nowrap">{label}</div>
+                </div>
               </div>
-            </div>
             </Fragment>
           ))}
         </div>
