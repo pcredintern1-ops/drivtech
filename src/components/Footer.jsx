@@ -66,13 +66,9 @@ export default function Footer() {
           <div className="col-span-2 sm:col-span-1 lg:col-span-1">
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-[0.2em] mb-5 sm:mb-7">Contact</h4>
             <ul className="space-y-4 sm:space-y-5">
-              <li className="flex gap-3 items-start group">
-                <IconMapPin size={13} className="text-[#A3E635] mt-0.5 shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=169%2C+Evershine+Mall%2C+Chincholi+Bunder+Junction%2C+Malad+West%2C+Mumbai+-+400064"
-                  target="_blank" rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg leading-relaxed transition-colors duration-300"
-                >169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</a>
+              <li className="flex gap-3 items-start">
+                <IconMapPin size={13} className="text-[#A3E635] mt-0.5 shrink-0" />
+                <p className="text-gray-400 text-base sm:text-lg leading-relaxed">169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</p>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMail size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />

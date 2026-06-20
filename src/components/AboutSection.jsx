@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { IconShield, IconTruck, IconAffiliate, IconArrowRight } from '@tabler/icons-react'
+import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
 
 /* ── Variants ── */
 const wa = {
@@ -21,8 +20,6 @@ const features = [
 ]
 
 export default function AboutSection() {
-  const navigate = useNavigate()
-
   return (
     <section id="about"
       className="theme-surface relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-8 md:pb-12 lg:pb-14 overflow-hidden section-sep">
@@ -67,16 +64,6 @@ export default function AboutSection() {
               enterprise supply chains, and the businesses powering India's fastest-growing cities.
             </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
-              <a href="/services"
-                onClick={e => { e.preventDefault(); navigate('/services') }}
-                className="group btn-shine btn-glow-hover inline-flex items-center gap-2 px-6 py-3 bg-[#A3E635] hover:bg-[#bef264] text-black font-bold rounded-xl text-sm glow-lime transition-all duration-300 hover:scale-105">
-                Explore Services
-                <IconArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </a>
-            </motion.div>
 
           </div>
 

@@ -71,10 +71,10 @@ function JourneyCardBody({ step }) {
             className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
             style={{
-              transform: 'scale(1.03)',
-              transformOrigin: '68% 38%',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              transform: step.label === 'Middle Mile' ? 'scale(1.03)' : 'scale(1.0)',
+              transformOrigin: step.label === 'Middle Mile' ? '68% 38%' : '50% 50%',
+              maskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)',
               maskComposite: 'intersect',
               WebkitMaskComposite: 'source-in',
             }}
@@ -85,10 +85,10 @@ function JourneyCardBody({ step }) {
             className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
             style={{
-              transform: 'scale(1.03)',
-              transformOrigin: '68% 38%',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)',
+              transform: step.label === 'Middle Mile' ? 'scale(1.03)' : 'scale(1.0)',
+              transformOrigin: step.label === 'Middle Mile' ? '68% 38%' : '50% 50%',
+              maskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%)',
               maskComposite: 'intersect',
               WebkitMaskComposite: 'source-in',
             }}
@@ -236,7 +236,7 @@ export default function ServicesSection() {
               Our <span className="gradient-text">Logistics Solutions</span>
             </h1>
           </div>
-          <p className="max-w-2xl mx-auto mt-4 text-base sm:text-lg text-gray-600 leading-relaxed text-center">
+          <p className="max-w-2xl mx-auto mt-4 text-base sm:text-lg text-black leading-relaxed text-center">
             From pickup to final delivery, DRIV powers every stage of the supply chain with scalable, technology-driven logistics solutions.
           </p>
         </div>

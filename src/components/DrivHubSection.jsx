@@ -318,7 +318,7 @@ export default function DrivHubSection() {
           <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
             The DRIV <span className="gradient-text-orange">HUB</span>
           </h1>
-          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             India&apos;s fleet operations, unified at one address —{' '}
             <span className="font-semibold text-gray-800">Bhiwandi Logistics Park</span>, where
             washing, parking, GPS monitoring, dispatch, and driver support run around the clock.
@@ -336,7 +336,7 @@ export default function DrivHubSection() {
                   <p className="text-xs sm:text-sm font-semibold text-gray-900 mt-1 leading-snug">
                     Bhiwandi Logistics Park
                   </p>
-                  <p className="text-base sm:text-lg text-gray-500 mt-0.5 leading-relaxed">
+                  <p className="text-base sm:text-lg text-black mt-0.5 leading-relaxed">
                     Five on-site facilities connected to one central command hub
                   </p>
                 </div>
@@ -351,7 +351,7 @@ export default function DrivHubSection() {
               </div>
 
               <div className="px-5 sm:px-8 py-4 border-t border-gray-100 bg-[#fafaf8] text-center sm:text-left">
-                <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto sm:mx-0">
+                <p className="text-base sm:text-lg text-black leading-relaxed max-w-xl mx-auto sm:mx-0">
                   <span className="font-semibold text-[#65a30d]">Green</span> — washing, monitoring
                   &amp; help desk &nbsp;·&nbsp;{' '}
                   <span className="font-semibold text-[#ea6c0a]">Orange</span> — fleet parking
