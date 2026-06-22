@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { motion } from 'framer-motion'
 import { IconShield, IconTruck, IconAffiliate } from '@tabler/icons-react'
+import { SectionLabel, SectionTitle, SECTION_SHELL, SECTION_SHELL_CONT, SECTION_CONTAINER, SECTION_LABEL_MB, CONTAINER_GAP } from './SectionHeader'
 
 /* ── Variants ── */
 const wa = {
@@ -19,22 +20,21 @@ const features = [
   { icon: IconShield,    title: 'Reliable & Scalable',     desc: 'Built to deliver consistently, at scale.' },
 ]
 
-export default function AboutSection() {
+export default function AboutSection({ continuation = false }) {
+  const shell = continuation ? SECTION_SHELL_CONT : SECTION_SHELL
   return (
     <section id="about"
-      className="theme-surface relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-8 md:pb-12 lg:pb-14 overflow-hidden section-sep">
+      className={`theme-surface ${shell} overflow-hidden`}>
 
       {/* Lime glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 65%)', filter:'blur(24px)' }}/>
 
-      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
+      <div className={`${SECTION_CONTAINER} ${continuation ? CONTAINER_GAP : ''}`}>
 
         {/* ── Section label ── */}
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
-            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />About DRIV<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
-          </span>
+        <div className={`text-center ${SECTION_LABEL_MB}`}>
+          <SectionLabel className="mb-0">About DRIV</SectionLabel>
         </div>
 
         {/* ── Main grid: LEFT text · RIGHT arrow ── */}
@@ -46,10 +46,10 @@ export default function AboutSection() {
             {/* Heading */}
             <div className="w-full text-center lg:text-left mb-5 md:mb-6">
               <span className="inline-block text-center lg:text-left">
-                <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 lg:whitespace-nowrap">
+                <SectionTitle as="h2" className="text-center lg:text-left lg:whitespace-nowrap mb-2">
                   Powering Enterprise<br/>
                   <span className="gradient-text">Logistics End-to-End</span>
-                </h2>
+                </SectionTitle>
               </span>
             </div>
 
@@ -114,18 +114,9 @@ export default function AboutSection() {
               <motion.div variants={fadeFromLeft}
                 className="flex flex-row items-center gap-2 sm:gap-3 py-3 sm:py-4 min-w-0 pl-3 pr-2 sm:pl-4 sm:pr-3 xl:pl-3 xl:pr-5 rounded-3xl cursor-default"
                 style={{ border: '1px solid transparent', transition: 'background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease' }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(163,230,53,0.07) 0%, rgba(255,255,255,0.60) 100%)'
-                  e.currentTarget.style.borderColor = 'rgba(163,230,53,0.38)'
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(163,230,53,0.18), 0 2px 8px rgba(0,0,0,0.05)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.borderColor = 'transparent'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}>
+                >
                 <motion.div
-                  whileHover={{ scale: 1.18, rotate: -8, boxShadow: '0 0 28px rgba(163,230,53,0.60), 0 0 10px rgba(163,230,53,0.30)' }}
+                  // whileHover={{ scale: 1.18, rotate: -8, boxShadow: '0 0 28px rgba(163,230,53,0.60), 0 0 10px rgba(163,230,53,0.30)' }}
                   transition={{ type: 'spring', stiffness: 320, damping: 18 }}
                   className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shrink-0"
                   style={{

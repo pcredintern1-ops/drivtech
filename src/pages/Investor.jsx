@@ -5,7 +5,7 @@ export default function Investor() {
   return (
     <>
       <InvestorSection />
-      <Roadmap />
+      <Roadmap continuation />
     </>
   )
 }

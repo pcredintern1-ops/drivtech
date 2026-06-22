@@ -8,8 +8,8 @@ export default function Home() {
     <>
       <Hero />
       <StatsSection />
-      <AboutSection />
-      <TrustBar />
+      <AboutSection continuation />
+      <TrustBar continuation />
     </>
   )
 }

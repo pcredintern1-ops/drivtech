@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { IconTrendingUp, IconShield, IconSettings, IconArrowRight, IconCircleCheck } from '@tabler/icons-react'
+import { SectionHeader, SECTION_SHELL, SECTION_CONTAINER } from './SectionHeader'
 
 const model = [
   { icon: IconTrendingUp, title: 'Fleet Asset Funding', desc: 'Investors participate in funding logistics fleet assets deployed for enterprise operations.' },
@@ -26,25 +27,16 @@ const features = [
 export default function InvestorSection() {
   const navigate = useNavigate()
   return (
-    <section id="invest" className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
+    <section id="invest" className={`${SECTION_SHELL} bg-white`}>
 
-      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
+      <div className={SECTION_CONTAINER}>
 
-        {/* Header */}
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
-            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Investor Program<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
-          </span>
-          <div className="w-fit mx-auto mb-4 md:mb-6">
-            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
-              Invest in Logistics <span className="gradient-text">Assets with DRIV</span>
-            </h1>
-          </div>
-          <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            DRIV offers an asset backed fleet investment model for individuals and partners
-            looking to participate in the growing logistics and mobility sector.
-          </p>
-        </div>
+        <SectionHeader
+          label="Investor Program"
+          title={<>Invest in Logistics <span className="gradient-text">Assets with DRIV</span></>}
+          titleAs="h1"
+          description="DRIV offers an asset backed fleet investment model for individuals and partners looking to participate in the growing logistics and mobility sector."
+        />
 
         {/* Asset-backed highlight */}
         <div

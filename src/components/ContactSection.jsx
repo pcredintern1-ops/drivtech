@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { IconMail, IconPhone, IconMapPin, IconMessage, IconSend } from '@tabler/icons-react'
+import { SectionHeader, SECTION_SHELL, SECTION_CONTAINER } from './SectionHeader'
 
 const inquiryTypes = [
   { value: 'enterprise', label: 'Enterprise Inquiry' },
@@ -19,24 +20,17 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-12 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-white">
+    <section id="contact" className={`${SECTION_SHELL} bg-white`}>
 
-      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
+      <div className={SECTION_CONTAINER}>
 
-        {/* Header */}
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
-            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Get In Touch<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
-          </span>
-          <div className="w-fit mx-auto mb-4 md:mb-6">
-            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
-              Let's Build Something <span className="gradient-text">Together</span>
-            </h1>
-          </div>
-          <p className="text-black text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Whether you're an enterprise client, investor, driver partner, or vendor, we'd love to hear from you.
-          </p>
-        </div>
+        <SectionHeader
+          label="Get In Touch"
+          title={<>Let&apos;s Build Something <span className="gradient-text">Together</span></>}
+          titleAs="h1"
+          description="Whether you're an enterprise client, investor, driver partner, or vendor, we'd love to hear from you."
+          descMaxWidth="max-w-xl"
+        />
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-16">
 

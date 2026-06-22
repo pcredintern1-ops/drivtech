@@ -7,9 +7,29 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const HOLD        = 0.45
+const VEHICLE_SEG = 1
 const SCROLL_MULT = 1.5
 const CARD_TOP    = 44
-const BAR_H       = 54
+
+/** Timeline helpers — vehicle finishes before the next card enters */
+function zoneEntranceStart(i) {
+  return i === 0 ? 0 : i + (i - 1) * HOLD
+}
+function zoneVehicleStart(i) {
+  return i === 0 ? 0 : i + i * HOLD
+}
+function zoneVehicleEnd(i) {
+  return zoneVehicleStart(i) + VEHICLE_SEG
+}
+function totalScrollSeg() {
+  return zoneVehicleEnd(ZONES.length - 1)
+}
+function activeZoneIndex(rawSeg) {
+  for (let i = ZONES.length - 1; i >= 0; i--) {
+    if (rawSeg >= zoneEntranceStart(i)) return i
+  }
+  return 0
+}
 
 const CSS_KEYFRAMES = `
   @keyframes driv-grid-drift {
@@ -19,25 +39,6 @@ const CSS_KEYFRAMES = `
   @keyframes driv-dot-pulse {
     0%, 100% { opacity: 1;    }
     50%       { opacity: 0.3; }
-  }
-  @keyframes driv-drive {
-    0%   { transform: translateY(0px)     rotate(-0.5deg); }
-    18%  { transform: translateY(-4px)    rotate(0.25deg); }
-    36%  { transform: translateY(-1.5px)  rotate(-0.15deg); }
-    55%  { transform: translateY(-5px)    rotate(0.3deg); }
-    74%  { transform: translateY(-2px)    rotate(-0.2deg); }
-    100% { transform: translateY(0px)     rotate(-0.5deg); }
-  }
-  @keyframes driv-scooty {
-    0%   { transform: translateY(0px)    rotate(-1.8deg); }
-    22%  { transform: translateY(-7px)   rotate(0.6deg);  }
-    48%  { transform: translateY(-3px)   rotate(-1deg);   }
-    72%  { transform: translateY(-8px)   rotate(0.8deg);  }
-    100% { transform: translateY(0px)    rotate(-1.8deg); }
-  }
-  @keyframes driv-building-float {
-    0%, 100% { transform: translateY(0px);  }
-    50%       { transform: translateY(-4px); }
   }
 `
 
@@ -66,6 +67,9 @@ const ZONES = [
       fromImg: '/scenes/building-warehouse.webp',
       vehicle:  '/vehicles/truck.webp',
       toImg:    '/scenes/building-warehouse.webp',
+      vehicleW: '64%',
+      vehicleH: '78%',
+      vehicleBottom: '-8%',
     },
   },
   {
@@ -79,8 +83,6 @@ const ZONES = [
       fromImg: '/scenes/building-hub.webp',
       toImg:    '/scenes/building-warehouse.webp',
       vehicle:  '/vehicles/tata_ace.webp',
-      extra:    '/vehicles/tata_tempo.webp',
-      extra2:   '/vehicles/truck.webp',
     },
   },
   {
@@ -133,35 +135,66 @@ function makeTheme(isDark) {
 }
 
 function RouteTelemetry({ zone, T }) {
+  const label = {
+    fontSize: '10px',
+    fontWeight: 700,
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+  }
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      {/* FROM */}
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%' }}>
       <span style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
-          background: zone.color, boxShadow: `0 0 6px ${zone.color}` }} />
-        <span style={{ color: zone.color, fontSize: '10px', fontWeight: 800,
-          letterSpacing: '0.15em', textTransform: 'uppercase' }}>{zone.from}</span>
+        <span style={{ width: '5px', height: '5px', borderRadius: '50%', flexShrink: 0,
+          background: zone.color }} />
+        <span style={{ ...label, color: zone.color }}>{zone.from}</span>
       </span>
 
-      {/* Connector line */}
-      <div style={{ flex: 1, minWidth: '18px', maxWidth: '60px', height: '1px',
-        background: `linear-gradient(90deg, ${zone.color}55, ${T.routeLine} 70%, transparent)` }} />
+      <div style={{ width: '40px', minWidth: '18px', maxWidth: '56px', height: '1px', flexShrink: 0,
+        background: `linear-gradient(90deg, ${zone.color}44, ${T.routeLine} 70%, transparent)` }} />
 
-      {/* TO */}
       <span style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
+        <span style={{ width: '5px', height: '5px', borderRadius: '50%', flexShrink: 0,
           background: T.destDot }} />
-        <span style={{ color: T.destText, fontSize: '10px', fontWeight: 700,
-          letterSpacing: '0.15em', textTransform: 'uppercase' }}>{zone.to}</span>
+        <span style={{ ...label, color: T.destText }}>{zone.to}</span>
       </span>
     </div>
   )
 }
 
+function ZoneCardText({ zone, T }) {
+  return (
+    <div
+      className="absolute top-0 left-0 right-0 z-[3] flex flex-col items-center text-center pointer-events-none
+                 px-4 sm:px-6 md:px-10 pt-5 sm:pt-6 md:pt-8 pb-3 sm:pb-4"
+    >
+      <h3
+        className="font-heading font-black text-white leading-[1.1] tracking-tight
+                   text-xl sm:text-2xl md:text-[1.75rem] lg:text-[2rem]
+                   mb-1.5 sm:mb-2 max-w-[720px] w-full min-h-[2.35em]"
+      >
+        {zone.title}
+      </h3>
+
+      <div className="-mt-0.5 sm:-mt-1 md:-mt-1.5">
+        <p
+          className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed text-slate-300/90
+                     mb-2 sm:mb-2.5 max-w-[560px] w-full min-h-[3.5em] sm:min-h-[3.75em]"
+        >
+          {zone.desc}
+        </p>
+
+        <RouteTelemetry zone={zone} T={T} />
+      </div>
+    </div>
+  )
+}
+
 // Scene panel — refs for vehicle elements passed in so GSAP can drive them directly
+const ROAD_H = '28%'
+
 function ZoneScene({ zone, T, sceneRefs }) {
   const { scene, color, glowRgb, title, noGlow } = zone
-  const isConvoy = zone.id === 'adhoc'
   const ga = noGlow ? 0 : 1   // glow alpha multiplier — 0 kills all colour glow
 
   return (
@@ -186,22 +219,44 @@ function ZoneScene({ zone, T, sceneRefs }) {
         background: `radial-gradient(ellipse 90% 65% at 50% 110%, rgba(${glowRgb},${0.32 * ga}) 0%, transparent 70%)`,
       }} />
 
-      {/* Road */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '28%', pointerEvents: 'none' }}>
+      {/* Road — horizontal left-to-right asphalt strip */}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: ROAD_H, pointerEvents: 'none', zIndex: 0 }}>
+        {/* Verge */}
         <div style={{ position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, #242424 0%, #161616 55%, #0e0e0e 100%)' }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-          background: 'linear-gradient(90deg, transparent 2%, #404040 20%, #404040 80%, transparent 98%)' }} />
-        <div style={{ position: 'absolute', top: '46%', left: '8%', right: '8%', height: '2px',
-          backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,210,0.45) 0px, rgba(255,255,210,0.45) 22px, transparent 22px, transparent 46px)' }} />
-        <div style={{ position: 'absolute', inset: 0,
-          background: `radial-gradient(ellipse 70% 100% at 50% 100%, rgba(${glowRgb},${0.20 * ga}) 0%, transparent 72%)` }} />
+          background: 'linear-gradient(to bottom, #1c1f18 0%, #121410 55%, #0a0b09 100%)' }} />
+
+        {/* Asphalt surface */}
+        <div style={{
+          position: 'absolute', inset: '8% 0 0 0',
+          background: 'linear-gradient(to bottom, #454842 0%, #323530 45%, #242622 100%)',
+          boxShadow: 'inset 0 6px 18px rgba(0,0,0,0.28)',
+        }}>
+          {/* Asphalt grain */}
+          <div style={{ position: 'absolute', inset: 0, opacity: 0.2, mixBlendMode: 'overlay',
+            backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, transparent 1px, transparent 3px), repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0px, transparent 2px, transparent 5px)' }} />
+
+          {/* Top road edge */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+            background: 'linear-gradient(90deg, transparent 1%, rgba(255,255,255,0.55) 8%, rgba(255,255,255,0.75) 50%, rgba(255,255,255,0.55) 92%, transparent 99%)' }} />
+
+          {/* Center lane dashes — left to right */}
+          <div style={{ position: 'absolute', top: '50%', left: '6%', right: '6%', height: '2px', transform: 'translateY(-50%)',
+            backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,248,200,0.92) 0px, rgba(255,248,200,0.92) 22px, transparent 22px, transparent 46px)' }} />
+
+          {/* Wear patches */}
+          <div style={{ position: 'absolute', inset: 0, opacity: 0.16,
+            background: 'radial-gradient(ellipse 22% 55% at 18% 60%, rgba(0,0,0,0.45) 0%, transparent 70%), radial-gradient(ellipse 20% 50% at 82% 45%, rgba(0,0,0,0.4) 0%, transparent 70%)' }} />
+        </div>
+
+        {/* Horizon shadow */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '18%',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 100%)' }} />
       </div>
 
-      {/* From building */}
+      {/* From building — sits above road, not on it */}
       {scene.fromImg && (
-        <div style={{ position: 'absolute', bottom: 0, left: '1%', width: '30%', height: '76%',
-          animation: 'driv-building-float 5s ease-in-out infinite', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', bottom: ROAD_H, left: '1%', width: '30%', height: '70%',
+          pointerEvents: 'none', zIndex: 1 }}>
           <img src={scene.fromImg} alt="" draggable={false} style={{
             width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'bottom left',
             filter: noGlow ? 'none' : `drop-shadow(0 0 18px rgba(${glowRgb},0.32))`,
@@ -209,10 +264,10 @@ function ZoneScene({ zone, T, sceneRefs }) {
         </div>
       )}
 
-      {/* To building */}
+      {/* To building — sits above road, not on it */}
       {scene.toImg && (
-        <div style={{ position: 'absolute', bottom: 0, right: '1%', width: '26%', height: '64%',
-          animation: 'driv-building-float 5s ease-in-out infinite 1.6s', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', bottom: ROAD_H, right: '1%', width: '26%', height: '58%',
+          pointerEvents: 'none', zIndex: 1 }}>
           <img src={scene.toImg} alt="" draggable={false} style={{
             width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'bottom right',
             filter: noGlow ? 'none' : `drop-shadow(0 0 14px rgba(${glowRgb},0.28))`,
@@ -220,63 +275,20 @@ function ZoneScene({ zone, T, sceneRefs }) {
         </div>
       )}
 
-      {/* Route connector */}
-      <div style={{
-        position: 'absolute', bottom: '15%',
-        left: scene.fromImg ? '27%' : '8%',
-        right: scene.toImg ? '24%' : '8%',
-        height: '3px',
-        background: `linear-gradient(90deg, transparent, ${color}70 20%, ${color} 50%, ${color}70 80%, transparent)`,
-        boxShadow: noGlow ? 'none' : `0 0 16px ${color}90, 0 0 32px ${color}45`,
-        pointerEvents: 'none',
-      }} />
-
-      {/* Convoy vehicles (adhoc) — positions driven by GSAP via sceneRefs */}
-      {isConvoy && (
-        <>
-          <div ref={el => { sceneRefs.convoy3 = el }} style={{ position: 'absolute', bottom: '4%', left: '-35%',
-            transform: 'translateX(-50%)', width: '20%', height: '26%', pointerEvents: 'none', zIndex: 1 }}>
-            <img src={scene.extra} alt="" draggable={false} style={{
-              width: '100%', height: '100%', objectFit: 'contain',
-              filter: `drop-shadow(0 0 16px rgba(${glowRgb},0.32)) drop-shadow(0 5px 12px rgba(0,0,0,0.60))`,
-              animation: 'driv-drive 3.4s ease-in-out infinite 0.9s', transformOrigin: 'center bottom',
-            }} />
-          </div>
-          <div ref={el => { sceneRefs.convoy2 = el }} style={{ position: 'absolute', bottom: '4%', left: '-15%',
-            transform: 'translateX(-50%)', width: '28%', height: '34%', pointerEvents: 'none', zIndex: 2 }}>
-            <img src={scene.vehicle} alt="" draggable={false} style={{
-              width: '100%', height: '100%', objectFit: 'contain',
-              filter: `drop-shadow(0 0 20px rgba(${glowRgb},0.45)) drop-shadow(0 6px 14px rgba(0,0,0,0.62))`,
-              animation: 'driv-drive 3.5s ease-in-out infinite 0.45s', transformOrigin: 'center bottom',
-            }} />
-          </div>
-        </>
-      )}
-
-      {/* Extra vehicle (non-convoy) */}
-      {scene.extra && !isConvoy && (
-        <div ref={el => { sceneRefs.extra = el }} style={{ position: 'absolute', bottom: '3%', left: '22%',
-          transform: 'translateX(-50%)', width: '28%', height: '36%',
-          animation: 'driv-drive 3.4s ease-in-out infinite 0.8s',
-          transformOrigin: 'center bottom', pointerEvents: 'none', zIndex: 1 }}>
-          <img src={scene.extra} alt="" draggable={false} style={{
-            width: '100%', height: '100%', objectFit: 'contain',
-            filter: `drop-shadow(0 0 16px rgba(${glowRgb},0.32)) drop-shadow(0 5px 12px rgba(0,0,0,0.60))`,
-          }} />
-        </div>
-      )}
-
       {/* Main vehicle — position driven by GSAP via sceneRefs.vehicle */}
-      <div ref={el => { sceneRefs.vehicle = el }} style={{ position: 'absolute', bottom: '4%', left: '22%',
-        transform: 'translateX(-50%)', width: '38%', height: '46%',
-        pointerEvents: 'none', zIndex: isConvoy ? 3 : 2 }}>
-        <img src={isConvoy ? scene.extra2 : scene.vehicle} alt={title} draggable={false} style={{
+      <div ref={el => { sceneRefs.vehicle = el }} style={{
+        position: 'absolute',
+        bottom: scene.vehicleBottom ?? '2%',
+        left: '22%',
+        transform: 'translateX(-50%)',
+        width: scene.vehicleW ?? '48%',
+        height: scene.vehicleH ?? '58%',
+        pointerEvents: 'none',
+        zIndex: 2,
+      }}>
+        <img src={scene.vehicle} alt={title} draggable={false} style={{
           width: '100%', height: '100%', objectFit: 'contain',
           filter: noGlow ? `drop-shadow(0 8px 16px rgba(0,0,0,0.65))` : `drop-shadow(0 0 26px rgba(${glowRgb},0.58)) drop-shadow(0 8px 16px rgba(0,0,0,0.65))`,
-          animation: zone.id === 'quick'
-            ? 'driv-scooty 2.4s ease-in-out infinite'
-            : 'driv-drive 3.6s ease-in-out infinite',
-          transformOrigin: 'center bottom',
         }} />
       </div>
 
@@ -301,7 +313,6 @@ function ZoneScene({ zone, T, sceneRefs }) {
 // Static card shell — GSAP drives transform/opacity directly via outerRef
 function StackCard({ zone, isDesktop, T, cardH, outerRef, sceneRefs }) {
   const { color, glowRgb, noGlow } = zone
-  const ZIcon = zone.Icon
 
   return (
     <div
@@ -328,86 +339,20 @@ function StackCard({ zone, isDesktop, T, cardH, outerRef, sceneRefs }) {
       {/* Full card dark background */}
       <div style={{ position: 'absolute', inset: 0, background: T.cardBg }} />
 
-      {/* ── MAIN CONTENT ── */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0, bottom: 0,
-        display: 'flex',
-        flexDirection: isDesktop ? 'row' : 'column',
-      }}>
-
-        {/* LEFT: Text panel */}
-        <div style={{
-          width: isDesktop ? '38%' : '100%',
-          height: isDesktop ? '100%' : '42%',
-          position: 'relative',
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          padding: isDesktop
-            ? 'clamp(24px,2.8vw,52px) clamp(28px,3.2vw,56px) clamp(24px,2.8vw,52px) clamp(32px,3.6vw,60px)'
-            : '16px 22px',
-          flexShrink: 0,
-          zIndex: 2,
-        }}>
-
-          <div style={{
-            position: 'absolute', left: 0, top: '15%', height: '70%',
-            width: '2px', borderRadius: '0 2px 2px 0',
-            background: `linear-gradient(to bottom, transparent, ${color} 30%, ${color} 70%, transparent)`,
-            boxShadow: noGlow ? 'none' : `0 0 18px ${color}60`,
-          }} />
-
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-            background: noGlow ? 'none' : `radial-gradient(ellipse 80% 60% at -20% 50%, rgba(${glowRgb},0.10) 0%, transparent 70%)`,
-          }} />
-
-          <h3 style={{
-            fontFamily: 'var(--font-heading, inherit)', fontWeight: 900,
-            fontSize: isDesktop ? 'clamp(24px,2.6vw,44px)' : 'clamp(18px,5vw,26px)',
-            lineHeight: 1.06, letterSpacing: '-0.025em',
-            color: '#ffffff', marginBottom: '12px',
-            position: 'relative',
-          }}>
-            {zone.title}
-          </h3>
-
-          <p style={{
-            fontSize: isDesktop ? 'clamp(13px,0.9vw,15px)' : '12px',
-            lineHeight: 1.78, color: 'rgba(203,213,225,0.80)',
-            marginBottom: isDesktop ? '22px' : '14px',
-            maxWidth: '380px',
-            position: 'relative',
-          }}>
-            {zone.desc}
-          </p>
-
-          <div style={{ position: 'relative' }}>
-            <RouteTelemetry zone={zone} T={T} />
-          </div>
-
-        </div>
-
-        {/* Vertical divider (desktop) */}
-        {isDesktop && (
-          <div style={{
-            width: '1px', flexShrink: 0, alignSelf: 'stretch',
-            background: `linear-gradient(to bottom, transparent 5%, ${color}28 25%, ${color}45 50%, ${color}28 75%, transparent 95%)`,
-          }} />
-        )}
-
-        {/* Horizontal divider (mobile) */}
-        {!isDesktop && (
-          <div style={{
-            height: '1px', flexShrink: 0,
-            background: `linear-gradient(to right, transparent 5%, ${color}30 35%, ${color}45 50%, ${color}30 65%, transparent 95%)`,
-          }} />
-        )}
-
-        {/* RIGHT: Scene panel */}
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', minHeight: 0 }}>
-          <ZoneScene zone={zone} T={T} sceneRefs={sceneRefs} />
-        </div>
+      {/* Full-width scene */}
+      <div style={{ position: 'absolute', inset: 0 }}>
+        <ZoneScene zone={zone} T={T} sceneRefs={sceneRefs} />
       </div>
+
+      {/* Top gradient for text legibility */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: isDesktop ? '46%' : '52%',
+        pointerEvents: 'none', zIndex: 2,
+        background: 'linear-gradient(to bottom, rgba(5,11,24,0.92) 0%, rgba(5,11,24,0.55) 55%, transparent 100%)',
+      }} />
+
+      {/* Centered top text overlay */}
+      <ZoneCardText zone={zone} T={T} />
 
       {/* Card-level glow overlay */}
       {!noGlow && (
@@ -436,8 +381,9 @@ export default function DrivWorldSection() {
 
   // Per-zone DOM refs — card outer div + scene vehicle elements
   const elRefs = useRef(
-    ZONES.map(() => ({ card: null, vehicle: null, convoy2: null, convoy3: null, extra: null }))
+    ZONES.map(() => ({ card: null, vehicle: null }))
   )
+  const maxTravelRef = useRef(ZONES.map(() => 0))
 
   // UI state — only re-renders for structural/theme changes, NOT every scroll tick
   const [activeZone, setActiveZone]   = useState(0)
@@ -454,13 +400,14 @@ export default function DrivWorldSection() {
     () => typeof window !== 'undefined' ? window.innerHeight : 800
   )
 
-  // Set cards off-screen before first paint to prevent flash
+  // Hide stacked cards before first paint; card 0 is positioned by ScrollTrigger sync
   useLayoutEffect(() => {
-    elRefs.current.forEach(r => {
-      if (r.card) {
+    elRefs.current.forEach((r, i) => {
+      if (r.card && i > 0) {
         r.card.style.transform = 'translateX(-50%) translateY(10000px)'
         r.card.style.opacity   = '0'
       }
+      if (r.vehicle) r.vehicle.style.left = '22%'
     })
   }, [])
 
@@ -469,10 +416,15 @@ export default function DrivWorldSection() {
     const onResize = () => {
       setIsDesktop(window.innerWidth >= 1024)
       setVh(window.innerHeight)
+      ScrollTrigger.refresh()
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  useEffect(() => {
+    ScrollTrigger.refresh()
+  }, [isDesktop, vh])
 
   // Theme observer
   useEffect(() => {
@@ -484,104 +436,96 @@ export default function DrivWorldSection() {
   }, [])
 
   // GSAP ScrollTrigger — all animation via direct DOM manipulation, zero React state per frame
-  useEffect(() => {
+  useLayoutEffect(() => {
     const vp = viewportRef.current
     if (!vp) return
 
     const _ss = t => t * t * (3 - 2 * t)
     const _cl = t => Math.max(0, Math.min(1, t))
-    const steps = ZONES.length - 1
+
+    const updateFrame = (progress) => {
+      const cvh        = window.innerHeight
+      const cardH      = Math.min(Math.round(cvh * 0.65), 520)
+      const cardCenter = Math.round((cvh - cardH) / 2 + CARD_TOP)
+      const rawSeg     = progress * totalScrollSeg()
+      const activeIdx  = activeZoneIndex(rawSeg)
+      const stackShift = activeIdx * 9
+
+      const newActive = activeIdx
+      if (newActive !== activeZoneRef.current) {
+        activeZoneRef.current = newActive
+        setActiveZone(newActive)
+      }
+
+      if (progress <= 0.002) {
+        maxTravelRef.current = ZONES.map(() => 0)
+      }
+
+      ZONES.forEach((zone, i) => {
+        const r = elRefs.current[i]
+        if (!r.card) return
+
+        const eStart = zoneEntranceStart(i)
+        const vStart = zoneVehicleStart(i)
+        const vEnd   = zoneVehicleEnd(i)
+        let cardY, opacity = 1, cardScale = 1
+
+        if (i > 0 && rawSeg < eStart) {
+          cardY   = cvh
+          opacity = 0
+        } else if (rawSeg < vStart) {
+          const t   = _ss(_cl((rawSeg - eStart) / HOLD))
+          const dst = cardCenter + stackShift
+          cardY     = cvh - t * (cvh - dst)
+          opacity   = Math.min(1, t * 2)
+        } else if (rawSeg < vEnd) {
+          cardY = cardCenter + stackShift
+        } else {
+          const depth = Math.min(Math.max(0, activeIdx - i), 3)
+          cardY     = cardCenter + stackShift - depth * 18
+          cardScale = 1 - depth * 0.015
+        }
+
+        r.card.style.transform = `translateX(-50%) translateY(${(cardY - CARD_TOP).toFixed(2)}px) scale(${cardScale.toFixed(4)})`
+        r.card.style.opacity   = opacity.toFixed(3)
+
+        if (r.vehicle) {
+          const travelRaw = _cl((rawSeg - vStart) / VEHICLE_SEG)
+          maxTravelRef.current[i] = Math.max(maxTravelRef.current[i], travelRaw)
+          const travel  = _ss(maxTravelRef.current[i])
+          const mainPct = 22 + travel * 56
+          r.vehicle.style.left = `${mainPct.toFixed(2)}%`
+        }
+      })
+    }
 
     const ctx = gsap.context(() => {
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: vp,
         pin: true, pinSpacing: true,
         start: 'top top',
-        end: () => `+=${(steps + HOLD) * window.innerHeight * SCROLL_MULT}`,
+        end: () => `+=${totalScrollSeg() * window.innerHeight * SCROLL_MULT}`,
         scrub: 1,
         anticipatePin: 1, invalidateOnRefresh: true,
-        fastScrollEnd: true, preventOverlaps: true,
 
-        onUpdate(self) {
-          const progress  = self.progress
-          const cvh        = window.innerHeight
-          const cardH      = Math.min(Math.round(cvh * 0.65), 520)
-          const cardCenter = Math.round((cvh - cardH) / 2 + 44)  // +44 = half navbar height with slight upward nudge
-          const rawSeg     = progress * (steps + HOLD)
-          const clampedSeg = Math.min(rawSeg, steps)
+        onUpdate(self) { updateFrame(self.progress) },
+        onRefresh(self) { updateFrame(self.progress) },
 
-          // Update progress pills only when active zone changes
-          const newActive = Math.min(steps, Math.round(clampedSeg))
-          if (newActive !== activeZoneRef.current) {
-            activeZoneRef.current = newActive
-            setActiveZone(newActive)
-          }
-
-          ZONES.forEach((zone, i) => {
-            const r = elRefs.current[i]
-            if (!r.card) return
-
-            const offset = clampedSeg - i
-            let cardY, opacity = 1, cardScale = 1
-
-            // stackShift: pushes the whole group down so the stack (peeks + active card)
-            // stays centred. Each past card peeks 18 px above; half that (9 px) shifts
-            // the group's visual midpoint back to cardCenter.
-            const stackShift = clampedSeg * 9   // 0 for card 0, +9 per zone
-
-            if (offset < -HOLD) {
-              // Not yet approaching — park below viewport
-              cardY   = cvh
-              opacity = 0
-            } else if (offset < 0) {
-              // Sliding up from below into centred position (accounting for stack)
-              const t   = _ss(_cl((offset + HOLD) / HOLD))
-              const dst = cardCenter + stackShift   // land at compensated centre
-              cardY     = cvh - t * (cvh - dst)
-              opacity   = Math.min(1, t * 2)
-            } else {
-              // Active (offset=0) or past — compensated centre; past cards nudge up
-              // so their top edges peek above the active card.
-              const depth = Math.min(offset, 3)
-              cardY      = cardCenter + stackShift - depth * 18
-              cardScale  = 1 - depth * 0.015
-            }
-
-            // Direct DOM write — no GSAP overhead, no React batching delay
-            r.card.style.transform = `translateX(-50%) translateY(${(cardY - CARD_TOP).toFixed(2)}px) scale(${cardScale.toFixed(4)})`
-            r.card.style.opacity   = opacity.toFixed(3)
-
-            // Vehicle travel — pure position-based, works identically forward & backward
-            const isLast      = i === steps
-            const travelRaw   = isLast
-              ? _cl((rawSeg - i) / HOLD)   // last zone uses rawSeg for full travel
-              : _cl(offset)                 // others: 0 entering → 1 leaving
-            const travel      = _ss(travelRaw)
-            const mainPct     = 22 + travel * 56
-
-            if (r.vehicle) r.vehicle.style.left = `${mainPct.toFixed(2)}%`
-
-            // Convoy vehicles — staggered
-            if (r.convoy2) {
-              const f2 = _ss(_cl((travelRaw - 0.10) / 0.80))
-              r.convoy2.style.left = `${(-15 + f2 * 93).toFixed(2)}%`
-            }
-            if (r.convoy3) {
-              const f3 = _ss(_cl((travelRaw - 0.20) / 0.80))
-              r.convoy3.style.left = `${(-35 + f3 * 113).toFixed(2)}%`
-            }
-
-            // Extra vehicle (non-convoy)
-            if (r.extra && zone.id !== 'adhoc') {
-              const extraGap = 28 * 4 * travel * (1 - travel)
-              r.extra.style.left = `${(mainPct - extraGap).toFixed(2)}%`
-            }
+        onLeave() { setActiveZone(ZONES.length - 1) },
+        onLeaveBack() {
+          setActiveZone(0)
+          activeZoneRef.current = 0
+          maxTravelRef.current = ZONES.map(() => 0)
+          elRefs.current.forEach(r => {
+            if (r.vehicle) r.vehicle.style.left = '22%'
           })
+          updateFrame(0)
         },
-
-        onLeave()     { setActiveZone(steps) },
-        onLeaveBack() { setActiveZone(0) },
       })
+
+      updateFrame(st.progress)
+      ScrollTrigger.refresh()
+      requestAnimationFrame(() => updateFrame(st.progress))
     }, vp)
 
     return () => ctx.revert()
@@ -589,8 +533,7 @@ export default function DrivWorldSection() {
 
   const T           = makeTheme(isDark)
   const cardH       = Math.min(Math.round(vh * 0.65), 520)
-  const activeColor = ZONES[activeZone]?.color    ?? '#A3E635'
-  const activeGlow  = ZONES[activeZone]?.glowRgb  ?? '163,230,53'
+  const activeColor = ZONES[activeZone]?.color ?? '#A3E635'
 
   return (
     <div ref={viewportRef} className="relative w-full overflow-hidden"
@@ -631,27 +574,6 @@ export default function DrivWorldSection() {
           transformOrigin: 'top',
           transition: 'transform 0.6s ease, background 0.9s ease, box-shadow 0.9s ease',
         }} />
-      </div>
-
-      {/* Section header */}
-      <div className="absolute top-0 inset-x-0 z-50 flex items-center justify-center pointer-events-none"
-        style={{ height: `${CARD_TOP}px` }}>
-        <div className="flex items-center gap-2">
-          <span style={{ width: '24px', height: '1px', background: `${activeColor}60`, transition: 'background 0.9s ease' }} />
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%',
-            background: activeColor, boxShadow: `0 0 6px ${activeColor}`,
-            transition: 'background 0.9s ease, box-shadow 0.9s ease',
-            animation: 'driv-dot-pulse 2.5s ease-in-out infinite' }} />
-          <span className="text-xs font-bold uppercase tracking-[0.28em]"
-            style={{ color: activeColor, transition: 'color 0.9s ease' }}>
-            What We Do
-          </span>
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%',
-            background: activeColor, boxShadow: `0 0 6px ${activeColor}`,
-            transition: 'background 0.9s ease, box-shadow 0.9s ease',
-            animation: 'driv-dot-pulse 2.5s ease-in-out infinite 1.25s' }} />
-          <span style={{ width: '24px', height: '1px', background: `${activeColor}60`, transition: 'background 0.9s ease' }} />
-        </div>
       </div>
 
       {/* Stacked cards */}

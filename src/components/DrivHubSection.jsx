@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import {
   IconDroplet,
   IconParking,
@@ -8,58 +9,47 @@ import {
   IconClock,
   IconTruck,
 } from '@tabler/icons-react'
+import { SectionHeader, SECTION_SHELL, SECTION_CONTAINER } from './SectionHeader'
 
 const HUB_BUILDING = '/scenes/building-hub.webp'
-
-/** Even pentagon on the orbit — 72° apart, starting at top */
-const ORBIT_RADIUS = 54
-const HUB_RING_RADIUS = 20
-
-const FACILITY_CARD_W = 'w-[148px] sm:w-[160px]'
-const FACILITY_IMG_H = 'h-[100px] sm:h-[110px]'
 
 const facilities = [
   {
     id: 'washing',
-    short: 'Wash Center',
-    building: '/scenes/building-warehouse.webp',
+    title: 'Wash Center',
+    desc: 'Fleet washing & vehicle upkeep on campus',
     Icon: IconDroplet,
-    color: '#65a30d',
-    tint: 'rgba(163,230,53,0.08)',
+    accent: 'lime',
   },
   {
     id: 'parking',
-    short: 'Parking',
-    building: '/scenes/building-warehouse.webp',
+    title: 'Parking',
+    desc: 'Secure parking for entire fleet capacity',
     Icon: IconParking,
-    color: '#ea6c0a',
-    tint: 'rgba(249,115,22,0.08)',
+    accent: 'orange',
   },
   {
     id: 'monitoring',
-    short: 'Monitoring',
-    building: '/scenes/dispatch-hub.webp',
+    title: 'Monitoring',
+    desc: 'Live GPS tracking & fleet visibility',
     Icon: IconRadar,
-    color: '#65a30d',
-    tint: 'rgba(163,230,53,0.08)',
+    accent: 'lime',
   },
   {
     id: 'dispatch',
-    short: 'Dispatch',
-    building: '/scenes/dispatch-hub.webp',
+    title: 'Dispatch',
+    desc: 'Route planning & load coordination',
     Icon: IconRoute,
-    color: '#ea6c0a',
-    tint: 'rgba(249,115,22,0.08)',
+    accent: 'orange',
   },
   {
     id: 'helpdesk',
-    short: 'Help Desk',
-    building: '/scenes/customer-house.webp',
+    title: 'Help Desk',
+    desc: 'On-site driver support, 24/7',
     Icon: IconHeadphones,
-    color: '#65a30d',
-    tint: 'rgba(163,230,53,0.08)',
+    accent: 'lime',
   },
-].map((f, i) => ({ ...f, angle: -90 + i * 72 }))
+]
 
 const hubStats = [
   { label: '500+ vehicle capacity', Icon: IconTruck },
@@ -74,214 +64,123 @@ const highlights = [
   { label: 'On site Driver Support', color: 'lime' },
 ]
 
-function polarToXY(angleDeg, radius = ORBIT_RADIUS) {
-  const rad = (angleDeg * Math.PI) / 180
-  return {
-    x: 50 + radius * Math.cos(rad),
-    y: 50 + radius * Math.sin(rad),
-  }
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
-function FacilityCard({ f }) {
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+}
+
+const accentStyles = {
+  lime: {
+    icon: 'bg-[#A3E635]/15 text-[#65a30d] border-[#A3E635]/25',
+    dot: 'bg-[#A3E635]',
+    hover: 'hover:border-[#A3E635]/40 hover:shadow-[0_12px_40px_rgba(163,230,53,0.12)]',
+    line: 'from-[#A3E635]/80 to-[#A3E635]/0',
+  },
+  orange: {
+    icon: 'bg-[#F97316]/12 text-[#ea6c0a] border-[#F97316]/25',
+    dot: 'bg-[#F97316]',
+    hover: 'hover:border-[#F97316]/40 hover:shadow-[0_12px_40px_rgba(249,115,22,0.12)]',
+    line: 'from-[#F97316]/80 to-[#F97316]/0',
+  },
+}
+
+function FacilityTile({ f }) {
   const FIcon = f.Icon
+  const a = accentStyles[f.accent]
+
   return (
-    <div
-      className={`relative ${FACILITY_CARD_W} rounded-2xl border border-gray-200/80 bg-white overflow-hidden shadow-[0_8px_28px_rgba(0,0,0,0.08)] shrink-0`}
+    <motion.article
+      variants={fadeUp}
+      className={`group relative flex flex-col gap-4 rounded-2xl border border-gray-200/80 bg-white p-5 sm:p-6 transition-all duration-300 ${a.hover}`}
     >
-      <div className="h-1.5 w-full" style={{ backgroundColor: f.color }} />
-      <div
-        className={`relative ${FACILITY_IMG_H} flex items-end justify-center px-2 pt-2`}
-        style={{
-          background: `linear-gradient(180deg, ${f.tint} 0%, #fff 55%)`,
-        }}
-      >
-        <div
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[72%] h-2 rounded-[100%] opacity-40"
-          style={{ backgroundColor: f.color }}
-        />
-        <img
-          src={f.building}
-          alt=""
-          className="relative z-[1] max-h-[92%] max-w-[96%] object-contain object-bottom drop-shadow-[0_6px_12px_rgba(0,0,0,0.12)]"
-        />
+      <div className={`absolute top-0 left-5 right-5 h-px bg-gradient-to-r ${a.line}`} />
+      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${a.icon}`}>
+        <FIcon size={22} stroke={2} />
       </div>
-      <span
-        className="absolute top-2.5 right-2.5 w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center border-2 border-white shadow-md"
-        style={{ backgroundColor: f.color }}
-      >
-        <FIcon size={17} className="text-white" stroke={2.5} />
+      <div>
+        <h3 className="font-heading font-bold text-base sm:text-lg text-gray-900">{f.title}</h3>
+        <p className="mt-1.5 text-sm text-gray-600 leading-relaxed">{f.desc}</p>
+      </div>
+      <span className={`mt-auto inline-flex w-fit items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500`}>
+        <span className={`h-1.5 w-1.5 rounded-full ${a.dot}`} />
+        On campus
       </span>
-    </div>
+    </motion.article>
   )
 }
 
-/** Rotate from center + fixed radius — slot angle is clockwise from top (12 o'clock) */
-function OrbitFacility({ f }) {
-  const slot = f.angle + 90
+function HubHero() {
   return (
-    <div
-      className="absolute left-1/2 top-1/2 z-10 origin-center"
-      style={{ transform: `rotate(${slot}deg) translateY(calc(-1 * var(--hub-orbit-r)))` }}
+    <motion.div
+      variants={fadeUp}
+      className="relative overflow-hidden rounded-3xl border border-gray-200/60 bg-[#0c1018] shadow-[0_24px_80px_rgba(0,0,0,0.18)]"
     >
       <div
-        className={`flex flex-col items-center ${FACILITY_CARD_W} origin-center`}
-        style={{ transform: `rotate(${-slot}deg) translate(-50%, calc(-1 * var(--hub-card-half)))` }}
-      >
-        <FacilityCard f={f} />
-        <span
-          className="mt-2 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-900 py-1.5 px-3 rounded-full bg-white border shadow-sm whitespace-nowrap"
-          style={{ borderColor: `${f.color}40` }}
-        >
-          <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: f.color }} />
-          {f.short}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-function OrbitDiagram() {
-  return (
-    <div className="relative w-full max-w-[780px] mx-auto px-3 sm:px-6 py-10 sm:py-14">
-      <div
-        className="relative w-full aspect-square overflow-visible [container-type:size] hub-orbit-stage box-content p-5 sm:p-8"
+        className="absolute inset-0 pointer-events-none opacity-60"
         style={{
-          '--hub-orbit-r': `${ORBIT_RADIUS}cqmin`,
-          '--hub-card-half': '50px',
+          backgroundImage: `
+            linear-gradient(rgba(163,230,53,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(163,230,53,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: '32px 32px',
         }}
-      >
-      <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 100 100" aria-hidden>
-        <defs>
-          <radialGradient id="hub-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#A3E635" stopOpacity="0.28" />
-            <stop offset="55%" stopColor="#A3E635" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#F97316" stopOpacity="0" />
-          </radialGradient>
-          <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#A3E635" stopOpacity="0.35" />
-            <stop offset="50%" stopColor="#F97316" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#A3E635" stopOpacity="0.35" />
-          </linearGradient>
-        </defs>
+      />
+      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#A3E635]/10 blur-3xl pointer-events-none" />
+      <div className="absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-[#F97316]/8 blur-3xl pointer-events-none" />
 
-        <circle cx="50" cy="50" r="49" fill="url(#hub-glow)" />
-        <circle
-          cx="50"
-          cy="50"
-          r={ORBIT_RADIUS}
-          fill="none"
-          stroke="url(#ring-grad)"
-          strokeWidth="0.55"
-          strokeDasharray="3 4"
-        />
-        <circle
-          cx="50"
-          cy="50"
-          r={ORBIT_RADIUS}
-          fill="none"
-          stroke="rgba(255,255,255,0.6)"
-          strokeWidth="0.2"
-        />
-        <circle cx="50" cy="50" r={HUB_RING_RADIUS} fill="rgba(163,230,53,0.04)" />
-        <circle cx="50" cy="50" r={HUB_RING_RADIUS} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth="0.3" />
+      <div className="relative grid lg:grid-cols-[1.05fr_0.95fr] min-h-[320px] sm:min-h-[360px]">
+        <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:py-12 order-2 lg:order-1">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#A3E635]/25 bg-[#A3E635]/10 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#A3E635]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A3E635] animate-pulse" />
+            Command Center
+          </span>
+          <h2 className="font-heading font-black text-3xl sm:text-4xl text-white mt-4 tracking-tight">
+            DRIV <span className="text-[#A3E635]">HUB</span>
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-white/60 leading-relaxed max-w-md">
+            One integrated campus where fleet operations, dispatch, and driver support run as a single system.
+          </p>
 
-        {facilities.map((f) => {
-          const end = polarToXY(f.angle)
-          return (
-            <g key={f.id}>
-              <line
-                x1="50"
-                y1="50"
-                x2={end.x}
-                y2={end.y}
-                stroke={f.color}
-                strokeWidth="0.65"
-                strokeLinecap="round"
-                opacity="0.22"
-              />
-              <line
-                x1="50"
-                y1="50"
-                x2={end.x}
-                y2={end.y}
-                stroke={f.color}
-                strokeWidth="0.25"
-                strokeLinecap="round"
-                strokeDasharray="1.2 2"
-                opacity="0.5"
-              />
-              <circle cx={end.x} cy={end.y} r="1.2" fill={f.color} opacity="0.5" />
-            </g>
-          )
-        })}
-        <circle cx="50" cy="50" r="2.2" fill="#1a1a1a" opacity="0.15" />
-        <circle cx="50" cy="50" r="1.1" fill="#A3E635" />
-      </svg>
-
-      {/* Center hub — above facility nodes */}
-      <div className="absolute left-1/2 top-1/2 z-30 flex flex-col items-center -translate-x-1/2 -translate-y-1/2 w-[min(68%,260px)] sm:w-[min(62%,280px)] max-w-[300px]">
-        <div className="relative w-full">
-          <div
-            className="absolute -inset-[3px] rounded-[1.4rem] opacity-70 blur-[1px]"
-            style={{
-              background: 'linear-gradient(135deg, #A3E635 0%, #F97316 45%, #A3E635 100%)',
-            }}
-          />
-          <div className="relative rounded-2xl sm:rounded-[1.35rem] bg-white border border-white/90 shadow-lime overflow-hidden">
-            <div className="bg-gradient-to-r from-[#1a1a1a] via-[#252525] to-[#1a1a1a] px-5 py-2.5 text-center">
-              <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-white">
-                DRIV HUB
-              </p>
-              <p className="text-[9px] sm:text-[10px] text-white/55 mt-0.5 font-medium tracking-wide">
-                Command Center
-              </p>
-            </div>
-
-            <div className="relative px-4 pt-4 pb-1 sm:px-6 sm:pt-5 sm:pb-2 bg-gradient-to-b from-[#eef4e6] via-[#f8faf5] to-white overflow-hidden">
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-6 rounded-[100%] bg-[#1a1a1a]/[0.07] blur-md" />
-              <img
-                src={HUB_BUILDING}
-                alt="DRIV HUB campus"
-                className="relative z-[1] w-full h-auto object-contain object-bottom max-h-[140px] sm:max-h-[180px] mx-auto drop-shadow-[0_10px_24px_rgba(0,0,0,0.14)]"
-              />
-            </div>
-
-            <div className="px-5 py-4 sm:px-6 sm:py-5 border-t-2 border-[#A3E635]/30 bg-[#eef4e6] text-center">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-[#A3E635]/25 mb-2">
-                <IconMapPin size={20} className="text-[#65a30d]" stroke={2} />
-              </span>
-              <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
-                Bhiwandi Logistics Park
-              </p>
-              <p className="text-base sm:text-lg text-gray-600 mt-1 font-medium">
-                Bhiwandi, Maharashtra, India
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 border-t border-[#A3E635]/15 bg-white">
-              {hubStats.map(({ label, Icon }, i) => (
-                <p
-                  key={label}
-                  className={`flex items-center justify-center gap-2 px-3 sm:px-4 py-3.5 text-[10px] sm:text-xs font-semibold text-gray-700 ${
-                    i === 0 ? 'border-r border-[#A3E635]/12' : ''
-                  }`}
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f4f7ef]">
-                    <Icon size={16} className="text-[#65a30d] shrink-0" stroke={2} />
-                  </span>
-                  <span className="leading-snug">{label}</span>
-                </p>
-              ))}
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 backdrop-blur-sm">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#A3E635]/15">
+              <IconMapPin size={18} className="text-[#A3E635]" stroke={2} />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-white">Bhiwandi Logistics Park</p>
+              <p className="text-xs sm:text-sm text-white/50 mt-0.5">Bhiwandi, Maharashtra, India</p>
             </div>
           </div>
         </div>
+
+        <div className="relative flex items-end justify-center px-6 pt-8 lg:pt-10 order-1 lg:order-2 min-h-[200px] lg:min-h-0">
+          <div className="absolute inset-x-8 bottom-8 h-16 rounded-full bg-black/40 blur-2xl" />
+          <img
+            src={HUB_BUILDING}
+            alt="DRIV HUB campus"
+            className="relative z-[1] w-full max-w-[300px] lg:max-w-none object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)]"
+          />
+        </div>
       </div>
 
-      {facilities.map((f) => (
-        <OrbitFacility key={f.id} f={f} />
-      ))}
+      <div className="relative grid sm:grid-cols-2 border-t border-white/10 bg-black/20">
+        {hubStats.map(({ label, Icon }, i) => (
+          <div
+            key={label}
+            className={`flex items-center gap-3 px-6 py-4 sm:py-5 ${i === 0 ? 'sm:border-r border-white/10' : ''}`}
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10">
+              <Icon size={18} className="text-[#A3E635]" stroke={2} />
+            </span>
+            <p className="text-xs sm:text-sm font-semibold text-white/80">{label}</p>
+          </div>
+        ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -289,7 +188,7 @@ export default function DrivHubSection() {
   return (
     <section
       id="hub"
-      className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-10 sm:pb-14 md:pb-20 lg:pb-24 overflow-x-clip section-sep bg-[#f6f7f4]"
+      className={`${SECTION_SHELL} bg-[#f6f7f4]`}
     >
       <div
         className="absolute left-0 top-1/4 w-[min(520px,55vw)] h-[420px] rounded-full pointer-events-none"
@@ -299,73 +198,66 @@ export default function DrivHubSection() {
         className="absolute right-0 bottom-1/4 w-[min(400px,45vw)] h-[360px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)' }}
       />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-50"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(163,230,53,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(163,230,53,0.04) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-        }}
-      />
 
-      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
-        <div className="text-center mb-8 md:mb-12 lg:mb-16">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
-            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />Operations Hub<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
-          </span>
-          <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2">
-            The DRIV <span className="gradient-text-orange">HUB</span>
-          </h1>
-          <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            India&apos;s fleet operations, unified at one address —{' '}
-            <span className="font-semibold text-gray-800">Bhiwandi Logistics Park</span>, where
-            washing, parking, GPS monitoring, dispatch, and driver support run around the clock.
-          </p>
-        </div>
+      <div className={`${SECTION_CONTAINER} max-w-6xl`}>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+        >
+          <SectionHeader
+            label="Operations Hub"
+            title={<>The DRIV <span className="gradient-text-orange">HUB</span></>}
+            titleAs="h1"
+            description={
+              <>
+                India&apos;s fleet operations, unified at one address —{' '}
+                <span className="font-semibold text-gray-800">Bhiwandi Logistics Park</span>, where
+                washing, parking, GPS monitoring, dispatch, and driver support run around the clock.
+              </>
+            }
+          />
+        </motion.div>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-br from-[#A3E635]/50 via-white to-[#F97316]/40 shadow-[0_20px_60px_rgba(163,230,53,0.12),0_8px_24px_rgba(0,0,0,0.06)]">
-            <div className="rounded-2xl sm:rounded-3xl bg-white overflow-visible">
-              <div className="px-5 sm:px-8 py-4 border-b border-gray-100 bg-gradient-to-r from-[#fafaf8] via-white to-[#fffaf5] flex flex-wrap items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#65a30d]">
-                    Campus layout
-                  </p>
-                  <p className="text-xs sm:text-sm font-semibold text-gray-900 mt-1 leading-snug">
-                    Bhiwandi Logistics Park
-                  </p>
-                  <p className="text-base sm:text-lg text-black mt-0.5 leading-relaxed">
-                    Five on-site facilities connected to one central command hub
-                  </p>
-                </div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1a1a1a] text-[10px] sm:text-xs font-semibold text-white shrink-0">
-                  <IconMapPin size={13} className="text-[#A3E635]" stroke={2} />
-                  Bhiwandi, MH
-                </span>
-              </div>
+        <motion.div
+          className="space-y-5 sm:space-y-6"
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.08 }}
+        >
+          <HubHero />
 
-              <div className="relative px-1 sm:px-2 py-8 sm:py-12 bg-[radial-gradient(ellipse_at_center,rgba(163,230,53,0.06)_0%,transparent_65%)] overflow-visible">
-                <OrbitDiagram />
-              </div>
-
-              <div className="px-5 sm:px-8 py-4 border-t border-gray-100 bg-[#fafaf8] text-center sm:text-left">
-                <p className="text-base sm:text-lg text-black leading-relaxed max-w-xl mx-auto sm:mx-0">
-                  <span className="font-semibold text-[#65a30d]">Green</span> — washing, monitoring
-                  &amp; help desk &nbsp;·&nbsp;{' '}
-                  <span className="font-semibold text-[#ea6c0a]">Orange</span> — fleet parking
-                  &amp; dispatch
-                </p>
-              </div>
+          <div className="flex items-end justify-between gap-4 px-1">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#65a30d]">On-site facilities</p>
+              <p className="text-sm sm:text-base font-semibold text-gray-900 mt-1">Five services, one campus</p>
             </div>
+            <p className="hidden sm:block text-xs text-gray-500 max-w-[200px] text-right leading-relaxed">
+              <span className="text-[#65a30d] font-semibold">Green</span> ops &nbsp;·&nbsp;
+              <span className="text-[#ea6c0a] font-semibold">Orange</span> fleet
+            </p>
           </div>
-        </div>
 
-        <div className="mt-8 sm:mt-10 flex flex-wrap justify-center gap-2">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+            {facilities.map((f) => (
+              <FacilityTile key={f.id} f={f} />
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="mt-10 sm:mt-12 flex flex-wrap justify-center gap-2"
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {highlights.map(({ label, color }) => (
-            <span
+            <motion.span
               key={label}
+              variants={fadeUp}
               className={`px-3 py-1.5 rounded-full text-xs font-medium ${
                 color === 'lime'
                   ? 'border border-[#A3E635]/35 text-[#65a30d] bg-white shadow-sm'
@@ -373,16 +265,10 @@ export default function DrivHubSection() {
               }`}
             >
               {label}
-            </span>
+            </motion.span>
           ))}
-        </div>
+        </motion.div>
       </div>
-
-      <style>{`
-        @media (min-width: 640px) {
-          .hub-orbit-stage { --hub-card-half: 55px; }
-        }
-      `}</style>
     </section>
   )
 }

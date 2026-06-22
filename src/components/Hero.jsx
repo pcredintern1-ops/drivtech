@@ -67,7 +67,7 @@ export default function Hero() {
       }} />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-5 sm:px-8 lg:px-12 2xl:px-24 pt-28 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
+      <div className="relative z-10 flex-1 flex flex-col w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24 pt-28 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-24 pb-8 sm:pb-10 xl:pb-0 justify-between xl:justify-center">
 
         <div className="flex flex-col">
 

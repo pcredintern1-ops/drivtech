@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IconTruck, IconRoute, IconBike } from '@tabler/icons-react'
 import DrivWorldSection from './DrivWorldSection'
+import { SectionHeader, SECTION_PT, SECTION_CONTAINER } from './SectionHeader'
 
 /* ── 3-card journey data ── */
 const JOURNEY_STEPS = [
@@ -36,10 +37,6 @@ function JourneyCardBody({ step }) {
   const StepIcon = step.Icon
   return (
     <>
-      {/* Hover radial glow */}
-      <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `radial-gradient(circle at 50% 30%, ${step.color}14 0%, transparent 65%)` }} />
-
       {/* Header row — step number + label */}
       <div className="relative flex items-center gap-2.5 px-5 pt-5 z-10">
         <span className="font-black text-[10px] sm:text-xs tabular-nums"
@@ -216,66 +213,57 @@ function JourneyCarousel() {
 
 export default function ServicesSection() {
   return (
-    <section id="services"
-      className="relative pt-28 sm:pt-36 md:pt-40 lg:pt-36 pb-0 overflow-x-clip section-sep bg-white">
+    <>
+      <section
+        id="services"
+        className={`relative ${SECTION_PT} pb-10 md:pb-12 lg:pb-14 overflow-x-clip section-sep bg-white`}
+      >
+        <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
 
-      <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
+        <div className={SECTION_CONTAINER}>
+          <SectionHeader
+            label="What We Do"
+            title={<>Our <span className="gradient-text">Logistics Solutions</span></>}
+            titleAs="h1"
+            description="From pickup to final delivery, DRIV powers every stage of the supply chain with scalable, technology-driven logistics solutions."
+          />
 
-      <div className="relative w-full mx-auto px-4 sm:px-8 lg:px-12 2xl:px-24">
+          {/* ── Mobile: carousel (tabs + arrows + slide + dots) ── */}
+          <JourneyCarousel />
 
-        {/* ── Header ── */}
-        <div className="mb-8 md:mb-12 lg:mb-16 text-center">
-          <span className="flex items-center justify-center gap-2 text-[#65a30d] text-sm font-bold uppercase tracking-[0.3em] mb-5">
-            <span className="w-8 h-px bg-[#A3E635]/60" /><span className="w-2 h-2 rounded-full bg-[#A3E635]" />What We Do<span className="w-2 h-2 rounded-full bg-[#A3E635]" /><span className="w-8 h-px bg-[#A3E635]/60" />
-          </span>
-          <div className="w-fit mx-auto">
-            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] text-gray-900 leading-[1.08] mb-2 text-center">
-              Our <span className="gradient-text">Logistics Solutions</span>
-            </h1>
+          {/* ── Desktop only: 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
+          <div className="hidden xl:grid xl:grid-cols-3 gap-4">
+            {JOURNEY_STEPS.map((step, i) => (
+              <motion.div
+                key={step.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: 'easeOut' }}
+                className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
+                style={{
+                  border: `1px solid ${step.border}`,
+                  background: step.bg,
+                  backgroundClip: 'padding-box',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
+                  transition: 'box-shadow 0.4s ease, border-color 0.4s ease',
+                }}>
+                <JourneyCardBody step={step} />
+              </motion.div>
+            ))}
           </div>
-          <p className="max-w-2xl mx-auto mt-4 text-base sm:text-lg text-black leading-relaxed text-center">
-            From pickup to final delivery, DRIV powers every stage of the supply chain with scalable, technology-driven logistics solutions.
-          </p>
+          <style>{`
+            .journey-card:hover {
+              box-shadow: 0 18px 40px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.05) !important;
+            }
+          `}</style>
         </div>
+      </section>
 
-        {/* ── Mobile: carousel (tabs + arrows + slide + dots) ── */}
-        <JourneyCarousel />
-
-        {/* ── Desktop only: 3 Journey cards: First Mile | Middle Mile | Last Mile ── */}
-        <div className="hidden xl:grid xl:grid-cols-3 gap-4 mb-5 md:mb-7">
-          {JOURNEY_STEPS.map((step, i) => (
-            <motion.div
-              key={step.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: 'easeOut' }}
-              className="journey-card relative rounded-3xl overflow-hidden flex flex-col group cursor-default"
-              style={{
-                border: `1px solid ${step.border}`,
-                background: step.bg,
-                backgroundClip: 'padding-box',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
-                transition: 'box-shadow 0.4s ease, border-color 0.4s ease',
-              }}>
-              <JourneyCardBody step={step} />
-            </motion.div>
-          ))}
-        </div>
-        <style>{`
-          .journey-card:hover {
-            box-shadow: 0 18px 40px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.05) !important;
-          }
-        `}</style>
-
-        {/* ── 4 Service zones — cinematic scroll world ── */}
-      </div>
-
-      {/* Full-bleed world (outside the padded container) */}
+      {/* Parallax lives outside overflow-clip so ScrollTrigger pin works correctly */}
       <DrivWorldSection />
-
-    </section>
+    </>
   )
 }
