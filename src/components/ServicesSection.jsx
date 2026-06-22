@@ -55,12 +55,10 @@ function JourneyCardBody({ step }) {
       {/* Image area with floating icon badge */}
       <div className="relative px-5 pt-3 z-10">
         {/* Floating icon badge */}
-        <div className="absolute left-7 top-5 z-20 flex items-center justify-center w-12 h-12 sm:w-[72px] sm:h-[72px] xl:w-16 xl:h-16 rounded-2xl backdrop-blur-sm
+        <div className="absolute left-7 top-5 z-20 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 xl:w-12 xl:h-12 rounded-2xl backdrop-blur-sm
                         transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3"
           style={{ background: `${step.color}1f`, border: `1.5px solid ${step.color}45` }}>
-          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ boxShadow: `0 0 20px ${step.color}55, inset 0 0 12px ${step.color}25` }} />
-          <StepIcon style={{ color: step.color }} className="relative z-10 w-6 h-6 sm:w-9 sm:h-9 xl:w-8 xl:h-8" />
+          <StepIcon style={{ color: step.color }} className="relative z-10 w-5 h-5 sm:w-7 sm:h-7 xl:w-6 xl:h-6" />
         </div>
 
         {/* Scene image (light + dark) */}
