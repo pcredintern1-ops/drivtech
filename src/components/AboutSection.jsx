@@ -26,9 +26,6 @@ export default function AboutSection({ continuation = false }) {
     <section id="about"
       className={`theme-surface ${shell} overflow-hidden`}>
 
-      {/* Lime glow */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 65%)', filter:'blur(24px)' }}/>
 
       <div className={`${SECTION_CONTAINER} ${continuation ? CONTAINER_GAP : ''}`}>
 

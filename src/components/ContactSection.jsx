@@ -130,7 +130,7 @@ export default function ContactSection() {
                 </div>
 
                 <button type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#A3E635] hover:bg-[#84cc16] text-black font-semibold rounded-xl text-sm glow-lime hover:scale-[1.02] transition-all duration-300 btn-glow-hover">
+                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#A3E635] hover:bg-[#bef264] text-black font-semibold rounded-xl text-sm glow-lime hover:scale-105 transition-all duration-300 btn-shine btn-glow-hover">
                   <IconSend size={14} />
                   Send Inquiry
                 </button>

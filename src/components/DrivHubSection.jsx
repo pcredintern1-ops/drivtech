@@ -190,14 +190,6 @@ export default function DrivHubSection() {
       id="hub"
       className={`${SECTION_SHELL} bg-[#f6f7f4]`}
     >
-      <div
-        className="absolute left-0 top-1/4 w-[min(520px,55vw)] h-[420px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 70%)' }}
-      />
-      <div
-        className="absolute right-0 bottom-1/4 w-[min(400px,45vw)] h-[360px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)' }}
-      />
 
       <div className={`${SECTION_CONTAINER} max-w-6xl`}>
         <motion.div

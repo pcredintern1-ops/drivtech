@@ -1,16 +1,13 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import {
-  IconRocket,
-  IconBriefcase,
-  IconBuildingWarehouse,
-  IconBolt,
-  IconMap,
-  IconCheck,
+  IconRocket, IconBriefcase, IconBuildingWarehouse,
+  IconBolt, IconMap, IconCheck,
 } from '@tabler/icons-react'
 import { roadmap } from '../data/content'
 import { SectionHeader, SECTION_PB, SECTION_CONTAINER, CONTAINER_GAP, SECTION_PT } from './SectionHeader'
 
-const MILESTONE_ICONS = {
+const ICONS = {
   '2023': IconRocket,
   '2024': IconBriefcase,
   '2025': IconBuildingWarehouse,
@@ -19,98 +16,95 @@ const MILESTONE_ICONS = {
 }
 
 function getStatus(year) {
-  const current = new Date().getFullYear()
+  const now = new Date().getFullYear()
   const y = parseInt(year, 10)
-  if (y < current) return 'past'
-  if (y === current) return 'current'
+  if (y < now) return 'past'
+  if (y === now) return 'current'
   return 'future'
 }
 
-const statusStyles = {
+const S = {
   past: {
     accent: '#65a30d',
-    glow: 'rgba(163,230,53,0.18)',
-    bar: 'linear-gradient(90deg, #65a30d, #A3E635)',
+    bar: 'linear-gradient(90deg,#65a30d,#A3E635)',
     tint: 'rgba(163,230,53,0.1)',
     iconBorder: 'border-[#A3E635]/30',
     badge: 'bg-[#A3E635]/10 text-[#65a30d] border-[#A3E635]/20',
-    border: 'border-gray-200/80 hover:border-[#A3E635]/40',
-    hoverShadow: 'hover:shadow-[0_16px_40px_rgba(163,230,53,0.12)]',
-    node: 'bg-[#A3E635] border-[#A3E635] text-white shadow-[0_0_20px_rgba(163,230,53,0.45)]',
-    connector: 'from-[#A3E635]/50',
+    card: 'border-[#A3E635]/20 hover:border-[#A3E635]/45 hover:shadow-[0_20px_50px_rgba(163,230,53,0.13)]',
+    node: 'bg-[#A3E635] border-[#A3E635] text-white shadow-[0_0_22px_rgba(163,230,53,0.5)]',
+    year: 'text-[#A3E635]/[0.07]',
     label: 'Completed',
   },
   current: {
     accent: '#ea6c0a',
-    glow: 'rgba(249,115,22,0.22)',
-    bar: 'linear-gradient(90deg, #F97316, #fb923c)',
+    bar: 'linear-gradient(90deg,#F97316,#fb923c)',
     tint: 'rgba(249,115,22,0.1)',
     iconBorder: 'border-[#F97316]/35',
     badge: 'bg-[#F97316]/10 text-[#c2410c] border-[#F97316]/25',
-    border: 'border-[#F97316]/30 hover:border-[#F97316]/55',
-    hoverShadow: 'hover:shadow-[0_16px_40px_rgba(249,115,22,0.14)]',
-    node: 'bg-[#F97316] border-[#F97316] text-white shadow-[0_0_24px_rgba(249,115,22,0.5)] ring-4 ring-[#F97316]/15',
-    connector: 'from-[#F97316]/55',
+    card: 'border-[#F97316]/30 hover:border-[#F97316]/55 hover:shadow-[0_20px_50px_rgba(249,115,22,0.15)]',
+    node: 'bg-[#F97316] border-[#F97316] text-white shadow-[0_0_28px_rgba(249,115,22,0.55)] ring-4 ring-[#F97316]/15',
+    year: 'text-[#F97316]/[0.08]',
     label: 'In progress',
   },
   future: {
     accent: '#9ca3af',
-    glow: 'transparent',
-    bar: 'linear-gradient(90deg, #e5e7eb, #d1d5db)',
+    bar: 'linear-gradient(90deg,#e5e7eb,#d1d5db)',
     tint: 'rgba(0,0,0,0.03)',
     iconBorder: 'border-gray-200',
-    badge: 'bg-gray-50 text-gray-500 border-gray-200',
-    border: 'border-gray-200/80 hover:border-gray-300',
-    hoverShadow: 'hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)]',
-    node: 'bg-white border-gray-200 text-gray-400 shadow-sm',
-    connector: 'from-gray-200',
+    badge: 'bg-gray-50 text-gray-400 border-gray-200',
+    card: 'border-gray-200 hover:border-gray-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] opacity-70',
+    node: 'bg-white border-gray-300 text-gray-400 shadow-sm',
+    year: 'text-gray-900/[0.04]',
     label: 'Upcoming',
   },
 }
 
-function TimelineCard({ item, index, side }) {
+// ─── single milestone card ────────────────────────────────────────────────────
+function MilestoneCard({ item, index, side }) {
   const status = getStatus(item.year)
-  const styles = statusStyles[status]
-  const Icon = MILESTONE_ICONS[item.year] ?? IconRocket
-  const isFuture = status === 'future'
-  const slideX = side === 'left' ? -20 : side === 'right' ? 20 : -12
+  const st = S[status]
+  const Icon = ICONS[item.year] ?? IconRocket
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.15 })
+
+  const xStart = side === 'left' ? -40 : side === 'right' ? 40 : 0
+  const yStart = side === 'mobile' ? 24 : 0
 
   return (
     <motion.article
-      initial={{ opacity: 0, x: slideX }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative rounded-3xl border bg-white/90 backdrop-blur-sm overflow-hidden transition-all duration-300 ${styles.border} ${styles.hoverShadow} ${
-        isFuture ? 'opacity-70' : ''
-      }`}
+      ref={ref}
+      initial={{ opacity: 0, x: xStart, y: yStart }}
+      animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
+      className={`group relative rounded-3xl border bg-white/90 backdrop-blur-sm overflow-hidden transition-colors duration-300 ${st.card}`}
     >
-      <div className="h-[3px] w-full" style={{ background: styles.bar }} />
+      {/* colour top bar */}
+      <div className="h-[3px]" style={{ background: st.bar }} />
 
+      {/* ghost year */}
       <span
         aria-hidden
-        className="absolute -right-1 -top-2 font-heading font-black text-[4.5rem] sm:text-[5rem] leading-none text-gray-900/[0.04] select-none pointer-events-none"
+        className={`absolute -right-2 -top-1 font-heading font-black leading-none select-none pointer-events-none ${st.year}`}
+        style={{ fontSize: 'clamp(5rem,12vw,7rem)' }}
       >
         {item.year.slice(2)}
       </span>
 
       <div className="relative p-5 sm:p-6">
-        <div className="flex items-start justify-between gap-3 mb-4">
+        {/* icon + badge row */}
+        <div className="flex items-start justify-between gap-3 mb-5">
           <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${styles.iconBorder} transition-transform duration-300 group-hover:scale-105`}
-            style={{ backgroundColor: styles.tint }}
+            className={`w-11 h-11 rounded-2xl border flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 ${st.iconBorder}`}
+            style={{ backgroundColor: st.tint }}
           >
-            <Icon size={22} style={{ color: styles.accent }} stroke={2} />
+            <Icon size={20} style={{ color: st.accent }} stroke={2} />
           </div>
           <div className="flex flex-col items-end gap-1.5">
-            <span
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${styles.badge}`}
-            >
-              {status === 'past' && <IconCheck size={11} stroke={2.5} />}
-              {status === 'current' && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />
-              )}
-              {styles.label}
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${st.badge}`}>
+              {status === 'past'    && <IconCheck size={11} stroke={2.5} />}
+              {status === 'current' && <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />}
+              {st.label}
             </span>
             <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-gray-400">
               Phase {String(index + 1).padStart(2, '0')}
@@ -118,73 +112,93 @@ function TimelineCard({ item, index, side }) {
           </div>
         </div>
 
-        <p className="font-heading font-black text-3xl text-gray-900 leading-none mb-2 tracking-tight">
+        {/* year + title + desc */}
+        <p className="font-heading font-black text-3xl text-gray-900 leading-none mb-1.5 tracking-tight">
           {item.year}
         </p>
         <h4 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-2 leading-snug">
           {item.title}
         </h4>
-        <p className="text-gray-500 text-sm sm:text-[15px] leading-relaxed">{item.desc}</p>
+        <p className="text-black text-base leading-relaxed">{item.desc}</p>
       </div>
     </motion.article>
   )
 }
 
-function TimelineNode({ item, side }) {
+// ─── timeline node on the center axis ────────────────────────────────────────
+function Node({ item, side }) {
   const status = getStatus(item.year)
-  const styles = statusStyles[status]
-  const Icon = MILESTONE_ICONS[item.year] ?? IconRocket
+  const st = S[status]
+  const Icon = ICONS[item.year] ?? IconRocket
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
 
   return (
-    <>
+    <div ref={ref} className="absolute top-6 md:top-1/2 left-5 md:left-1/2 -translate-x-0 md:-translate-x-1/2 md:-translate-y-1/2 z-20">
+      {/* horizontal connector arm */}
       {side && (
-        <span
+        <motion.span
           aria-hidden
-          className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-px w-10 bg-gradient-to-r ${styles.connector} ${
-            side === 'left' ? 'right-[calc(50%+1.4rem)]' : 'left-[calc(50%+1.4rem)] rotate-180'
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-px w-10 origin-${side === 'left' ? 'right' : 'left'} ${
+            side === 'left'
+              ? 'right-[calc(100%+0.6rem)]'
+              : 'left-[calc(100%+0.6rem)]'
           }`}
+          style={{ background: `linear-gradient(${side === 'left' ? '270deg' : '90deg'},${st.accent},transparent)` }}
         />
       )}
-      <div className="absolute top-6 md:top-1/2 left-5 md:left-1/2 -translate-x-0 md:-translate-x-1/2 md:-translate-y-1/2 z-20">
-        <div
-          className={`relative flex h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-2xl border-2 transition-transform duration-300 ${styles.node}`}
-        >
-          <Icon size={18} stroke={2.2} />
-          {status === 'current' && (
-            <span
-              className="absolute inset-0 rounded-2xl animate-ping opacity-20"
-              style={{ backgroundColor: styles.glow }}
-            />
-          )}
-        </div>
-      </div>
-    </>
+
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={inView ? { scale: 1, opacity: 1 } : {}}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border-2 transition-transform duration-300 hover:scale-110 ${st.node}`}
+      >
+        <Icon size={18} stroke={2.2} />
+        {status === 'current' && (
+          <span
+            className="absolute inset-0 rounded-2xl animate-ping opacity-25"
+            style={{ backgroundColor: 'rgba(249,115,22,0.4)' }}
+          />
+        )}
+      </motion.div>
+    </div>
   )
 }
 
+// ─── main ─────────────────────────────────────────────────────────────────────
 export default function Roadmap({ continuation = false }) {
   const currentYear = new Date().getFullYear()
-  const activeIdx = roadmap.findIndex((r) => parseInt(r.year, 10) >= currentYear)
-  const progressIdx = activeIdx === -1 ? roadmap.length - 1 : activeIdx
-  const progressPct = ((progressIdx + 0.5) / roadmap.length) * 100
+  const sectionRef  = useRef(null)
+  const lineRef     = useRef(null)
+
+  // scroll-driven line fill
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 75%', 'end 85%'],
+  })
+  const lineScale = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+
+  const progressIdx = (() => {
+    const i = roadmap.findIndex(r => parseInt(r.year, 10) >= currentYear)
+    return i === -1 ? roadmap.length - 1 : i
+  })()
+  const progressPct = ((progressIdx + 0.55) / roadmap.length) * 100
 
   return (
     <section
       id="roadmap"
+      ref={sectionRef}
       className={`relative pt-0 ${SECTION_PB} overflow-x-clip section-sep bg-[#f6f7f4]`}
     >
-      <div
-        className="absolute left-0 top-1/4 w-[min(480px,50vw)] h-[360px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 70%)' }}
-      />
-      <div
-        className="absolute right-0 bottom-0 w-[min(400px,45vw)] h-[300px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)' }}
-      />
-
       <div className={`${SECTION_CONTAINER} max-w-6xl ${continuation ? CONTAINER_GAP : SECTION_PT}`}>
+
+        {/* ── header ── */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -197,86 +211,83 @@ export default function Roadmap({ continuation = false }) {
           />
         </motion.div>
 
-        <div className="rounded-3xl p-[1px] bg-gradient-to-br from-[#A3E635]/30 via-white/80 to-[#F97316]/25 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-          <div className="rounded-3xl bg-white/95 backdrop-blur-md overflow-hidden">
-            <div className="px-5 sm:px-8 py-6 sm:py-7 border-b border-gray-100/80 bg-gradient-to-r from-[#fafaf8] via-white to-[#fffaf5]">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#65a30d]">
-                  2023 → {roadmap[roadmap.length - 1].year}
-                </p>
-                <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-500">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#F97316] animate-pulse" />
-                  Today: <span className="text-gray-900">{currentYear}</span>
-                </span>
-              </div>
-              <div className="h-1 rounded-full bg-gray-100 overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${progressPct}%`,
-                    background: 'linear-gradient(90deg, #65a30d 0%, #A3E635 55%, #F97316 100%)',
-                    boxShadow: '0 0 12px rgba(163,230,53,0.35)',
-                  }}
-                />
-              </div>
-            </div>
+        {/* ── timeline ── */}
+        <div className="relative">
 
-            <div className="relative px-4 sm:px-6 md:px-8 py-8 sm:py-10 md:py-12">
-              <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 top-8 bottom-8 w-px rounded-full bg-gray-200/80 overflow-hidden">
-                <div
-                  className="absolute top-0 left-0 w-full rounded-full"
-                  style={{
-                    height: `${progressPct}%`,
-                    background: 'linear-gradient(180deg, #65a30d 0%, #A3E635 50%, #F97316 100%)',
-                    boxShadow: '0 0 10px rgba(163,230,53,0.4)',
-                  }}
-                />
-              </div>
+          {/* center vertical line */}
+          <div
+            ref={lineRef}
+            className="absolute left-5 md:left-1/2 md:-translate-x-[0.5px] top-8 bottom-8 w-px bg-gray-200/80 overflow-hidden"
+          >
+            {/* static filled portion */}
+            <div
+              className="absolute top-0 left-0 w-full rounded-full"
+              style={{
+                height: `${progressPct}%`,
+                background: 'linear-gradient(180deg,#65a30d 0%,#A3E635 50%,#F97316 100%)',
+                boxShadow: '0 0 10px rgba(163,230,53,0.4)',
+              }}
+            />
+            {/* scroll-driven animated overlay */}
+            <motion.div
+              className="absolute top-0 left-0 w-full rounded-full"
+              style={{
+                height: lineScale,
+                background: 'linear-gradient(180deg,rgba(163,230,53,0.6) 0%,rgba(163,230,53,0.2) 100%)',
+              }}
+            />
+          </div>
 
-              <div className="space-y-6 md:space-y-10">
-                {roadmap.map((item, i) => {
-                  const isLeft = i % 2 === 0
-                  return (
-                    <div key={item.year} className="relative md:flex md:items-center">
-                      <TimelineNode item={item} side={isLeft ? 'left' : 'right'} />
+          {/* milestone rows */}
+          <div className="space-y-8 md:space-y-12">
+            {roadmap.map((item, i) => {
+              const isLeft = i % 2 === 0
+              return (
+                <div key={item.year} className="relative md:flex md:items-center">
+                  <Node item={item} side={isLeft ? 'left' : 'right'} />
 
-                      <div className="md:hidden pl-14 pt-1">
-                        <TimelineCard item={item} index={i} side="mobile" />
-                      </div>
+                  {/* mobile card */}
+                  <div className="md:hidden pl-14 pt-1">
+                    <MilestoneCard item={item} index={i} side="mobile" />
+                  </div>
 
-                      <div
-                        className={`hidden md:block w-[calc(50%-2.5rem)] ${
-                          isLeft ? 'mr-auto pr-8' : 'ml-auto pl-8'
-                        }`}
-                      >
-                        <TimelineCard
-                          item={item}
-                          index={i}
-                          side={isLeft ? 'left' : 'right'}
-                        />
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            <div className="px-5 sm:px-8 py-4 border-t border-gray-100/80 bg-[#fafaf8]/80 flex flex-wrap items-center justify-center gap-5 text-xs">
-              <span className="inline-flex items-center gap-2 text-gray-500">
-                <span className="w-2 h-2 rounded-full bg-[#A3E635] shadow-[0_0_8px_rgba(163,230,53,0.5)]" />
-                <span className="font-semibold text-[#65a30d]">Completed</span>
-              </span>
-              <span className="inline-flex items-center gap-2 text-gray-500">
-                <span className="w-2 h-2 rounded-full bg-[#F97316] shadow-[0_0_8px_rgba(249,115,22,0.45)]" />
-                <span className="font-semibold text-[#ea6c0a]">In progress</span>
-              </span>
-              <span className="inline-flex items-center gap-2 text-gray-500">
-                <span className="w-2 h-2 rounded-full bg-white border border-gray-300" />
-                <span className="font-semibold text-gray-500">Upcoming</span>
-              </span>
-            </div>
+                  {/* desktop card — alternating sides */}
+                  <div
+                    className={`hidden md:block w-[calc(50%-2.75rem)] ${
+                      isLeft ? 'mr-auto pr-10' : 'ml-auto pl-10'
+                    }`}
+                  >
+                    <MilestoneCard item={item} index={i} side={isLeft ? 'left' : 'right'} />
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
+
+        {/* ── legend ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-10 md:mt-14 flex flex-wrap items-center justify-center gap-6 text-xs"
+        >
+          {[
+            { color: '#A3E635', glow: 'rgba(163,230,53,0.5)',  label: 'Completed',   text: 'text-[#65a30d]' },
+            { color: '#F97316', glow: 'rgba(249,115,22,0.45)', label: 'In progress',  text: 'text-[#ea6c0a]' },
+            { color: '#d1d5db', glow: 'transparent',           label: 'Upcoming',     text: 'text-gray-500'  },
+          ].map(l => (
+            <span key={l.label} className="inline-flex items-center gap-2 text-gray-500">
+              <span
+                className="w-2 h-2 rounded-full border border-white/30"
+                style={{ backgroundColor: l.color, boxShadow: `0 0 8px ${l.glow}` }}
+              />
+              <span className={`font-semibold ${l.text}`}>{l.label}</span>
+            </span>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   )

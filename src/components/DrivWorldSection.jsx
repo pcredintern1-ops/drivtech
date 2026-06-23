@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const HOLD        = 0.45
 const VEHICLE_SEG = 1
-const SCROLL_MULT = 1.5
+const SCROLL_MULT = 2.2
 const CARD_TOP    = 44
 
 /** Timeline helpers — vehicle finishes before the next card enters */
@@ -49,32 +49,18 @@ const ZONES = [
     tag: 'Fleet Operations',
     title: 'Enterprise Dedicated Fleet',
     desc: 'Dedicated fleet solutions tailored to your business with reliable vehicles, drivers, and end-to-end operational support.',
-    from: 'Warehouse', to: 'Dark Store',
-    scene: {
-      fromImg: '/scenes/building-warehouse.webp',
-      vehicle:  '/vehicles/tata_ace.webp',
-      toImg:    '/scenes/dispatch-hub.webp',
-    },
-  },
-  {
-    id: 'linehaul', index: 1, noGlow: true,
-    Icon: IconRoute, color: '#F97316', glowRgb: '249,115,22',
-    tag: 'Linehaul',
-    title: 'Linehaul Logistics',
-    desc: 'Efficient intercity and hub-to-hub transportation designed for seamless long-distance freight movement.',
-    from: 'Warehouse', to: 'Warehouse',
+    from: 'Origin', to: 'Destination',
     scene: {
       fromImg: '/scenes/building-warehouse.webp',
       vehicle:  '/vehicles/truck.webp',
       toImg:    '/scenes/building-warehouse.webp',
-      vehicleW: '64%',
-      vehicleH: '78%',
-      vehicleBottom: '-8%',
+      vehicleW: '44%', vehicleH: '76%',
+      vehicleBottom: '-10%',
     },
   },
   {
-    id: 'adhoc', index: 2, noGlow: true,
-    Icon: IconBolt, color: '#F97316', glowRgb: '249,115,22',
+    id: 'adhoc', index: 1, noGlow: true,
+    Icon: IconBolt, color: '#A3E635', glowRgb: '163,230,53',
     tag: 'Adhoc Deploy',
     title: 'Adhoc Vehicle Support',
     desc: 'On-demand vehicle availability to handle urgent deliveries, peak demand, and temporary logistics requirements.',
@@ -82,7 +68,28 @@ const ZONES = [
     scene: {
       fromImg: '/scenes/building-hub.webp',
       toImg:    '/scenes/building-warehouse.webp',
-      vehicle:  '/vehicles/tata_ace.webp',
+      vehicle:  '/vehicles/truck.webp',
+      vehicleW: '44%', vehicleH: '76%',
+      vehicleBottom: '-10%',
+      convoy: [
+        { src: '/vehicles/tata_ace.webp',   w: '34%', h: '62%', offset: 27, bottom: '-4%' },
+        { src: '/vehicles/tata_tempo.webp', w: '40%', h: '72%', offset: 54, bottom: '-12%' },
+      ],
+    },
+  },
+  {
+    id: 'linehaul', index: 2, noGlow: true,
+    Icon: IconRoute, color: '#A3E635', glowRgb: '163,230,53',
+    tag: 'Linehaul',
+    title: 'Linehaul Logistics',
+    desc: 'Efficient intercity and hub-to-hub transportation designed for seamless long-distance freight movement.',
+    from: 'Mumbai', to: 'Pune',
+    scene: {
+      fromImg: '/scenes/building-warehouse.webp',
+      vehicle:  '/vehicles/truck.webp',
+      toImg:    '/scenes/building-warehouse.webp',
+      vehicleW: '44%', vehicleH: '76%',
+      vehicleBottom: '-10%',
     },
   },
   {
@@ -102,11 +109,11 @@ const ZONES = [
 
 function makeTheme(isDark) {
   return isDark ? {
-    sectionBg:        '#050b18',
-    dotColor:         'rgba(255,255,255,0.05)',
+    sectionBg:        '#111827',
+    dotColor:         'transparent',
     cardBorder:       'rgba(255,255,255,0.09)',
     cardBg:           'linear-gradient(160deg, #101010 0%, #050505 100%)',
-    cardShadow: (g) => `0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.55), 0 40px 100px rgba(0,0,0,0.65), 0 0 80px rgba(${g},0.11), inset 0 1px 0 rgba(255,255,255,0.05)`,
+    cardShadow: (g) => `0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.55), 0 40px 100px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05)`,
     progressInactive: 'rgba(255,255,255,0.13)',
     progressTrack:    'rgba(255,255,255,0.03)',
     vignette:         'rgba(0,0,0,0.44)',
@@ -116,12 +123,13 @@ function makeTheme(isDark) {
     destDot:          'rgba(255,255,255,0.20)',
     destText:         'rgba(255,255,255,0.40)',
     telemetryLabel:   'rgba(255,255,255,0.18)',
+    scanLine:         'transparent',
   } : {
     sectionBg:        '#f0f4f8',
-    dotColor:         'rgba(0,0,0,0.055)',
+    dotColor:         'rgba(0,0,0,0)',
     cardBorder:       'rgba(0,0,0,0.12)',
     cardBg:           '#111827',
-    cardShadow: (g) => `0 0 0 1px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.14), 0 32px 80px rgba(0,0,0,0.18), 0 0 60px rgba(${g},0.08), inset 0 1px 0 rgba(255,255,255,0.06)`,
+    cardShadow: (g) => `0 0 0 1px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.14), 0 32px 80px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06)`,
     progressInactive: 'rgba(0,0,0,0.12)',
     progressTrack:    'rgba(0,0,0,0.05)',
     vignette:         'rgba(0,0,0,0.06)',
@@ -131,6 +139,7 @@ function makeTheme(isDark) {
     destDot:          'rgba(255,255,255,0.30)',
     destText:         'rgba(255,255,255,0.50)',
     telemetryLabel:   'rgba(255,255,255,0.28)',
+    scanLine:         'transparent',
   }
 }
 
@@ -193,9 +202,14 @@ function ZoneCardText({ zone, T }) {
 // Scene panel — refs for vehicle elements passed in so GSAP can drive them directly
 const ROAD_H = '28%'
 
-function ZoneScene({ zone, T, sceneRefs }) {
+function ZoneScene({ zone, T, sceneRefs, isDesktop }) {
   const { scene, color, glowRgb, title, noGlow } = zone
-  const ga = noGlow ? 0 : 1   // glow alpha multiplier — 0 kills all colour glow
+  const ga = noGlow ? 0 : 1
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1440
+  const isTablet = !isDesktop && vw >= 600
+  const mvW = (pct) => isDesktop ? pct : `${(parseFloat(pct) * (isTablet ? 0.50 : 0.60)).toFixed(1)}%`
+  const mvH = (pct) => isDesktop ? pct : `${(parseFloat(pct) * 0.60).toFixed(1)}%`
+  const mvBldH = (pct) => isDesktop ? pct : `${(parseFloat(pct) * 0.65).toFixed(1)}%`
 
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
@@ -213,14 +227,9 @@ function ZoneScene({ zone, T, sceneRefs }) {
         background: 'linear-gradient(to bottom, rgba(8,14,28,0.0) 0%, rgba(4,8,18,0.5) 60%, rgba(0,0,0,0.85) 100%)',
       }} />
 
-      {/* Zone color radial glow at base */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: `radial-gradient(ellipse 90% 65% at 50% 110%, rgba(${glowRgb},${0.32 * ga}) 0%, transparent 70%)`,
-      }} />
 
       {/* Road — horizontal left-to-right asphalt strip */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: ROAD_H, pointerEvents: 'none', zIndex: 0 }}>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: isDesktop ? ROAD_H : '18%', pointerEvents: 'none', zIndex: 0 }}>
         {/* Verge */}
         <div style={{ position: 'absolute', inset: 0,
           background: 'linear-gradient(to bottom, #1c1f18 0%, #121410 55%, #0a0b09 100%)' }} />
@@ -255,7 +264,7 @@ function ZoneScene({ zone, T, sceneRefs }) {
 
       {/* From building — sits above road, not on it */}
       {scene.fromImg && (
-        <div style={{ position: 'absolute', bottom: ROAD_H, left: '1%', width: '30%', height: '70%',
+        <div style={{ position: 'absolute', bottom: `25%`, left: '1%', width: '34%', height: mvBldH('76%'),
           pointerEvents: 'none', zIndex: 1 }}>
           <img src={scene.fromImg} alt="" draggable={false} style={{
             width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'bottom left',
@@ -266,7 +275,7 @@ function ZoneScene({ zone, T, sceneRefs }) {
 
       {/* To building — sits above road, not on it */}
       {scene.toImg && (
-        <div style={{ position: 'absolute', bottom: ROAD_H, right: '1%', width: '26%', height: '58%',
+        <div style={{ position: 'absolute', bottom: `25%`, right: '1%', width: '34%', height: mvBldH('76%'),
           pointerEvents: 'none', zIndex: 1 }}>
           <img src={scene.toImg} alt="" draggable={false} style={{
             width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'bottom right',
@@ -275,16 +284,39 @@ function ZoneScene({ zone, T, sceneRefs }) {
         </div>
       )}
 
+      {/* Convoy vehicles (behind main vehicle) — GSAP drives left via vehicle2, vehicle3 refs */}
+      {scene.convoy && scene.convoy.map((cv, ci) => (
+        <div key={ci}
+          ref={el => { sceneRefs[`vehicle${ci + 2}`] = el }}
+          style={{
+            position: 'absolute',
+            bottom: isDesktop ? (cv.bottom ?? scene.vehicleBottom ?? '2%') : (scene.vehicleBottom ?? '2%'),
+            left: '22%',
+            transform: 'translateX(-50%)',
+            transformOrigin: '50% 100%',
+            width: mvW(cv.w),
+            height: mvH(cv.h),
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}>
+          <img src={cv.src} alt="" draggable={false} style={{
+            width: '100%', height: '100%', objectFit: 'contain',
+            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.65))',
+          }} />
+        </div>
+      ))}
+
       {/* Main vehicle — position driven by GSAP via sceneRefs.vehicle */}
       <div ref={el => { sceneRefs.vehicle = el }} style={{
         position: 'absolute',
         bottom: scene.vehicleBottom ?? '2%',
         left: '22%',
         transform: 'translateX(-50%)',
-        width: scene.vehicleW ?? '48%',
-        height: scene.vehicleH ?? '58%',
+        transformOrigin: '50% 100%',
+        width: mvW(scene.vehicleW ?? '48%'),
+        height: mvH(scene.vehicleH ?? '58%'),
         pointerEvents: 'none',
-        zIndex: 2,
+        zIndex: 3,
       }}>
         <img src={scene.vehicle} alt={title} draggable={false} style={{
           width: '100%', height: '100%', objectFit: 'contain',
@@ -341,7 +373,7 @@ function StackCard({ zone, isDesktop, T, cardH, outerRef, sceneRefs }) {
 
       {/* Full-width scene */}
       <div style={{ position: 'absolute', inset: 0 }}>
-        <ZoneScene zone={zone} T={T} sceneRefs={sceneRefs} />
+        <ZoneScene zone={zone} T={T} sceneRefs={sceneRefs} isDesktop={isDesktop} />
       </div>
 
       {/* Top gradient for text legibility */}
@@ -391,6 +423,7 @@ export default function DrivWorldSection() {
   const [isDesktop, setIsDesktop]     = useState(
     () => typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
   )
+  const isDesktopRef                  = useRef(typeof window !== 'undefined' ? window.innerWidth >= 1024 : true)
   const [isDark, setIsDark]           = useState(
     () => typeof document !== 'undefined'
       ? document.documentElement.classList.contains('dark')
@@ -414,7 +447,9 @@ export default function DrivWorldSection() {
   // Resize handler
   useEffect(() => {
     const onResize = () => {
-      setIsDesktop(window.innerWidth >= 1024)
+      const d = window.innerWidth >= 1024
+      setIsDesktop(d)
+      isDesktopRef.current = d
       setVh(window.innerHeight)
       ScrollTrigger.refresh()
     }
@@ -457,9 +492,6 @@ export default function DrivWorldSection() {
         setActiveZone(newActive)
       }
 
-      if (progress <= 0.002) {
-        maxTravelRef.current = ZONES.map(() => 0)
-      }
 
       ZONES.forEach((zone, i) => {
         const r = elRefs.current[i]
@@ -492,9 +524,18 @@ export default function DrivWorldSection() {
         if (r.vehicle) {
           const travelRaw = _cl((rawSeg - vStart) / VEHICLE_SEG)
           maxTravelRef.current[i] = Math.max(maxTravelRef.current[i], travelRaw)
-          const travel  = _ss(maxTravelRef.current[i])
-          const mainPct = 22 + travel * 56
-          r.vehicle.style.left = `${mainPct.toFixed(2)}%`
+          // Convoy zones extend truck travel to 100% so all vehicles reach near the right building
+          const travelDist = ZONES[i].scene.convoy ? 78 : 56
+          const baseLeft = 22 + _ss(maxTravelRef.current[i]) * travelDist
+          r.vehicle.style.left = `${baseLeft.toFixed(2)}%`
+          // Lock-step convoy: all move at equal speed, fixed spacing throughout
+          const convoy = ZONES[i].scene.convoy
+          if (convoy) {
+            convoy.forEach((cv, ci) => {
+              const cvRef = r[`vehicle${ci + 2}`]
+              if (cvRef) cvRef.style.left = `${(baseLeft - cv.offset).toFixed(2)}%`
+            })
+          }
         }
       })
     }
@@ -507,8 +548,27 @@ export default function DrivWorldSection() {
         end: () => `+=${totalScrollSeg() * window.innerHeight * SCROLL_MULT}`,
         scrub: 1,
         anticipatePin: 1, invalidateOnRefresh: true,
+        fastScrollEnd: true, preventOverlaps: true,
 
-        onUpdate(self) { updateFrame(self.progress) },
+        onUpdate(self) {
+          if (self.direction === -1) {
+            // Skip vehicle segments when scrolling up — jump to the segment start
+            // so only the short card-entrance phase needs to be scrubbed back
+            const raw = self.progress * totalScrollSeg()
+            for (let i = ZONES.length - 1; i >= 0; i--) {
+              const vS = zoneVehicleStart(i)
+              const vE = zoneVehicleEnd(i)
+              if (raw > vS && raw < vE) {
+                const targetProgress = vS / totalScrollSeg()
+                const targetScroll = self.start + targetProgress * (self.end - self.start)
+                updateFrame(targetProgress)
+                window.scrollTo(0, Math.max(0, targetScroll - 1))
+                return
+              }
+            }
+          }
+          updateFrame(self.progress)
+        },
         onRefresh(self) { updateFrame(self.progress) },
 
         onLeave() { setActiveZone(ZONES.length - 1) },
@@ -516,8 +576,15 @@ export default function DrivWorldSection() {
           setActiveZone(0)
           activeZoneRef.current = 0
           maxTravelRef.current = ZONES.map(() => 0)
-          elRefs.current.forEach(r => {
+          elRefs.current.forEach((r, i) => {
             if (r.vehicle) r.vehicle.style.left = '22%'
+            const convoy = ZONES[i].scene.convoy
+            if (convoy) {
+              convoy.forEach((cv, ci) => {
+                const cvRef = r[`vehicle${ci + 2}`]
+                if (cvRef) cvRef.style.left = `${(22 - cv.offset).toFixed(2)}%`
+              })
+            }
           })
           updateFrame(0)
         },
@@ -552,7 +619,7 @@ export default function DrivWorldSection() {
 
       {/* Scan-line texture */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px)',
+        backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 3px, ${T.scanLine} 3px, ${T.scanLine} 4px)`,
       }} />
 
       {/* Dynamic zone glow — removed */}

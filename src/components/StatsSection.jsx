@@ -36,7 +36,6 @@ export default function StatsSection({ continuation = false }) {
 
   return (
     <section id="stats" className={`relative ${bandClass} border-t border-white/8 overflow-x-clip bg-[#111827]`}>
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.06) 0%, transparent 70%)' }} />
 
       {/* Green neon glow line at section bottom */}
       <div className="absolute bottom-0 inset-x-0 h-[2px] pointer-events-none z-10" style={{

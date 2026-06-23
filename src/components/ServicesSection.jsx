@@ -218,8 +218,6 @@ export default function ServicesSection() {
         id="services"
         className={`relative ${SECTION_PT} pb-10 md:pb-12 lg:pb-14 overflow-x-clip section-sep bg-white`}
       >
-        <div className="absolute right-0 top-1/3 w-[500px] h-[600px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 70%)' }} />
 
         <div className={SECTION_CONTAINER}>
           <SectionHeader
