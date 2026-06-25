@@ -17,9 +17,14 @@ import Contact from './pages/Contact'
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [pathname])
   return null
+}
+
+// Prevent browser from restoring scroll on SPA navigation
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
 }
 
 function ConditionalFooter() {

@@ -55,7 +55,7 @@ const ZONES = [
       vehicle:  '/vehicles/truck.webp',
       toImg:    '/scenes/building-warehouse.webp',
       vehicleW: '44%', vehicleH: '76%',
-      vehicleBottom: '-10%',
+      vehicleBottom: '0%', vehicleBottomMobile: '-6%',
     },
   },
   {
@@ -70,10 +70,10 @@ const ZONES = [
       toImg:    '/scenes/building-warehouse.webp',
       vehicle:  '/vehicles/truck.webp',
       vehicleW: '44%', vehicleH: '76%',
-      vehicleBottom: '-10%',
+      vehicleBottom: '0%', vehicleBottomMobile: '-6%',
       convoy: [
-        { src: '/vehicles/tata_ace.webp',   w: '34%', h: '62%', offset: 27, bottom: '-4%' },
-        { src: '/vehicles/tata_tempo.webp', w: '40%', h: '72%', offset: 54, bottom: '-12%' },
+        { src: '/vehicles/tata_ace.webp',   w: '34%', h: '62%', offset: 27, bottom: '6%',  mobileBottom: '0%'  },
+        { src: '/vehicles/tata_tempo.webp', w: '40%', h: '72%', offset: 54, bottom: '-2%', mobileBottom: '-8%' },
       ],
     },
   },
@@ -89,7 +89,7 @@ const ZONES = [
       vehicle:  '/vehicles/truck.webp',
       toImg:    '/scenes/building-warehouse.webp',
       vehicleW: '44%', vehicleH: '76%',
-      vehicleBottom: '-10%',
+      vehicleBottom: '0%', vehicleBottomMobile: '-6%',
     },
   },
   {
@@ -103,6 +103,7 @@ const ZONES = [
       fromImg: '/scenes/dispatch-hub.webp',
       vehicle:  '/vehicles/scooty.webp',
       toImg:    '/scenes/customer-house.webp',
+      vehicleBottom: '12%', vehicleBottomMobile: '-2%', vehicleBottomSmallTab: '4%',
     },
   },
 ]
@@ -206,10 +207,14 @@ function ZoneScene({ zone, T, sceneRefs, isDesktop }) {
   const { scene, color, glowRgb, title, noGlow } = zone
   const ga = noGlow ? 0 : 1
   const vw = typeof window !== 'undefined' ? window.innerWidth : 1440
-  const isTablet = !isDesktop && vw >= 600
-  const mvW = (pct) => isDesktop ? pct : `${(parseFloat(pct) * (isTablet ? 0.50 : 0.60)).toFixed(1)}%`
-  const mvH = (pct) => isDesktop ? pct : `${(parseFloat(pct) * 0.60).toFixed(1)}%`
-  const mvBldH = (pct) => isDesktop ? pct : `${(parseFloat(pct) * 0.65).toFixed(1)}%`
+  const isTablet      = !isDesktop && vw >= 600
+  const isSmallTablet = !isDesktop && vw >= 600 && vw < 900
+  const isLargeTablet = !isDesktop && vw >= 900
+  // Vehicle scaling: large-tablet range (900-1279px) applies even when isDesktop is true (covers iPad Pro at 1024px)
+  const isLgTabVehicle = vw >= 900 && vw < 1280
+  const mvW = (pct) => isLgTabVehicle ? `${(parseFloat(pct) * 0.43).toFixed(1)}%` : isDesktop ? pct : `${(parseFloat(pct) * (isTablet ? 0.50 : 0.62)).toFixed(1)}%`
+  const mvH = (pct) => isLgTabVehicle ? `${(parseFloat(pct) * 0.52).toFixed(1)}%` : isDesktop ? pct : `${(parseFloat(pct) * (isTablet ? 0.60 : 0.70)).toFixed(1)}%`
+  const mvBldH = (pct) => isLgTabVehicle ? `${(parseFloat(pct) * 0.56).toFixed(1)}%` : isDesktop ? pct : `${(parseFloat(pct) * (isTablet ? 0.65 : 0.68)).toFixed(1)}%`
 
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
@@ -290,7 +295,7 @@ function ZoneScene({ zone, T, sceneRefs, isDesktop }) {
           ref={el => { sceneRefs[`vehicle${ci + 2}`] = el }}
           style={{
             position: 'absolute',
-            bottom: isDesktop ? (cv.bottom ?? scene.vehicleBottom ?? '2%') : (scene.vehicleBottom ?? '2%'),
+            bottom: isDesktop ? (cv.bottom ?? scene.vehicleBottom ?? '2%') : (cv.mobileBottom ?? scene.vehicleBottomMobile ?? scene.vehicleBottom ?? '2%'),
             left: '22%',
             transform: 'translateX(-50%)',
             transformOrigin: '50% 100%',
@@ -309,7 +314,7 @@ function ZoneScene({ zone, T, sceneRefs, isDesktop }) {
       {/* Main vehicle — position driven by GSAP via sceneRefs.vehicle */}
       <div ref={el => { sceneRefs.vehicle = el }} style={{
         position: 'absolute',
-        bottom: scene.vehicleBottom ?? '2%',
+        bottom: isDesktop ? (scene.vehicleBottom ?? '2%') : isSmallTablet ? (scene.vehicleBottomSmallTab ?? scene.vehicleBottomMobile ?? scene.vehicleBottom ?? '2%') : (scene.vehicleBottomMobile ?? scene.vehicleBottom ?? '2%'),
         left: '22%',
         transform: 'translateX(-50%)',
         transformOrigin: '50% 100%',
@@ -432,12 +437,15 @@ export default function DrivWorldSection() {
   const [vh, setVh]                   = useState(
     () => typeof window !== 'undefined' ? window.innerHeight : 800
   )
+  const [vw, setVw]                   = useState(
+    () => typeof window !== 'undefined' ? window.innerWidth  : 400
+  )
 
   // Hide stacked cards before first paint; card 0 is positioned by ScrollTrigger sync
   useLayoutEffect(() => {
     elRefs.current.forEach((r, i) => {
       if (r.card && i > 0) {
-        r.card.style.transform = 'translateX(-50%) translateY(10000px)'
+        r.card.style.transform = `translateX(calc(-50% + ${window.innerWidth}px))`
         r.card.style.opacity   = '0'
       }
       if (r.vehicle) r.vehicle.style.left = '22%'
@@ -451,6 +459,7 @@ export default function DrivWorldSection() {
       setIsDesktop(d)
       isDesktopRef.current = d
       setVh(window.innerHeight)
+      setVw(window.innerWidth)
       ScrollTrigger.refresh()
     }
     window.addEventListener('resize', onResize)
@@ -480,7 +489,16 @@ export default function DrivWorldSection() {
 
     const updateFrame = (progress) => {
       const cvh        = window.innerHeight
-      const cardH      = Math.min(Math.round(cvh * 0.65), 520)
+      const isD        = isDesktopRef.current
+      const isSmTab    = !isD && window.innerWidth >= 600 && window.innerWidth < 900
+      const isLgTab    = !isD && window.innerWidth >= 900
+      const cardH      = isD
+        ? Math.min(Math.round(cvh * 0.65), 520)
+        : isSmTab
+          ? Math.min(Math.round(window.innerWidth * 0.88), 440)
+          : isLgTab
+            ? Math.min(Math.round(window.innerWidth * 0.88), 420)
+            : Math.min(Math.round(window.innerWidth * 0.88), 370)
       const cardCenter = Math.round((cvh - cardH) / 2 + CARD_TOP)
       const rawSeg     = progress * totalScrollSeg()
       const activeIdx  = activeZoneIndex(rawSeg)
@@ -500,25 +518,29 @@ export default function DrivWorldSection() {
         const eStart = zoneEntranceStart(i)
         const vStart = zoneVehicleStart(i)
         const vEnd   = zoneVehicleEnd(i)
-        let cardY, opacity = 1, cardScale = 1
+        let cardX = 0, cardY, opacity = 1, cardScale = 1
+        const vw = window.innerWidth
 
         if (i > 0 && rawSeg < eStart) {
-          cardY   = cvh
+          cardX   = vw
+          cardY   = cardCenter + stackShift
           opacity = 0
-        } else if (rawSeg < vStart) {
-          const t   = _ss(_cl((rawSeg - eStart) / HOLD))
-          const dst = cardCenter + stackShift
-          cardY     = cvh - t * (cvh - dst)
-          opacity   = Math.min(1, t * 2)
+        } else if (i > 0 && rawSeg < vStart) {
+          const t = _ss(_cl((rawSeg - eStart) / HOLD))
+          cardX   = vw * (1 - t)
+          cardY   = cardCenter + stackShift
+          opacity = Math.min(1, t * 2)
         } else if (rawSeg < vEnd) {
+          cardX = 0
           cardY = cardCenter + stackShift
         } else {
           const depth = Math.min(Math.max(0, activeIdx - i), 3)
-          cardY     = cardCenter + stackShift - depth * 18
+          cardX     = -(depth * 18)
+          cardY     = cardCenter + stackShift
           cardScale = 1 - depth * 0.015
         }
 
-        r.card.style.transform = `translateX(-50%) translateY(${(cardY - CARD_TOP).toFixed(2)}px) scale(${cardScale.toFixed(4)})`
+        r.card.style.transform = `translateX(calc(-50% + ${cardX.toFixed(2)}px)) translateY(${(cardY - CARD_TOP).toFixed(2)}px) scale(${cardScale.toFixed(4)})`
         r.card.style.opacity   = opacity.toFixed(3)
 
         if (r.vehicle) {
@@ -599,7 +621,15 @@ export default function DrivWorldSection() {
   }, []) // run once — invalidateOnRefresh handles resize
 
   const T           = makeTheme(isDark)
-  const cardH       = Math.min(Math.round(vh * 0.65), 520)
+  const isSmTab     = !isDesktop && vw >= 600 && vw < 900
+  const isLgTab     = !isDesktop && vw >= 900
+  const cardH       = isDesktop
+    ? Math.min(Math.round(vh * 0.65), 520)
+    : isSmTab
+      ? Math.min(Math.round(vw * 0.88), 440)
+      : isLgTab
+        ? Math.min(Math.round(vw * 0.88), 420)
+        : Math.min(Math.round(vw * 0.88), 370)
   const activeColor = ZONES[activeZone]?.color ?? '#A3E635'
 
   return (

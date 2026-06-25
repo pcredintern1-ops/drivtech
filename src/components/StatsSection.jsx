@@ -24,7 +24,7 @@ function PanelCounter({ target, suffix, inView }) {
 
 const stats = [
   { Icon: IconTruck,    target: 150,   suffix: '+', label: 'Active Fleet'       },
-  { Icon: IconRoute,    target: 20,    suffix: 'Lakhs+', label: 'Trips Completed'    },
+  { Icon: IconRoute,    target: 20,    suffix: 'Lakhs+', label: 'Deliveries'          },
   { Icon: IconBuilding, target: 25,    suffix: '+', label: 'Clients' },
   { Icon: IconMapPin,   target: 2,     suffix: '+', label: 'Cities'             },
 ]
@@ -50,13 +50,8 @@ export default function StatsSection({ continuation = false }) {
           className="flex flex-wrap lg:flex-nowrap items-stretch justify-center">
           {stats.map(({ Icon, target, suffix, label }, i) => (
             <Fragment key={label}>
-              {/* Vertical divider between stat blocks — desktop only */}
-              {i > 0 && (
-                <div className="hidden lg:block w-px self-stretch my-4 shrink-0"
-                  style={{ background: 'linear-gradient(to bottom, transparent, rgba(163,230,53,0.20) 30%, rgba(163,230,53,0.20) 70%, transparent)' }} />
-              )}
 
-              <div className="flex items-center justify-start lg:justify-start gap-3 lg:gap-3 px-2 sm:px-4 lg:px-6 py-2 flex-1 min-w-[50%] lg:min-w-0">
+              <div className="flex items-center justify-start lg:justify-center gap-3 lg:gap-3 px-2 sm:px-4 lg:px-6 py-2 flex-1 min-w-[50%] lg:min-w-0">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: 'rgba(163,230,53,0.10)', border: '1px solid rgba(163,230,53,0.18)' }}>
                   <Icon size={24} style={{ color: '#A3E635' }} />
