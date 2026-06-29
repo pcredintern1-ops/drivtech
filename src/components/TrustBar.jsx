@@ -1,79 +1,63 @@
 import { SectionHeader, BAND_PY, BAND_SHELL_CONT, SECTION_CONTAINER, CONTAINER_GAP } from './SectionHeader'
 
-/* Verified, locally-hosted logos (sourced from Wikimedia Commons, checked
-   against each brand's actual mark — see /public/brands/).
-   Hyperpure, Truemeds & Yulu have no verified freely-licensed logo file
-   available; they render as a clean text/initials badge until a real asset
-   is supplied. */
 const brands = [
   /* Row 1 — 7 clients */
-  { name: 'Hyperpure',  logo: '/brands/hyperpure.webp',  initials: 'HP', color: '#E23744' },
-  { name: 'Blinkit',    logo: '/brands/blinkit.svg',    initials: 'B',  color: '#F8CB46' },
-  { name: 'BigBasket',  logo: '/brands/bigbasket.png',  initials: 'BB', color: '#84BD00' },
-  { name: 'ElasticRun', logo: '/brands/elasticrun.svg', initials: 'ER', color: '#2563eb' },
-  { name: 'DMart',      logo: '/brands/dmart.png',      initials: 'D',  color: '#F47820' },
-  { name: 'Flipkart',   logo: '/brands/flipkart.svg',   initials: 'F',  color: '#2874F0' },
-  { name: 'Meesho',     logo: '/brands/meesho.png',     initials: 'M',  color: '#5F0A87' },
+  { name: 'Hyperpure',  logo: '/brands/hyperpure.webp', whiteBg: true,  zoom: 1.5 },
+  { name: 'Blinkit',    logo: '/brands/blinkit.webp',                    zoom: 1.8 },
+  { name: 'BigBasket',  logo: '/brands/bigbasket.webp', whiteBg: true,  zoom: 2.6 },
+  { name: 'ElasticRun', logo: '/brands/elasticrun.svg' },
+  { name: 'DMart',      logo: '/brands/dmart.webp',    whiteBg: true,   zoom: 2.4 },
+  { name: 'Flipkart',   logo: '/brands/flipkart.webp', whiteBg: true },
+  { name: 'Meesho',     logo: '/brands/meesho.webp',   whiteBg: true,   zoom: 2.0 },
   /* Row 2 — 6 clients */
-  { name: 'Delhivery',  logo: '/brands/delhivery.png',  initials: 'D',  color: '#E53935' },
-  { name: 'Amazon',     logo: '/brands/amazon.svg',     initials: 'A',  color: '#FF9900' },
-  { name: 'Truemeds',   logo: '/brands/truemeds.webp',   initials: 'TM', color: '#1AAE9F' },
-  { name: 'Yulu',       logo: '/brands/yulu.svg',       initials: 'Y',  color: '#00BCD4' },
-  { name: 'Dunzo',      logo: '/brands/dunzo.svg',      initials: 'D',  color: '#00D26A' },
-  { name: 'Zepto',      logo: '/brands/zepto.svg',      initials: 'Z',  color: '#950EDB' },
+  { name: 'Delhivery',  logo: '/brands/delhivery.webp', whiteBg: true,  zoom: 2.6 },
+  { name: 'Amazon',     logo: '/brands/amazon.webp',                     zoom: 2.0 },
+  { name: 'Truemeds',   logo: '/brands/truemeds.webp',  whiteBg: true,  zoom: 2.2 },
+  { name: 'Yulu',       logo: '/brands/yulu.svg'       },
+  { name: 'Dunzo',      logo: '/brands/dunzo.svg'      },
+  { name: 'Zepto',      logo: '/brands/zepto.svg'      },
 ]
 
 const half = Math.ceil(brands.length / 2)
 const rowOne = brands.slice(0, half)
 const rowTwo = brands.slice(half)
-/* Exactly 2 copies — the marquee keyframe translates -50%, so two identical
-   copies make the loop seamless (3 copies caused the -50% restart to land
-   mid-pattern → the visible jump). */
 const loopRowOne = [...rowOne, ...rowOne]
 const loopRowTwo = [...rowTwo, ...rowTwo]
 
-function BrandLogo({ brand }) {
-  // Verified local logo file. No logo asset yet → clean initials badge
-  // (never a guessed/unverified image).
-  if (!brand.logo) {
-    return (
-      <div
-        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-25 lg:h-25 rounded-xl flex items-center justify-center text-white font-black leading-none"
-        style={{ background: brand.color }}
-      >
-        {brand.initials}
-      </div>
-    )
+function BrandCard({ brand }) {
+  const imgStyle = {
+    ...(brand.invert ? { filter: 'brightness(0) invert(1)' } : {}),
+    ...(brand.zoom   ? { transform: `scale(${brand.zoom})` } : {}),
   }
 
   return (
-    <div className="w-15 h-15 sm:w-10 sm:h-10 lg:w-25 lg:h-25 rounded-xl bg-white flex items-center justify-center shrink-0 p-1.5">
-      <img
-        src={brand.logo}
-        alt={brand.name}
-        className="w-full h-full object-contain"
-      />
-    </div>
-  )
-}
-
-function BrandCard({ brand }) {
-  return (
     <div
       className="
-        inline-flex items-center gap-2 sm:gap-3 lg:gap-4 mx-1.5 sm:mx-3 px-3 sm:px-5 lg:px-7 py-2.5 sm:py-3.5 lg:py-5 shrink-0 w-auto sm:w-[208px] lg:w-[330px]
-        bg-white/8 border border-white/12 rounded-2xl
+        inline-flex items-stretch mx-1.5 sm:mx-3 shrink-0
+        min-w-[130px] sm:min-w-[170px] lg:min-w-[210px]
+        border border-white/20 rounded-2xl overflow-hidden
         cursor-default select-none
         transition-all duration-300
         hover:border-[#A3E635]/50 hover:-translate-y-1.5
         hover:shadow-[0_10px_32px_rgba(0,0,0,0.4),0_2px_8px_rgba(163,230,53,0.15)]
-        group
       "
+      style={{
+        backgroundColor: 'rgba(255,255,255,0.14)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.08)',
+      }}
     >
-      <BrandLogo brand={brand} />
-      <span className="font-heading font-bold text-[12px] sm:text-[13.5px] lg:text-[17px] text-gray-300 group-hover:text-white tracking-wide whitespace-nowrap sm:overflow-hidden sm:text-ellipsis transition-colors duration-300">
-        {brand.name}
-      </span>
+      <div
+        className="w-full flex items-center justify-center px-5 sm:px-7 lg:px-9 py-4 sm:py-5 lg:py-6"
+      >
+        <img
+          src={brand.logo}
+          alt={brand.name}
+          className="h-10 sm:h-12 lg:h-14 w-auto max-w-full object-contain"
+          style={Object.keys(imgStyle).length ? imgStyle : undefined}
+        />
+      </div>
     </div>
   )
 }
