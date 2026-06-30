@@ -41,8 +41,8 @@ export default function ContactSection() {
               {[
                 { icon: IconMapPin, label: 'Location', value: '169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064', href: 'https://maps.google.com/?q=169+Evershine+Mall+Chincholi+Bunder+Junction+Malad+West+Mumbai+400064', external: true },
                 { icon: IconMail, label: 'Email', value: 'contact@drivtech.in', href: 'mailto:contact@drivtech.in' },
-                { icon: IconPhone, label: 'Phone', value: '+91 77380 46786', href: 'tel:+917738046786' },
-                { icon: IconMessage, label: 'WhatsApp', value: 'Chat on WhatsApp', href: 'https://wa.me/917738046786', external: true },
+                { icon: IconPhone, label: 'Phone', value: '+91 88558 86673', href: 'tel:+918855886673' },
+                { icon: IconMessage, label: 'WhatsApp', value: 'Chat on WhatsApp', href: 'https://wa.me/918855886673', external: true },
               ].map(({ icon: Icon, label, value, href, external }) => (
                 <motion.div key={label} className="group flex gap-4 items-start" whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}>
                   <div className="w-10 h-10 rounded-xl bg-[#A3E635]/10 border border-[#A3E635]/25 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 group-hover:bg-[#A3E635]/20 transition-all duration-300">

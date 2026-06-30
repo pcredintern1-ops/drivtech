@@ -2,20 +2,20 @@ import { SectionHeader, BAND_PY, BAND_SHELL_CONT, SECTION_CONTAINER, CONTAINER_G
 
 const brands = [
   /* Row 1 — 7 clients */
-  { name: 'Hyperpure',  logo: '/brands/hyperpure.webp', whiteBg: true,  zoom: 1.5 },
-  { name: 'Blinkit',    logo: '/brands/blinkit.webp',                    zoom: 1.8 },
-  { name: 'BigBasket',  logo: '/brands/bigbasket.webp', whiteBg: true,  zoom: 2.6 },
-  { name: 'ElasticRun', logo: '/brands/elasticrun.svg' },
-  { name: 'DMart',      logo: '/brands/dmart.webp',    whiteBg: true,   zoom: 2.4 },
-  { name: 'Flipkart',   logo: '/brands/flipkart.webp', whiteBg: true },
-  { name: 'Meesho',     logo: '/brands/meesho.webp',   whiteBg: true,   zoom: 2.0 },
+  { name: 'Hyperpure',  logo: '/brands/hyperpure.webp', cardBg: '#e23844', zoom: 1.5 },
+  { name: 'Blinkit',    logo: '/brands/blinkit.webp',   cardBg: '#f6cb4a', zoom: 1.8 },
+  { name: 'BigBasket',  logo: '/brands/bigbasket.webp', cardBg: '#000000', zoom: 2.6 },
+  { name: 'ElasticRun', logo: '/brands/elasticrun.svg', cardBg: '#ffffff' },
+  { name: 'DMart',      logo: '/brands/dmart.webp',     cardBg: '#ffffff', zoom: 2.4 },
+  { name: 'Flipkart',   logo: '/brands/flipkart.webp',  cardBg: '#027cd5' },
+  { name: 'Meesho',     logo: '/brands/meesho.webp',    cardBg: '#ffffff', zoom: 2.0 },
   /* Row 2 — 6 clients */
-  { name: 'Delhivery',  logo: '/brands/delhivery.webp', whiteBg: true,  zoom: 2.6 },
-  { name: 'Amazon',     logo: '/brands/amazon.webp',                     zoom: 2.0 },
-  { name: 'Truemeds',   logo: '/brands/truemeds.webp',  whiteBg: true,  zoom: 2.2 },
-  { name: 'Yulu',       logo: '/brands/yulu.svg'       },
-  { name: 'Dunzo',      logo: '/brands/dunzo.svg'      },
-  { name: 'Zepto',      logo: '/brands/zepto.svg'      },
+  { name: 'Delhivery',  logo: '/brands/delhivery.webp', cardBg: '#000000', zoom: 2.6 },
+  { name: 'Amazon',     logo: '/brands/amazon.webp',    cardBg: '#161d26', zoom: 2.0 },
+  { name: 'Truemeds',   logo: '/brands/truemeds.webp',  cardBg: '#ffffff', zoom: 2.2 },
+  { name: 'Yulu',       logo: '/brands/yulu.svg',       cardBg: '#ffffff' },
+  { name: 'Dunzo',      logo: '/brands/dunzo.svg',      cardBg: '#ffffff' },
+  { name: 'Zepto',      logo: '/brands/zepto.svg',      cardBg: '#ffffff' },
 ]
 
 const half = Math.ceil(brands.length / 2)
@@ -26,8 +26,7 @@ const loopRowTwo = [...rowTwo, ...rowTwo]
 
 function BrandCard({ brand }) {
   const imgStyle = {
-    ...(brand.invert ? { filter: 'brightness(0) invert(1)' } : {}),
-    ...(brand.zoom   ? { transform: `scale(${brand.zoom})` } : {}),
+    ...(brand.zoom ? { transform: `scale(${brand.zoom})` } : {}),
   }
 
   return (
@@ -41,16 +40,9 @@ function BrandCard({ brand }) {
         hover:border-[#A3E635]/50 hover:-translate-y-1.5
         hover:shadow-[0_10px_32px_rgba(0,0,0,0.4),0_2px_8px_rgba(163,230,53,0.15)]
       "
-      style={{
-        backgroundColor: 'rgba(255,255,255,0.14)',
-        backdropFilter: 'blur(18px)',
-        WebkitBackdropFilter: 'blur(18px)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.08)',
-      }}
+      style={{ backgroundColor: brand.cardBg || '#ffffff' }}
     >
-      <div
-        className="w-full flex items-center justify-center px-5 sm:px-7 lg:px-9 py-4 sm:py-5 lg:py-6"
-      >
+      <div className="w-full flex items-center justify-center px-5 sm:px-7 lg:px-9 py-4 sm:py-5 lg:py-6">
         <img
           src={brand.logo}
           alt={brand.name}

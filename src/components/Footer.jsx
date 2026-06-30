@@ -27,12 +27,11 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {[
-                { label: 'in', title: 'LinkedIn' },
-                { label: 'ig', title: 'Instagram' },
-                { label: 'fb', title: 'Facebook' },
-              ].map(({ label, title }) => (
-                <a key={label} href="#" title={title}
-                  onClick={e => e.preventDefault()}
+                { label: 'in', title: 'LinkedIn',  href: 'https://www.linkedin.com/company/driv-tech/' },
+                { label: 'ig', title: 'Instagram', href: 'https://www.instagram.com/drivtech.in?igsh=MW53NHBjbjRvY2F1ZA%3D%3D&utm_source=qr' },
+                { label: 'fb', title: 'Facebook',  href: 'https://www.facebook.com/share/1B28W9bziJ/?mibextid=wwXIfr' },
+              ].map(({ label, title, href }) => (
+                <a key={label} href={href} title={title} target="_blank" rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center text-gray-500 hover:text-[#A3E635] hover:border-[#A3E635]/40 hover:bg-[#A3E635]/8 hover:shadow-[0_4px_16px_rgba(163,230,53,0.12)] hover:-translate-y-1 transition-all duration-300 text-xs font-bold uppercase">
                   {label}
                 </a>
@@ -77,11 +76,11 @@ export default function Footer() {
               </li>
               <li className="flex gap-3 items-center group">
                 <IconPhone size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="tel:+917738046786" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">+91 77380 46786</a>
+                <a href="tel:+918855886673" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">+91 88558 86673</a>
               </li>
               <li className="flex gap-3 items-center group">
                 <IconMessage size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                <a href="https://wa.me/917738046786" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">WhatsApp Us</a>
+                <a href="https://wa.me/918855886673" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#A3E635] text-xs sm:text-sm transition-colors duration-300">WhatsApp Us</a>
               </li>
             </ul>
           </div>
