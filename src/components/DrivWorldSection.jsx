@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IconTruck, IconRoute, IconBolt, IconBike } from '@tabler/icons-react'
+import { SECTION_CONTAINER } from './SectionHeader'
 
 const ZONES = [
   {
@@ -187,7 +188,7 @@ export default function DrivWorldSection() {
       className="w-full py-14 sm:py-20 lg:py-24 overflow-x-hidden"
       style={{ background: T.sectionBg, transition: 'background 0.5s ease' }}
     >
-      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32">
+      <div className={SECTION_CONTAINER}>
         <div className="flex flex-col">
           {ZONES.map((zone, i) => {
             /* even (0,2) → image LEFT on desktop  */

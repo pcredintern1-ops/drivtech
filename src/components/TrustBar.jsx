@@ -32,8 +32,8 @@ function BrandCard({ brand }) {
   return (
     <div
       className="
-        inline-flex items-stretch mx-1.5 sm:mx-3 shrink-0
-        min-w-[130px] sm:min-w-[170px] lg:min-w-[210px]
+        inline-flex items-stretch mx-1 sm:mx-3 shrink-0
+        min-w-[92px] sm:min-w-[170px] lg:min-w-[210px]
         border border-white/20 rounded-2xl overflow-hidden
         cursor-default select-none
         transition-all duration-300
@@ -42,11 +42,11 @@ function BrandCard({ brand }) {
       "
       style={{ backgroundColor: brand.cardBg || '#ffffff' }}
     >
-      <div className="w-full flex items-center justify-center px-5 sm:px-7 lg:px-9 py-4 sm:py-5 lg:py-6">
+      <div className="w-full flex items-center justify-center px-2.5 sm:px-7 lg:px-9 py-2.5 sm:py-5 lg:py-6">
         <img
           src={brand.logo}
           alt={brand.name}
-          className="h-10 sm:h-12 lg:h-14 w-auto max-w-full object-contain"
+          className="h-6 sm:h-12 lg:h-14 w-auto max-w-full object-contain"
           style={Object.keys(imgStyle).length ? imgStyle : undefined}
         />
       </div>

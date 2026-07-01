@@ -70,8 +70,9 @@ export default function Navbar() {
           }`}
           style={{ backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)' }}
         >
-          {/* Green neon glow line at bottom */}
-          <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none" style={{
+          {/* Green neon glow line at bottom — hidden while mobile menu is open to avoid doubling up with the dropdown's own top accent line */}
+          <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none transition-opacity duration-200" style={{
+            opacity: open ? 0 : 1,
             background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
             boxShadow: scrolled
               ? '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)'
@@ -130,10 +131,10 @@ export default function Navbar() {
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-x-3 sm:inset-x-6 top-[5.5rem] sm:top-[6.25rem] md:top-[7.25rem] z-40 lg:hidden rounded-2xl overflow-hidden"
             style={{
-              background: scrolled ? 'rgba(8,12,28,0.92)' : 'rgba(255,255,255,0.96)',
+              background: useWhiteLogo ? 'rgba(8,12,28,0.92)' : 'rgba(255,255,255,0.96)',
               backdropFilter: 'blur(28px)',
               WebkitBackdropFilter: 'blur(28px)',
-              border: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)',
+              border: useWhiteLogo ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)',
               boxShadow: '0 16px 48px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06)',
             }}>
             {/* Top accent line */}
@@ -149,7 +150,7 @@ export default function Navbar() {
                     className={`w-full text-left flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                       active === link.href
                         ? 'bg-[#A3E635]/15 text-[#A3E635]'
-                        : scrolled
+                        : useWhiteLogo
                           ? 'text-gray-300 hover:text-white hover:bg-white/8'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}>
