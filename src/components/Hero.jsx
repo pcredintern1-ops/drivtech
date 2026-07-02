@@ -19,14 +19,16 @@ export default function Hero() {
         <img
           src="/hero-light-mobile.webp"
           alt=""
-          className="hero-img-light sm:hidden absolute inset-0 w-full h-full object-cover object-center"
+          className="hero-img-light sm:hidden absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '75% center' }}
           draggable={false}
           fetchPriority="high"
         />
         <img
           src="/hero-dark-mobile.webp"
           alt=""
-          className="hero-img-dark sm:hidden absolute inset-0 w-full h-full object-cover object-center"
+          className="hero-img-dark sm:hidden absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: '75% center' }}
           draggable={false}
         />
         {/* Tablet / desktop images (sm+) */}
