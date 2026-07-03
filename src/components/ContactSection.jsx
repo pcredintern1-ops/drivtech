@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { IconMail, IconPhone, IconMapPin, IconMessage, IconSend } from '@tabler/icons-react'
+import { IconMail, IconPhone, IconMapPin, IconSend } from '@tabler/icons-react'
 import { SectionHeader, SECTION_SHELL, SECTION_CONTAINER } from './SectionHeader'
 
 const inquiryTypes = [
@@ -73,7 +73,7 @@ export default function ContactSection() {
                   <IconSend size={22} className="text-[#65a30d]" />
                 </div>
                 <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-3">Message Received!</h3>
-                <p className="text-black text-base sm:text-lg max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DRIV.</p>
+                <p className="text-black text-base sm:text-lg max-w-xs">Our team will get back to you within 24 hours. Thank you for reaching out to DrivTech.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 space-y-5 shadow-sm">

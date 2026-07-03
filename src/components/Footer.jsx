@@ -53,7 +53,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center mb-5">
-              <img src="/logo-white.webp" alt="DRIV" className="h-9 sm:h-12 w-auto object-contain" />
+              <img src="/logo-white.webp" alt="DrivTech" className="h-9 sm:h-12 w-auto object-contain" />
             </div>
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-10 max-w-xs">
               Smart Logistics. Seamless Delivery.<br />
@@ -80,7 +80,7 @@ export default function Footer() {
               {[
                 { label: 'Home', href: '/home' },
                 { label: 'Services', href: '/services' },
-                { label: 'DRIV HUB', href: '/hub' },
+                { label: 'Driv HUB', href: '/hub' },
                 { label: 'Investor Program', href: '/invest' },
                 { label: 'Contact', href: '/contact' },
               ].map(l => (
@@ -122,7 +122,7 @@ export default function Footer() {
 
         <div className="section-divider mb-8" />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-gray-500 text-[11px] sm:text-xs text-center sm:text-left">© {new Date().getFullYear()} DRIV Logistics Pvt. Ltd. All rights reserved.</p>
+          <p className="text-gray-500 text-[11px] sm:text-xs text-center sm:text-left">© {new Date().getFullYear()} DrivTech Logistics Pvt. Ltd. All rights reserved.</p>
           <p className="text-gray-500 text-[11px] sm:text-xs text-center sm:text-right">Enterprise Logistics Operations Company · Mumbai, India</p>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
-  IconSend, IconCheck, IconCircleCheck,
+  IconSend, IconCircleCheck,
   IconUser, IconMail, IconPhone, IconMapPin,
   IconCurrencyRupee, IconSettings, IconTrendingUp,
   IconShield,
@@ -18,13 +18,13 @@ const EJS_KEY      = import.meta.env.VITE_EJS_PUBLIC_KEY  || ''
 
 const STEPS = [
   { num: '01', icon: IconCurrencyRupee, label: 'You fund a vehicle', desc: 'Pick a fleet tier and commit capital through a signed agreement.' },
-  { num: '02', icon: IconSettings,      label: 'DRIV runs everything', desc: 'Driver, routes, maintenance, compliance. We carry the full operational load.' },
+  { num: '02', icon: IconSettings,      label: 'DrivTech runs everything', desc: 'Driver, routes, maintenance, compliance. We carry the full operational load.' },
   { num: '03', icon: IconTrendingUp,    label: 'Revenue flows back to you', desc: 'Earnings from live deployments are shared back. Asset liquidated at tenure end.' },
 ]
 
 const FEATURES = [
   'Revenue sharing through a formal signed agreement',
-  'Full vehicle lifecycle managed by DRIV',
+  'Full vehicle lifecycle managed by DrivTech',
   'Enterprise fleet deployment and route planning',
   'Driver hiring, training and daily management',
   'Maintenance, insurance and compliance covered',
@@ -53,8 +53,6 @@ const up = (delay = 0) => ({
   viewport: { once: true, amount: 0.05 },
   transition: { duration: 0.6, delay, ease: 'easeOut' },
 })
-
-const springHover = { whileHover: { y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } } }
 
 // ─── count-up ────────────────────────────────────────────────────────────────
 function useCountUp(target, inView, duration = 1600) {
@@ -159,7 +157,7 @@ export default function InvestorSection() {
         {/* ── section header ── */}
         <SectionHeader
           label="Investor Program"
-          title={<>Own a Fleet. <span className="gradient-text">DRIV Runs It.</span></>}
+          title={<>Own a Fleet. <span className="gradient-text">DrivTech Runs It.</span></>}
           description="Put capital into logistics vehicles. We handle drivers, operations, and deployments from start to finish."
           descMaxWidth="max-w-xl"
         />
@@ -344,7 +342,7 @@ export default function InvestorSection() {
                   </button>
 
                   <p className="text-gray-400 text-xs text-center">
-                    By submitting you agree to be contacted by DRIV regarding the investor program.
+                    By submitting you agree to be contacted by DrivTech regarding the investor program.
                   </p>
                 </motion.form>
               )}

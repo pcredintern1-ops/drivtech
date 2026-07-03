@@ -13,6 +13,7 @@ const JOURNEY_STEPS = [
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
     img: '/services/first-mile.webp',
+    imgDark: '/services/first-mile-dark.webp',
   },
   {
     label: 'Middle Mile', step: '02', Icon: IconRoute,
@@ -21,6 +22,7 @@ const JOURNEY_STEPS = [
     color: '#F97316', textColor: '#c2410c',
     bg: 'rgba(249,115,22,0.05)', border: 'rgba(249,115,22,0.20)',
     img: '/services/middle-mile.webp',
+    imgDark: '/services/middle-mile-dark.webp',
   },
   {
     label: 'Last Mile', step: '03', Icon: IconBike,
@@ -29,6 +31,7 @@ const JOURNEY_STEPS = [
     color: '#A3E635', textColor: '#65a30d',
     bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
     img: '/services/last-mile.webp',
+    imgDark: '/services/last-mile-dark.webp',
   },
 ]
 
@@ -61,7 +64,7 @@ function JourneyCardBody({ step }) {
         {/* Scene image (light + dark) */}
         <div className="relative aspect-[16/10] overflow-hidden">
           <img loading="lazy" decoding="async"
-            src={step.label === 'First Mile' ? '/services/first-mile.webp' : step.label === 'Middle Mile' ? '/services/middle-mile.webp' : '/services/mile-light.webp'}
+            src={step.img}
             alt={step.title}
             className="about-img-light w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
@@ -75,7 +78,7 @@ function JourneyCardBody({ step }) {
             }}
           />
           <img loading="lazy" decoding="async"
-            src={step.label === 'First Mile' ? '/services/first-mile-dark.webp' : step.label === 'Middle Mile' ? '/services/middle-mile-dark.webp' : '/services/mile-dark.webp'}
+            src={step.imgDark}
             alt={step.title}
             className="about-img-dark absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             draggable={false}
@@ -224,7 +227,7 @@ export default function ServicesSection() {
             label="What We Do"
             title={<>Our <span className="gradient-text">Logistics Solutions</span></>}
             titleAs="h1"
-            description="From pickup to final delivery, DRIV powers every stage of the supply chain with scalable, technology-driven logistics solutions."
+            description="From pickup to final delivery, DrivTech powers every stage of the supply chain with scalable, technology-driven logistics solutions."
           />
 
           {/* ── Mobile: carousel (tabs + arrows + slide + dots) ── */}

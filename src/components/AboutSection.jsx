@@ -8,9 +8,7 @@ const wa = {
   hidden: { opacity: 0, y: 24 },
   show:   { opacity: 1, y: 0,  transition: { duration: 0.7, ease: 'easeOut' } },
 }
-const fadeUp     = wa
 const fadeFromLeft = wa
-const stag      = { hidden: {}, show: { transition: { staggerChildren: 0.13 } } }
 const stagCards = { hidden: {}, show: { transition: { staggerChildren: 0.15 } } }
 
 /* ── Feature cards ── */
@@ -31,7 +29,7 @@ export default function AboutSection({ continuation = false }) {
 
         {/* ── Section label ── */}
         <div className={`text-center ${SECTION_LABEL_MB}`}>
-          <SectionLabel className="mb-0">About DRIV</SectionLabel>
+          <SectionLabel className="mb-0">About DrivTech</SectionLabel>
         </div>
 
         {/* ── Main grid: LEFT text · RIGHT arrow ── */}
@@ -51,7 +49,7 @@ export default function AboutSection({ continuation = false }) {
             </div>
 
             <p className="text-black text-base sm:text-lg leading-relaxed mb-3">
-              DRIV is a Mumbai-based fleet operations and logistics company built for{' '}
+              DrivTech is a Mumbai-based fleet operations and logistics company built for{' '}
               <span className="text-gray-900 font-semibold">enterprise clients</span>.
               We manage dedicated transportation, linehaul movement, on-demand fleet deployment, and end-to-end driver operations.
             </p>
@@ -71,7 +69,7 @@ export default function AboutSection({ continuation = false }) {
             <div className="shrink-0 w-full grid">
               <img loading="lazy" decoding="async"
                 src="/about-network-3.webp"
-                alt="DRIV Logistics Network"
+                alt="DrivTech Logistics Network"
                 className="about-img-light w-full h-auto"
                 draggable={false}
                 style={{
@@ -84,7 +82,7 @@ export default function AboutSection({ continuation = false }) {
               />
               <img loading="lazy" decoding="async"
                 src="/about-network-dark.webp"
-                alt="DRIV Logistics Network"
+                alt="DrivTech Logistics Network"
                 className="about-img-dark w-full h-auto"
                 draggable={false}
                 style={{

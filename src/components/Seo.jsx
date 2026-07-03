@@ -7,39 +7,39 @@ const DEFAULT_OG = `${SITE}/logo.webp`
 /* Per-route metadata. '/' falls back to '/home'. */
 const META = {
   '/home': {
-    title: 'DRIV — Smart Logistics. Seamless Delivery.',
+    title: 'DrivTech — Smart Logistics. Seamless Delivery.',
     description:
-      "DRIV is Mumbai's premier enterprise logistics operations company — fleet management, linehaul logistics, driver sourcing, and scalable mobility solutions across India.",
+      "DrivTech is Mumbai's premier enterprise logistics operations company — fleet management, linehaul logistics, driver sourcing, and scalable mobility solutions across India.",
     path: '/home',
   },
   '/about': {
-    title: 'About DRIV — Enterprise Logistics Operations Company in Mumbai',
+    title: 'About DrivTech — Enterprise Logistics Operations Company in Mumbai',
     description:
-      'Learn about DRIV, a Mumbai-based enterprise logistics operations company powering fleet management, linehaul, and driver sourcing for India’s fastest-growing businesses.',
+      'Learn about DrivTech, a Mumbai-based enterprise logistics operations company powering fleet management, linehaul, and driver sourcing for India’s fastest-growing businesses.',
     path: '/about',
   },
   '/services': {
-    title: 'Logistics Services — First, Middle & Last Mile Delivery | DRIV',
+    title: 'Logistics Services — First, Middle & Last Mile Delivery | DrivTech',
     description:
-      'DRIV delivers end-to-end logistics: first-mile, middle-mile, and last-mile transportation, fleet management, adhoc vehicles, and driver sourcing across India.',
+      'DrivTech delivers end-to-end logistics: first-mile, middle-mile, and last-mile transportation, fleet management, adhoc vehicles, and driver sourcing across India.',
     path: '/services',
   },
   '/hub': {
-    title: 'DRIV HUB — Technology Platform for Fleet Operations | DRIV',
+    title: 'Driv HUB — Technology Platform for Fleet Operations | DrivTech',
     description:
-      'DRIV HUB is the technology platform powering real-time fleet operations, driver management, and logistics visibility for enterprise supply chains.',
+      'Driv HUB is the technology platform powering real-time fleet operations, driver management, and logistics visibility for enterprise supply chains.',
     path: '/hub',
   },
   '/invest': {
-    title: 'Fleet Investor Program — Partner & Earn With DRIV',
+    title: 'Fleet Investor Program — Partner & Earn With DrivTech',
     description:
-      'Join the DRIV fleet investor program. Invest in a managed fleet model and earn predictable returns from India’s growing enterprise logistics market.',
+      'Join the DrivTech fleet investor program. Invest in a managed fleet model and earn predictable returns from India’s growing enterprise logistics market.',
     path: '/invest',
   },
   '/contact': {
-    title: 'Contact DRIV — Enterprise Logistics in Mumbai, India',
+    title: 'Contact DrivTech — Enterprise Logistics in Mumbai, India',
     description:
-      'Get in touch with DRIV for enterprise logistics, fleet management, and partnership inquiries. Based in Malad West, Mumbai. Call, email, or message us.',
+      'Get in touch with DrivTech for enterprise logistics, fleet management, and partnership inquiries. Based in Malad West, Mumbai. Call, email, or message us.',
     path: '/contact',
   },
 }
@@ -81,7 +81,7 @@ export default function Seo() {
     setMeta('property', 'og:url', url)
     setMeta('property', 'og:type', 'website')
     setMeta('property', 'og:image', DEFAULT_OG)
-    setMeta('property', 'og:site_name', 'DRIV')
+    setMeta('property', 'og:site_name', 'DrivTech')
 
     setMeta('name', 'twitter:card', 'summary_large_image')
     setMeta('name', 'twitter:title', m.title)

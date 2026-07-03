@@ -205,7 +205,7 @@ export default function Roadmap({ continuation = false }) {
         >
           <SectionHeader
             label="Growth Timeline"
-            title={<>The DRIV <span className="gradient-text">Roadmap</span></>}
+            title={<>The DrivTech <span className="gradient-text">Roadmap</span></>}
             description="From Mumbai operations to a national logistics infrastructure."
             descMaxWidth="max-w-xl"
           />

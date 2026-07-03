@@ -65,4 +65,7 @@ export function ThemeProvider({ children }) {
   )
 }
 
+// Context files conventionally export the provider component plus its hook;
+// fast-refresh still works in practice for this pairing.
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => useContext(ThemeContext)

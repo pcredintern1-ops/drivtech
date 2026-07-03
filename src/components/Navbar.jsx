@@ -83,7 +83,7 @@ export default function Navbar() {
           <button onClick={() => handleNav('/home')} className="flex items-center shrink-0 cursor-pointer" aria-label="Home">
             <img
               src={useWhiteLogo ? '/logo-white.webp' : '/logo.webp'}
-              alt="DRIV"
+              alt="DrivTech"
               className="h-11 sm:h-12 md:h-[4.25rem] lg:h-[3.75rem] w-auto object-contain transition-all duration-500 hover:scale-105"
             />
           </button>

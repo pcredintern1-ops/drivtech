@@ -3,10 +3,6 @@ import { motion } from 'framer-motion'
 import { IconArrowRight } from '@tabler/icons-react'
 
 /* ── TextReveal handles all text — only badge + CTA buttons use Framer ── */
-const up = {
-  hidden: { opacity: 0, y: 30, scale: 0.8, filter: 'blur(10px)' },
-  show:   { opacity: 1, y: 0,  scale: 1,   filter: 'blur(0px)', transition: { duration: 0.8, ease: 'easeOut' } },
-}
 
 export default function Hero() {
   const navigate = useNavigate()

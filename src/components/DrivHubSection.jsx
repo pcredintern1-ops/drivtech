@@ -260,8 +260,8 @@ function CampusScene({ sectionRef }) {
               width: 'clamp(85px,12.5vw,178px)', height: 'auto',
               filter: 'drop-shadow(0 12px 28px rgba(163,230,53,.1)) drop-shadow(0 5px 14px rgba(0,0,0,.5))',
               zIndex: 5 }}/>
-          {/* main DRIV HUB – center, dominant */}
-          <motion.img src="/scenes/building-hub.webp" alt="DRIV HUB"
+          {/* main Driv HUB – center, dominant */}
+          <motion.img src="/scenes/building-hub.webp" alt="Driv HUB"
             loading="lazy"
             initial={{ opacity: 0, y: 55, scale: .87 }}
             animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -354,7 +354,7 @@ export default function DrivHubSection() {
           >
             <SectionLabel onDark>Operations Hub</SectionLabel>
             <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-[3.2rem] leading-[1.06] tracking-tight text-white mt-4 mb-4">
-              The DRIV{' '}
+              The Driv{' '}
               <span style={{ background: 'linear-gradient(130deg,#F97316,#fb923c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>HUB</span>
             </h1>
             <p className="text-base sm:text-lg text-white/52 max-w-2xl mx-auto leading-relaxed">

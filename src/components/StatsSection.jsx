@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, Fragment } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useInView } from 'framer-motion'
 import { IconTruck, IconRoute, IconBuilding, IconMapPin } from '@tabler/icons-react'
 import { BAND_PY, BAND_SHELL_CONT, SECTION_CONTAINER, CONTAINER_GAP } from './SectionHeader'
 
@@ -48,7 +48,7 @@ export default function StatsSection({ continuation = false }) {
         <div
           ref={statsRef}
           className="flex flex-wrap lg:flex-nowrap items-stretch justify-center">
-          {stats.map(({ Icon, target, suffix, label }, i) => (
+          {stats.map(({ Icon, target, suffix, label }) => (
             <Fragment key={label}>
 
               <div className="flex items-center justify-start lg:justify-center gap-3 lg:gap-3 px-2 sm:px-4 lg:px-6 py-2 flex-1 min-w-[50%] lg:min-w-0">

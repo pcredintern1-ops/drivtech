@@ -30,7 +30,7 @@ const ZONES = [
     tag:   'Adhoc Deploy',
     title: 'Adhoc Vehicle Support',
     desc:  'On-demand vehicle availability to handle urgent deliveries, peak demand, and temporary logistics requirements.',
-    from:  'DRIV Hub',
+    from:  'Driv Hub',
     to:    'Warehouse',
   },
   {
