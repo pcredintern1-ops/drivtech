@@ -189,7 +189,8 @@ export default function DrivWorldSection() {
       style={{ background: T.sectionBg, transition: 'background 0.5s ease' }}
     >
       <div className={SECTION_CONTAINER}>
-        <div className="flex flex-col">
+        {/* Cap row width so the image/description gap stays constant on large screens */}
+        <div className="flex flex-col max-w-[1280px] mx-auto">
           {ZONES.map((zone, i) => {
             /* even (0,2) → image LEFT on desktop  */
             /* odd  (1,3) → image RIGHT on desktop */
@@ -206,7 +207,7 @@ export default function DrivWorldSection() {
                   ].join(' ')}
                 >
                   {/* ── Content — DOM-first so mobile shows text above image ── */}
-                  <div className="w-full lg:w-[30%] flex flex-col gap-4 sm:gap-5 items-center text-center">
+                  <div className="w-full lg:w-[44%] flex flex-col gap-4 sm:gap-5 items-center text-center">
 
                     {/* Title */}
                     <h3
