@@ -58,11 +58,12 @@ export function SectionDescription({
   className = '',
   maxWidth = 'max-w-2xl',
   align = 'center',
+  onDark = false,
 }) {
   const alignClass = align === 'left' ? 'text-left mx-0' : 'text-center mx-auto'
   return (
     <p
-      className={`text-black text-base sm:text-lg ${maxWidth} leading-relaxed mt-2 md:mt-3 ${alignClass} ${className}`}
+      className={`${onDark ? 'text-white/60' : 'text-black'} text-base sm:text-lg ${maxWidth} leading-relaxed mt-2 md:mt-3 ${alignClass} ${className}`}
     >
       {children}
     </p>
@@ -93,7 +94,7 @@ export function SectionHeader({
         </div>
       )}
       {description && (
-        <SectionDescription maxWidth={descMaxWidth} align={titleAlign}>
+        <SectionDescription maxWidth={descMaxWidth} align={titleAlign} onDark={onDark}>
           {description}
         </SectionDescription>
       )}

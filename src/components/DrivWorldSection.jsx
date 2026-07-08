@@ -1,116 +1,155 @@
-import { useEffect, useState } from 'react'
-import { IconTruck, IconRoute, IconBolt, IconBike } from '@tabler/icons-react'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import {
+  IconTruck, IconRoute, IconBolt, IconBike, IconUsers, IconClock,
+  IconMapPin, IconTrendingUp, IconRocket, IconSend2, IconArrowRight,
+} from '@tabler/icons-react'
 import { SECTION_CONTAINER } from './SectionHeader'
 
 const ZONES = [
   {
-    id:    'fleet',
-    Icon:  IconTruck,
+    id: 'fleet',
+    Icon: IconTruck,
     color: '#A3E635',
-    tag:   'Fleet Operations',
     title: 'Enterprise Dedicated Fleet',
-    desc:  'Dedicated fleet solutions tailored to your business with reliable vehicles, drivers, and end-to-end operational support.',
-    from:  'Origin',
-    to:    'Destination',
+    desc: 'Dedicated fleet solutions tailored to your business with reliable vehicles, drivers, and end-to-end operational support.',
+    img: '/zones/enterprise-dedicated-fleet.webp',
+    features: [
+      { Icon: IconTruck, label: 'Dedicated Vehicles' },
+      { Icon: IconUsers, label: 'Trained Drivers' },
+      { Icon: IconClock, label: '24/7 Monitoring' },
+    ],
   },
   {
-    id:    'linehaul',
-    Icon:  IconRoute,
+    id: 'linehaul',
+    Icon: IconRoute,
     color: '#A3E635',
-    tag:   'Linehaul',
     title: 'Linehaul Logistics',
-    desc:  'Efficient intercity and hub-to-hub transportation designed for seamless long-distance freight movement.',
-    from:  'Mumbai',
-    to:    'Pune',
+    desc: 'Efficient intercity and hub-to-hub transportation designed for seamless long-distance freight movement.',
+    img: '/zones/linehaul_logistics.webp',
+    features: [
+      { Icon: IconRoute, label: 'Hub-to-Hub Transit' },
+      { Icon: IconMapPin, label: 'Intercity Network' },
+      { Icon: IconClock, label: 'On-Time Transit' },
+    ],
   },
   {
-    id:    'adhoc',
-    Icon:  IconBolt,
+    id: 'adhoc',
+    Icon: IconBolt,
     color: '#A3E635',
-    tag:   'Adhoc Deploy',
     title: 'Adhoc Vehicle Support',
-    desc:  'On-demand vehicle availability to handle urgent deliveries, peak demand, and temporary logistics requirements.',
-    from:  'Driv Hub',
-    to:    'Warehouse',
+    desc: 'On-demand vehicle availability to handle urgent deliveries, peak demand, and temporary logistics requirements.',
+    img: '/zones/adhoc.webp',
+    features: [
+      { Icon: IconBolt, label: 'On-Demand Fleet' },
+      { Icon: IconTrendingUp, label: 'Peak Ready' },
+      { Icon: IconRocket, label: 'Fast Deployment' },
+    ],
   },
   {
-    id:    'quick',
-    Icon:  IconBike,
+    id: 'quick',
+    Icon: IconBike,
     color: '#A3E635',
-    tag:   'Quick Commerce',
     title: 'Quick Commerce Riders',
-    desc:  'Fast and dependable rider network for hyperlocal, same-day, and instant deliveries.',
-    from:  'Dark Store',
-    to:    'Doorstep',
+    desc: 'Fast and dependable rider network for hyperlocal, same-day, and instant deliveries.',
+    img: '/zones/quick-commerce-riders.webp',
+    features: [
+      { Icon: IconBike, label: 'Hyperlocal Riders' },
+      { Icon: IconClock, label: 'Same-Day Delivery' },
+      { Icon: IconSend2, label: 'Instant Dispatch' },
+    ],
   },
 ]
 
 function makeTheme(isDark) {
   return isDark ? {
-    sectionBg:     '#111827',
-    imgBg:         '#0d1520',
-    imgBorder:     'rgba(255,255,255,0.07)',
-    imgDot:        'rgba(255,255,255,0.035)',
-    imgAccent:     'rgba(163,230,53,0.18)',
-    tagBg:         'rgba(163,230,53,0.10)',
-    tagColor:      '#A3E635',
-    titleColor:    '#ffffff',
-    descColor:     'rgba(255,255,255,0.62)',
-    divider:       'rgba(255,255,255,0.06)',
-    routeFrom:     '#A3E635',
-    routeLine:     'rgba(255,255,255,0.15)',
-    routeDest:     'rgba(255,255,255,0.22)',
-    routeDestText: 'rgba(255,255,255,0.40)',
+    sectionBg:   '#111827',
+    cardBg:      '#151b28',
+    cardBorder:  'rgba(255,255,255,0.08)',
+    imgBg:       '#0d1520',
+    imgDot:      'rgba(255,255,255,0.035)',
+    imgAccent:   'rgba(163,230,53,0.18)',
+    badgeBg:     'rgba(163,230,53,0.12)',
+    badgeBorder: 'rgba(163,230,53,0.35)',
+    badgeText:   '#A3E635',
+    titleColor:  '#ffffff',
+    descColor:   'rgba(255,255,255,0.62)',
+    chipIconBg:  'rgba(163,230,53,0.10)',
+    chipText:    'rgba(255,255,255,0.75)',
+    shadow:      '0 18px 50px rgba(0,0,0,.35)',
   } : {
-    sectionBg:     '#f0f4f8',
-    imgBg:         '#1a2332',
-    imgBorder:     'rgba(0,0,0,0.10)',
-    imgDot:        'rgba(255,255,255,0.04)',
-    imgAccent:     'rgba(163,230,53,0.20)',
-    tagBg:         'rgba(101,163,13,0.10)',
-    tagColor:      '#4d7c0f',
-    titleColor:    '#0f172a',
-    descColor:     'rgba(15,23,42,0.62)',
-    divider:       'rgba(0,0,0,0.07)',
-    routeFrom:     '#4d7c0f',
-    routeLine:     'rgba(15,23,42,0.18)',
-    routeDest:     'rgba(15,23,42,0.22)',
-    routeDestText: 'rgba(15,23,42,0.42)',
+    sectionBg:   '#f0f4f8',
+    cardBg:      '#ffffff',
+    cardBorder:  'rgba(15,23,42,0.08)',
+    imgBg:       '#1a2332',
+    imgDot:      'rgba(255,255,255,0.04)',
+    imgAccent:   'rgba(163,230,53,0.20)',
+    badgeBg:     'rgba(77,124,15,0.08)',
+    badgeBorder: 'rgba(77,124,15,0.28)',
+    badgeText:   '#4d7c0f',
+    titleColor:  '#0f172a',
+    descColor:   'rgba(15,23,42,0.62)',
+    chipIconBg:  'rgba(77,124,15,0.08)',
+    chipText:    'rgba(15,23,42,0.68)',
+    shadow:      '0 18px 44px rgba(15,23,42,.08)',
   }
 }
 
-function RouteBadge({ zone, T }) {
+// ── Floating icon badge — fills with brand color as it crosses viewport center ──
+function ZoneIconBadge({ zone, T, seamLeft }) {
+  const ref = useRef(null)
+
+  // 0 → badge enters from the bottom, 0.5 → badge center sits at viewport center, 1 → badge exits the top
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['center end', 'center start'] })
+  const fillRaw = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0])
+  const fill = useSpring(fillRaw, { stiffness: 140, damping: 24, mass: 0.6 })
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
-      <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-        <span style={{
-          width: 6, height: 6, borderRadius: '50%',
-          background: T.routeFrom, flexShrink: 0,
-        }} />
-        <span style={{
-          fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
-          textTransform: 'uppercase', color: T.routeFrom,
-        }}>
-          {zone.from}
-        </span>
+    <div
+      ref={ref}
+      className="hidden lg:flex absolute z-10 items-center justify-center rounded-full overflow-hidden"
+      style={{
+        top: '50%', left: seamLeft, transform: 'translate(-50%, -50%)',
+        width: 72, height: 72,
+        background: T.cardBg,
+        border: `1.5px solid ${T.badgeBorder}`,
+        boxShadow: T.shadow,
+      }}
+    >
+      {/* Fill — expands from the center outward as the badge crosses viewport center */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 rounded-full"
+        style={{ background: T.badgeText, scale: fill }}
+      />
+      {/* Glow that peaks alongside the fill */}
+      <motion.div
+        aria-hidden
+        className="absolute -inset-2 rounded-full pointer-events-none"
+        style={{ boxShadow: `0 0 26px ${T.badgeText}`, opacity: fill }}
+      />
+
+      {/* Base icon — brand color, always present underneath */}
+      <zone.Icon size={30} color={T.badgeText} stroke={1.8} className="relative" />
+      {/* Filled-state icon — crossfades to white as the fill grows */}
+      <motion.div className="absolute inset-0 flex items-center justify-center" style={{ opacity: fill }}>
+        <zone.Icon size={30} color="#ffffff" stroke={1.8} />
+      </motion.div>
+    </div>
+  )
+}
+
+function FeatureChip({ feature, T }) {
+  const { Icon, label } = feature
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="flex items-center justify-center w-6 h-6 rounded-full shrink-0"
+        style={{ background: T.chipIconBg }}>
+        <Icon size={13} color={T.badgeText} />
       </span>
-
-      <div style={{
-        width: 36, height: 1, flexShrink: 0,
-        background: `linear-gradient(90deg, ${T.routeFrom}55, ${T.routeLine})`,
-      }} />
-
-      <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-        <span style={{
-          width: 6, height: 6, borderRadius: '50%',
-          background: T.routeDest, flexShrink: 0,
-        }} />
-        <span style={{
-          fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
-          textTransform: 'uppercase', color: T.routeDestText,
-        }}>
-          {zone.to}
-        </span>
+      <span className="text-xs sm:text-[13px] font-medium whitespace-nowrap" style={{ color: T.chipText }}>
+        {label}
       </span>
     </div>
   )
@@ -118,19 +157,23 @@ function RouteBadge({ zone, T }) {
 
 function ImgPlaceholder({ zone, T }) {
   const { Icon, color } = zone
+
+  if (zone.img) {
+    return (
+      <img src={zone.img} alt={zone.title} loading="lazy" decoding="async" draggable={false}
+        className="w-full h-full object-cover" />
+    )
+  }
+
   return (
     <div style={{
       position: 'relative',
-      width: '100%',
-      aspectRatio: '1 / 1',
-      borderRadius: 20,
-      overflow: 'hidden',
+      width: '100%', height: '100%',
+      minHeight: '260px',
       background: T.imgBg,
-      border: `1px solid ${T.imgBorder}`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      flexShrink: 0,
     }}>
       {/* Dot grid */}
       <div style={{
@@ -167,6 +210,7 @@ function ImgPlaceholder({ zone, T }) {
 }
 
 export default function DrivWorldSection() {
+  const navigate = useNavigate()
   const [isDark, setIsDark] = useState(
     () => typeof document !== 'undefined'
       ? document.documentElement.classList.contains('dark')
@@ -189,63 +233,138 @@ export default function DrivWorldSection() {
       style={{ background: T.sectionBg, transition: 'background 0.5s ease' }}
     >
       <div className={SECTION_CONTAINER}>
-        {/* Cap row width so the image/description gap stays constant on large screens */}
-        <div className="flex flex-col max-w-[1280px] mx-auto">
+        <div className="flex flex-col gap-10 sm:gap-12 lg:gap-8 max-w-[1280px] mx-auto">
           {ZONES.map((zone, i) => {
             /* even (0,2) → image LEFT on desktop  */
             /* odd  (1,3) → image RIGHT on desktop */
             const imgLeft = i % 2 === 0
+            const num = String(i + 1).padStart(2, '0')
+
+            const imgFraction  = 1.15
+            const textFraction = 0.85
+            const seamLeft = imgLeft
+              ? `${(imgFraction / (imgFraction + textFraction)) * 100}%`
+              : `${(textFraction / (imgFraction + textFraction)) * 100}%`
 
             return (
-              <div key={zone.id}>
-                {/* Row */}
+              <Fragment key={zone.id}>
                 <div
-                  className={[
-                    'flex flex-col gap-8 sm:gap-10 items-center',
-                    'lg:flex-row lg:justify-between',
-                    imgLeft ? 'lg:flex-row-reverse' : '',
-                  ].join(' ')}
+                  className={`relative grid grid-cols-1 gap-3 lg:gap-0 items-stretch ${
+                    imgLeft ? 'lg:grid-cols-[1.15fr_0.85fr]' : 'lg:grid-cols-[0.85fr_1.15fr]'
+                  }`}
                 >
-                  {/* ── Content — DOM-first so mobile shows text above image ── */}
-                  <div className="w-full lg:w-[44%] flex flex-col gap-4 sm:gap-5 items-center text-center">
+
+                  {/* ── Content card — first on mobile/tablet (description above image) ── */}
+                  <div
+                    className={`order-1 flex flex-col justify-center gap-4 rounded-3xl p-7 sm:p-9 lg:p-10 ${imgLeft ? 'lg:order-2' : 'lg:order-1'}`}
+                    style={{
+                      background: T.cardBg,
+                      border: `1px solid ${T.cardBorder}`,
+                      boxShadow: T.shadow,
+                      transition: 'background 0.5s ease, border-color 0.5s ease',
+                    }}
+                  >
+                    {/* Numbered badge */}
+                    <span className="inline-flex items-center justify-center w-11 h-11 rounded-2xl text-xs font-black shrink-0"
+                      style={{ background: T.badgeBg, border: `1.5px solid ${T.badgeBorder}`, color: T.badgeText }}>
+                      {num}
+                    </span>
 
                     {/* Title */}
                     <h3
-                      className="font-heading font-black leading-[1.1] tracking-tight
-                        text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.4rem]"
+                      className="font-heading font-black leading-[1.1] tracking-tight text-2xl sm:text-3xl"
                       style={{ color: T.titleColor }}
                     >
                       {zone.title}
                     </h3>
 
                     {/* Description */}
-                    <p
-                      className="text-base sm:text-lg leading-relaxed"
-                      style={{ color: T.descColor }}
-                    >
+                    <p className="text-base leading-relaxed" style={{ color: T.descColor }}>
                       {zone.desc}
                     </p>
 
-                    {/* Route badge */}
-                    <RouteBadge zone={zone} T={T} />
+                    {/* Feature chips */}
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 mt-1">
+                      {zone.features.map(f => (
+                        <FeatureChip key={f.label} feature={f} T={T} />
+                      ))}
+                    </div>
                   </div>
 
-                  {/* ── Image — DOM-second so mobile shows image below text ── */}
-                  <div className="w-full md:w-4/5 lg:w-[52%] lg:max-w-[580px]">
+                  {/* ── Image card — second on mobile/tablet; kept in its true rectangular
+                       aspect ratio (8:3) below lg so the whole photo fits with no crop ── */}
+                  <div
+                    className={`order-2 rounded-3xl overflow-hidden aspect-[8/3] lg:aspect-auto lg:min-h-[260px] ${imgLeft ? 'lg:order-1' : 'lg:order-2'}`}
+                    style={{
+                      border: `1px solid ${T.cardBorder}`,
+                      boxShadow: T.shadow,
+                      transition: 'border-color 0.5s ease',
+                    }}
+                  >
                     <ImgPlaceholder zone={zone} T={T} />
                   </div>
+
+                  {/* ── Floating icon — sits on the seam between the two cards, desktop only ── */}
+                  <ZoneIconBadge zone={zone} T={T} seamLeft={seamLeft} />
+
                 </div>
 
-                {/* Divider — skip after last row */}
-                {i < ZONES.length - 1 && (
-                  <div
-                    className="my-14 sm:my-16 lg:my-20 h-px w-full"
-                    style={{ background: T.divider }}
-                  />
-                )}
-              </div>
+                {/* ── Divider — separates services on mobile/tablet only, avoids run-on confusion ── */}
+                <div className="lg:hidden h-px w-full" style={{ background: T.cardBorder }} />
+              </Fragment>
             )
           })}
+
+          {/* ── Grow CTA — last item in the same list, no separate section/background ── */}
+          <div className="relative rounded-3xl overflow-hidden min-h-[220px] sm:min-h-[260px] lg:min-h-[300px] flex items-center"
+            style={{ border: `1px solid ${T.cardBorder}`, boxShadow: T.shadow }}
+          >
+            {/* Background image (light + dark) — reuses Hero's exact desktop images */}
+            <div className="absolute inset-0" aria-hidden>
+              <img src="/hero-light.webp" alt=""
+                className="hero-img-light absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: '82% 68%' }} draggable={false} loading="lazy" />
+              <img src="/hero-dark.webp" alt=""
+                className="hero-img-dark absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: '82% 68%' }} draggable={false} loading="lazy" />
+            </div>
+
+            {/* Overlays — light / dark theme */}
+            <div className="hero-overlay-light absolute inset-0" style={{
+              background: 'linear-gradient(90deg, rgba(240,245,250,0.96) 0%, rgba(235,242,248,0.90) 16%, rgba(215,230,245,0.66) 32%, rgba(215,230,245,0.28) 48%, rgba(255,255,255,0) 68%)'
+            }} />
+            <div className="hero-overlay-dark absolute inset-0" style={{
+              background: 'linear-gradient(90deg, rgba(8,12,22,0.94) 0%, rgba(10,14,24,0.86) 16%, rgba(11,16,28,0.58) 34%, rgba(11,16,28,0.22) 50%, rgba(11,16,28,0) 70%)'
+            }} />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, ease: [.22, 1, .36, 1] }}
+              className="relative z-10 max-w-md px-6 sm:px-10 lg:px-14 py-6 sm:py-8"
+            >
+              <span className="block text-xs sm:text-sm font-bold uppercase tracking-[0.2em] mb-2 text-[#65a30d] dark:text-[#A3E635]">
+                Ready To Grow With Us?
+              </span>
+
+              <h2 className="font-heading font-black text-2xl sm:text-3xl lg:text-[2.1rem] leading-[1.12] mb-2.5 text-gray-900 dark:text-white">
+                Let&apos;s Drive Your Business <span className="gradient-text-lime">Forward.</span>
+              </h2>
+
+              <p className="hero-desc-shadow text-black dark:text-white/70 text-sm sm:text-base leading-relaxed mb-5 max-w-sm">
+                Partner with DrivTech and experience logistics solutions that deliver more.
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <a href="/contact"
+                  onClick={e => { e.preventDefault(); navigate('/contact') }}
+                  className="btn-shine btn-glow-hover group flex items-center justify-center gap-2.5 px-6 py-3 bg-[#A3E635] hover:bg-[#bef264] text-black font-bold rounded-xl text-sm glow-lime transition-all duration-300 hover:scale-105">
+                  Contact Us
+                  <IconArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+            </motion.div>
+          </div>
+
         </div>
       </div>
     </section>

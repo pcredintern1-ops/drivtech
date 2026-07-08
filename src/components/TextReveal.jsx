@@ -57,6 +57,21 @@ function playEl(el) {
   if (el.dataset.waPlayed) return
   el.dataset.waPlayed = '1'
   el.classList.add('wa-go')
+
+  // Safety net: document.startViewTransition() (used by the theme toggle)
+  // can pause or drop in-flight CSS animations on some browsers, which
+  // left words stuck at opacity:0 permanently since the animation never
+  // reached its 'to' state. Force the end state via inline style once the
+  // animation should be done, independent of whether it actually finished.
+  const words = el.querySelectorAll('[data-wa-i]')
+  const settleAfter = Math.min(words.length * WORD_MS, MAX_MS) + 700
+  setTimeout(() => {
+    words.forEach(w => {
+      w.style.animation = 'none'
+      w.style.opacity   = '1'
+      w.style.filter    = 'none'
+    })
+  }, settleAfter)
 }
 
 export default function TextReveal() {

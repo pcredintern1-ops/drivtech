@@ -32,7 +32,7 @@ function BrandCard({ brand }) {
   return (
     <div
       className="
-        inline-flex items-stretch mx-1 sm:mx-3 shrink-0
+        inline-flex items-stretch mx-1.5 sm:mx-3.5 shrink-0
         min-w-[92px] sm:min-w-[170px] lg:min-w-[210px]
         border border-white/20 rounded-2xl overflow-hidden
         cursor-default select-none
@@ -67,7 +67,7 @@ export default function TrustBar({ continuation = false }) {
         />
 
         <div
-          className="relative marquee-wrap py-3 flex flex-col gap-3 sm:gap-4 -mx-4 sm:-mx-8 lg:-mx-12 2xl:-mx-24"
+          className="relative marquee-wrap py-3 flex flex-col gap-3 sm:gap-4 -mx-4 sm:-mx-8 lg:mx-auto lg:max-w-[1400px]"
           style={{ overflowX: 'clip' }}
         >
           {/* Row 1 — scrolls left */}
