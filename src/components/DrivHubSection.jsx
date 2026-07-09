@@ -51,7 +51,7 @@ const CSS = `
   @keyframes blink { 0%,100%{opacity:.4} 50%{opacity:1} }
 `
 
-// ─── campus — the generated Driv HUB illustration, open composition ───────
+// ─── campus — the generated Driv Hub illustration, open composition ───────
 
 function CampusScene({ sectionRef, T }) {
   const wrapRef = useRef(null)
@@ -91,8 +91,8 @@ function CampusScene({ sectionRef, T }) {
       >
         <motion.img
           src="/scenes/driv-hub-campus.webp"
-          alt="Driv HUB — Bhiwandi Logistics Park operations campus"
-          loading="lazy"
+          alt="Driv Hub — Bhiwandi Logistics Park operations campus"
+          fetchPriority="high"
           draggable={false}
           style={{
             y: imgY,
@@ -189,7 +189,7 @@ export default function DrivHubSection() {
             />
           </motion.div>
 
-          {/* campus — the Driv HUB illustration */}
+          {/* campus — the Driv Hub illustration */}
           <div className="mb-5 sm:mb-6 lg:mb-8 mt-4 sm:mt-6">
             <CampusScene sectionRef={sectionRef} T={T} />
           </div>

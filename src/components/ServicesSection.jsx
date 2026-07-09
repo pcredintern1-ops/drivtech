@@ -18,9 +18,9 @@ const JOURNEY_STEPS = [
   {
     label: 'Middle Mile', step: '02', Icon: IconRoute,
     title: 'Hub-to-Hub Transit',
-    desc: 'Our mid-mile network enables efficient transportation between warehouses, distribution centers, and regional hubs, optimizing inventory flow and reducing transit times.',
-    color: '#F97316', textColor: '#c2410c',
-    bg: 'rgba(249,115,22,0.05)', border: 'rgba(249,115,22,0.20)',
+    desc: 'Our mid-mile network connects warehouses, distribution centers, and regional hubs across India, optimizing inventory flow and reducing transit times.',
+    color: '#A3E635', textColor: '#65a30d',
+    bg: 'rgba(163,230,53,0.05)', border: 'rgba(163,230,53,0.20)',
     img: '/services/middle-mile.webp',
     imgDark: '/services/middle-mile-dark.webp',
   },

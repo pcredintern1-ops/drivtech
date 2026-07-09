@@ -71,8 +71,8 @@ export default function Hero() {
 
           {/* H1 — TextReveal splits words */}
           <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] leading-[1.08] mb-4 text-gray-900 text-center xl:text-left">
-            <span className="block">Smarter <span className="gradient-text">Fleets.</span></span>
-            <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime">Delivery.</span></span>
+            <span className="block">Smarter <span className="gradient-text">Fleets</span></span>
+            <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime">Delivery</span></span>
           </h1>
 
           {/* Description — TextReveal splits words */}
@@ -91,11 +91,11 @@ export default function Hero() {
             </a>
             <a href="/services"
               onClick={e => { e.preventDefault(); navigate('/services') }}
-              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gray-900 border border-gray-700 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
+              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gray-900 border border-gray-500 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
               Explore Services
             </a>
-            <a href="/invest"
-              onClick={e => { e.preventDefault(); navigate('/invest') }}
+            <a href="/investor-program"
+              onClick={e => { e.preventDefault(); navigate('/investor-program') }}
               className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 border border-[#A3E635]/60 bg-white/70 backdrop-blur-sm text-[#65a30d] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap">
               Become an Investor
             </a>
@@ -117,11 +117,11 @@ export default function Hero() {
           <div className="flex gap-3 w-full">
             <a href="/services"
               onClick={e => { e.preventDefault(); navigate('/services') }}
-              className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 bg-gray-900 border border-gray-700 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 flex-1">
+              className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 bg-gray-900 border border-gray-500 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 flex-1">
               Explore Services
             </a>
-            <a href="/invest"
-              onClick={e => { e.preventDefault(); navigate('/invest') }}
+            <a href="/investor-program"
+              onClick={e => { e.preventDefault(); navigate('/investor-program') }}
               className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 border border-[#A3E635]/60 bg-white/70 backdrop-blur-sm text-[#65a30d] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 flex-1 whitespace-nowrap">
               Become an Investor
             </a>

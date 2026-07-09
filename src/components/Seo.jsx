@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const SITE = 'https://drivtech.in'
@@ -21,20 +21,28 @@ const META = {
   '/services': {
     title: 'Logistics Services — First, Middle & Last Mile Delivery | DrivTech',
     description:
-      'DrivTech delivers end-to-end logistics: first-mile, middle-mile, and last-mile transportation, fleet management, adhoc vehicles, and driver sourcing across India.',
+      'DrivTech delivers end-to-end logistics: first-mile, middle-mile, and last-mile transportation, fleet management, ad hoc vehicles, and driver sourcing across India.',
     path: '/services',
   },
-  '/hub': {
-    title: 'Driv HUB — Technology Platform for Fleet Operations | DrivTech',
+  /* Driv Hub — temporarily disabled; uncomment when page is ready
+  '/driv-hub': {
+    title: 'Driv Hub — Technology Platform for Fleet Operations | DrivTech',
     description:
-      'Driv HUB is the technology platform powering real-time fleet operations, driver management, and logistics visibility for enterprise supply chains.',
-    path: '/hub',
+      'Driv Hub is the technology platform powering real-time fleet operations, driver management, and logistics visibility for enterprise supply chains.',
+    path: '/driv-hub',
   },
-  '/invest': {
+  '/hub': {
+    title: 'Driv Hub — Technology Platform for Fleet Operations | DrivTech',
+    description:
+      'Driv Hub is the technology platform powering real-time fleet operations, driver management, and logistics visibility for enterprise supply chains.',
+    path: '/driv-hub',
+  },
+  */
+  '/investor-program': {
     title: 'Fleet Investor Program — Partner & Earn With DrivTech',
     description:
-      'Join the DrivTech fleet investor program. Invest in a managed fleet model and earn predictable returns from India’s growing enterprise logistics market.',
-    path: '/invest',
+      "Join the DrivTech fleet investor program. Invest in a managed fleet model and earn predictable returns from India’s growing enterprise logistics market.",
+    path: '/investor-program',
   },
   '/contact': {
     title: 'Contact DrivTech — Enterprise Logistics in Mumbai, India',

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { IconBrandWhatsapp, IconArrowUp } from '@tabler/icons-react'
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Seo from './components/Seo'
@@ -90,8 +91,8 @@ function BackToTop() {
             />
           </svg>
 
-          <IconArrowUp size={22} className="relative text-[#65a30d] sm:hidden" />
-          <IconArrowUp size={26} className="relative text-[#65a30d] hidden sm:block" />
+          <IconArrowUp size={20} className="relative sm:hidden text-gray-700 dark:text-gray-200" />
+          <IconArrowUp size={22} className="relative hidden sm:block text-gray-700 dark:text-gray-200" />
         </motion.button>
       )}
     </AnimatePresence>
@@ -101,6 +102,7 @@ function BackToTop() {
 export default function App() {
   return (
     <BrowserRouter>
+      <LoadingScreen />
       <ScrollToTop />
       <Seo />
       <TextReveal />
@@ -111,7 +113,11 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          {/* Driv Hub — temporarily disabled; uncomment when page is ready
+          <Route path="/driv-hub" element={<Hub />} />
           <Route path="/hub" element={<Hub />} />
+          */}
+          <Route path="/investor-program" element={<Investor />} />
           <Route path="/invest" element={<Investor />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Home />} />

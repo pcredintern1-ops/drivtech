@@ -142,6 +142,7 @@ html.dark .border-gray-200   { border-color: var(--border-soft) !important; }
 html.dark .border-gray-200\/80 { border-color: var(--border-soft) !important; }
 html.dark .border-gray-100   { border-color: var(--border-soft) !important; }
 html.dark .border-gray-300\/60 { border-color: var(--border-soft) !important; }
+html.dark #about .border-gray-300\/60 { border-color: rgba(255,255,255,0.32) !important; }
 html.dark .border-gray-700   { border-color: rgba(255,255,255,0.14) !important; }
 
 /* Helper classes */

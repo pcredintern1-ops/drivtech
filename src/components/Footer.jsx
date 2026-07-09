@@ -43,17 +43,17 @@ export default function Footer() {
       {/* Subtle dot pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.025]"
         style={{ backgroundImage: 'radial-gradient(circle, #A3E635 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-      {/* Top lime accent */}
-      <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(163,230,53,0.45), transparent)' }} />
+      {/* Top lime accent — sits exactly at the section boundary */}
+      <div className="absolute -top-[2px] left-0 right-0 h-[2px]"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, #A3E635 3%, #A3E635 97%, transparent 100%)' }} />
 
-      <div className={`${SECTION_CONTAINER} pt-12 md:pt-16 lg:pt-20 ${SECTION_PB}`}>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-12 mb-10 md:mb-14">
+      <div className={`${SECTION_CONTAINER} pt-12 md:pt-16 lg:pt-20 pb-6 md:pb-8`}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-12 mb-8 md:mb-10">
 
           {/* Brand */}
-          <div className="col-span-2 lg:col-span-1">
-            <div className="flex items-center mb-5">
-              <img src="/logo-white.webp" alt="DrivTech" className="h-9 sm:h-12 w-auto object-contain" />
+          <div className="col-span-2 md:col-span-1">
+            <div className="mb-5">
+              <img src="/logo-white.webp" alt="DrivTech" className="block h-11 sm:h-14 w-[170px] sm:w-[210px] object-contain object-left -ml-2" />
             </div>
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-10 max-w-xs">
               Smart Logistics. Seamless Delivery.<br />
@@ -80,10 +80,10 @@ export default function Footer() {
               {[
                 { label: 'Home', href: '/home' },
                 { label: 'Services', href: '/services' },
-                { label: 'Driv HUB', href: '/hub' },
-                { label: 'Investor Program', href: '/invest' },
+                // { label: 'Driv Hub', href: '/driv-hub' }, // temporarily disabled
+                { label: 'Investor Program', href: '/investor-program' },
                 { label: 'Contact', href: '/contact' },
-              ].map(l => (
+              ].filter(Boolean).map(l => (
                 <li key={l.href}>
                   <a href={l.href}
                     onClick={e => { e.preventDefault(); navigate(l.href) }}
@@ -101,19 +101,29 @@ export default function Footer() {
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-[0.2em] mb-5 sm:mb-7">Contact</h4>
             <ul className="space-y-4 sm:space-y-5">
               <li className="flex gap-3 items-start">
-                <IconMapPin size={13} className="text-[#A3E635] mt-0.5 shrink-0" />
-                <p className="text-gray-400 text-base sm:text-lg leading-relaxed">169, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</p>
+                <IconMapPin size={17} className="text-[#A3E635] mt-[3px] shrink-0" />
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-[#A3E635]/60 mb-0.5">Headquarters</p>
+                  <p className="text-gray-400 text-base sm:text-lg leading-relaxed">158, Evershine Mall, Chincholi Bunder Junction, Malad West, Mumbai - 400064</p>
+                </div>
+              </li>
+              <li className="flex gap-3 items-start">
+                <IconMapPin size={17} className="text-[#A3E635] mt-[3px] shrink-0" />
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-[#A3E635]/60 mb-0.5">Hub</p>
+                  <p className="text-gray-400 text-base sm:text-lg leading-relaxed">F4-01, Bhumi World Industrial Park, Kalyan Bypass, Pimplas village, Bhiwandi - 421311</p>
+                </div>
               </li>
               <li className="flex gap-3 items-center group">
-                <IconMail size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <IconMail size={17} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
                 <a href="mailto:contact@drivtech.in" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">contact@drivtech.in</a>
               </li>
               <li className="flex gap-3 items-center group">
-                <IconPhone size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <IconPhone size={17} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
                 <a href="tel:+918855886673" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">+91 88558 86673</a>
               </li>
               <li className="flex gap-3 items-center group">
-                <IconMessage size={13} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <IconMessage size={17} className="text-[#A3E635] shrink-0 group-hover:scale-110 transition-transform duration-300" />
                 <a href="https://wa.me/918855886673" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#A3E635] text-base sm:text-lg transition-colors duration-300">WhatsApp Us</a>
               </li>
             </ul>
@@ -121,9 +131,8 @@ export default function Footer() {
         </div>
 
         <div className="section-divider mb-8" />
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-gray-500 text-[11px] sm:text-xs text-center sm:text-left">© {new Date().getFullYear()} DrivTech Logistics Pvt. Ltd. All rights reserved.</p>
-          <p className="text-gray-500 text-[11px] sm:text-xs text-center sm:text-right">Enterprise Logistics Operations Company · Mumbai, India</p>
+        <div className="flex items-center justify-center">
+          <p className="text-gray-500 text-[11px] sm:text-xs text-center">© {new Date().getFullYear()} DrivTech Logistics Pvt. Ltd. All rights reserved.</p>
         </div>
       </div>
     </footer>

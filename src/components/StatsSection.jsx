@@ -26,7 +26,7 @@ const stats = [
   { Icon: IconTruck,    target: 150,   suffix: '+', label: 'Active Fleet'       },
   { Icon: IconRoute,    target: 20,    suffix: 'Lakhs+', label: 'Deliveries'          },
   { Icon: IconBuilding, target: 25,    suffix: '+', label: 'Clients' },
-  { Icon: IconMapPin,   target: 2,     suffix: '+', label: 'Cities'             },
+  { Icon: IconMapPin,   target: 3,     suffix: '+', label: 'Cities'             },
 ]
 
 export default function StatsSection({ continuation = false }) {
