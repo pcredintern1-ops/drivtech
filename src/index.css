@@ -195,8 +195,68 @@ html.dark .hero-overlay-light { opacity: 0; }
 /* Hero description — sharp shadow in light mode only */
 html:not(.dark) .hero-desc-shadow { text-shadow: 0 1px 2px rgba(0,0,0,0.45); }
 
+/* Desktop home hero (xl+) — locked dark look regardless of site theme toggle */
+@media (min-width: 1280px) {
+  #home h1 {
+    color: #ffffff !important;
+  }
+  #home .hero-desc {
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-shadow: none !important;
+  }
+  #home .gradient-text-lime-light {
+    background: linear-gradient(135deg, #d9f99d 0%, #A3E635 55%, #84cc16 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  #home .hero-desktop-ctas a[href="/contact"] {
+    background-color: #A3E635 !important;
+    color: #000000 !important;
+  }
+  #home .hero-desktop-ctas a[href="/contact"] * {
+    color: #000000 !important;
+  }
+  #home .hero-desktop-ctas a[href="/services"] {
+    background-color: #111827 !important;
+    color: #ffffff !important;
+    border-color: #6b7280 !important;
+  }
+  #home .hero-desktop-ctas a[href="/investor-program"] {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #A3E635 !important;
+    border-color: rgba(163, 230, 53, 0.6) !important;
+  }
+}
 
-/* ── Theme surface helper (greyish section bg) ── */
+
+/* Investor hero — locked dark look at all breakpoints regardless of site theme toggle */
+#investor-hero .investor-hero-title {
+  color: transparent !important;
+}
+.investor-heading-gradient-light {
+  display: inline-block;
+  max-width: 100%;
+  background: linear-gradient(90deg, #111827 0%, #111827 42%, #65a30d 68%, #A3E635 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.investor-heading-gradient-dark {
+  display: inline-block;
+  max-width: 100%;
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 42%, #d9f99d 68%, #A3E635 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#investor-hero .investor-hero-tagline {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+#investor-hero .investor-hero-desc {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
 .theme-surface { background-color: var(--bg-surface); }
 
 /* ── Navbar (top, not scrolled) in dark ── */

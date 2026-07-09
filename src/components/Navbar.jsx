@@ -33,14 +33,18 @@ function ThemeToggle({ scrolled, className = '' }) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [inHeroZone, setInHeroZone] = useState(false)
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   // Active link from current route ('/' counts as '/home')
   const active = location.pathname === '/' ? '/home' : location.pathname
+  const isHome = active === '/home'
+  const isInvestor = active === '/investor-program'
   const { theme } = useTheme()
-  // Use the white logo whenever the bar is dark (scrolled) or dark theme is active
-  const useWhiteLogo = scrolled || theme === 'dark'
+  // Dark bar: scrolled, dark theme, or hero zone (home xl+ / investor all sizes)
+  const barDark = scrolled || theme === 'dark' || inHeroZone
+  const useWhiteLogo = barDark
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -48,6 +52,40 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  /* Hero zone: home (xl+) or investor (all sizes) — dark navbar until scroll past hero */
+  useEffect(() => {
+    if (!isHome && !isInvestor) {
+      setInHeroZone(false)
+      return
+    }
+
+    const mq = window.matchMedia('(min-width: 1280px)')
+    const heroId = isHome ? 'home' : 'investor-hero'
+
+    const update = () => {
+      if (isHome && !mq.matches) {
+        setInHeroZone(false)
+        return
+      }
+      const hero = document.getElementById(heroId)
+      if (!hero) {
+        setInHeroZone(false)
+        return
+      }
+      setInHeroZone(hero.getBoundingClientRect().bottom > 96)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    mq.addEventListener('change', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+      mq.removeEventListener('change', update)
+    }
+  }, [isHome, isInvestor])
 
   const handleNav = (href) => {
     setOpen(false)
@@ -64,7 +102,7 @@ export default function Navbar() {
       >
         <div
           className={`relative overflow-hidden w-full flex items-center justify-between px-4 sm:px-6 py-[14px] sm:py-[1.125rem] md:py-[1.375rem] lg:px-5 lg:py-2.5 rounded-2xl border transition-all duration-500 ${
-            scrolled
+            barDark
               ? 'border-white/10 bg-black/85 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
               : 'border-gray-100 bg-white/90'
           }`}
@@ -74,7 +112,7 @@ export default function Navbar() {
           <div className="absolute -bottom-px inset-x-0 h-[3px] rounded-b-2xl pointer-events-none transition-opacity duration-200" style={{
             opacity: open ? 0 : 1,
             background: 'linear-gradient(90deg, transparent 0%, rgba(163,230,53,0.6) 20%, #A3E635 50%, rgba(163,230,53,0.6) 80%, transparent 100%)',
-            boxShadow: scrolled
+            boxShadow: barDark
               ? '0 0 12px rgba(163,230,53,0.7), 0 0 24px rgba(163,230,53,0.35)'
               : '0 0 8px rgba(163,230,53,0.45), 0 0 16px rgba(163,230,53,0.20)',
           }} />
@@ -94,8 +132,8 @@ export default function Navbar() {
               <button key={link.href} onClick={() => handleNav(link.href)}
                 className={`nav-link relative px-3.5 py-2.5 text-[0.92rem] font-medium tracking-wide transition-all duration-200 rounded-lg whitespace-nowrap ${
                   active === link.href
-                    ? scrolled ? 'text-[#A3E635] bg-[#A3E635]/10' : 'text-[#65a30d] bg-[#A3E635]/8'
-                    : scrolled ? 'text-gray-300 hover:text-[#A3E635] hover:bg-[#A3E635]/10' : 'text-gray-500 hover:text-[#4d7c0f] hover:bg-[#A3E635]/8'
+                    ? barDark ? 'text-[#A3E635] bg-[#A3E635]/10' : 'text-[#65a30d] bg-[#A3E635]/8'
+                    : barDark ? 'text-gray-300 hover:text-[#A3E635] hover:bg-[#A3E635]/10' : 'text-gray-500 hover:text-[#4d7c0f] hover:bg-[#A3E635]/8'
                 }`}>
                 {active === link.href && (
                   <motion.span layoutId="nav-pill"
@@ -105,15 +143,15 @@ export default function Navbar() {
                 <span className="relative z-10">{link.label}</span>
               </button>
             ))}
-            <ThemeToggle scrolled={scrolled} className="ml-1.5" />
+            <ThemeToggle scrolled={barDark} className="ml-1.5" />
           </div>
 
           {/* Mobile: theme toggle + menu toggle */}
           <div className="lg:hidden flex items-center gap-1 ml-auto">
-            <ThemeToggle scrolled={scrolled} />
+            <ThemeToggle scrolled={barDark} />
             <button onClick={() => setOpen(!open)}
               className={`p-3.5 sm:p-4 transition-colors rounded-lg ${
-                scrolled ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                barDark ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
               }`}>
               {open ? <IconX size={22} /> : <IconMenu2 size={22} />}
             </button>

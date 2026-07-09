@@ -1,11 +1,33 @@
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { IconArrowRight } from '@tabler/icons-react'
+
+/* Desktop hero video — public/hero-desktop.mp4 */
+const HERO_DESKTOP_VIDEO = '/hero-desktop.mp4'
 
 /* ── TextReveal handles all text — only badge + CTA buttons use Framer ── */
 
 export default function Hero() {
   const navigate = useNavigate()
+  const desktopVideoRef = useRef(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)')
+    const playIfDesktop = () => {
+      const video = desktopVideoRef.current
+      if (!video) return
+      if (mq.matches) {
+        video.play().catch(() => {})
+      } else {
+        video.pause()
+      }
+    }
+    playIfDesktop()
+    mq.addEventListener('change', playIfDesktop)
+    return () => mq.removeEventListener('change', playIfDesktop)
+  }, [])
+
   return (
     <section id="home" className="relative min-h-screen xl:h-screen flex flex-col overflow-hidden bg-[#050b18]">
 
@@ -27,41 +49,50 @@ export default function Hero() {
           style={{ objectPosition: '75% center' }}
           draggable={false}
         />
-        {/* Tablet / desktop images (sm+) */}
+        {/* Tablet images (sm–lg) — follows site theme like mobile */}
         <img
           src="/hero-light.webp"
           alt=""
-          className="hero-img-light hidden sm:block w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
+          className="hero-img-light hidden sm:block xl:hidden absolute inset-0 w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
           draggable={false}
           fetchPriority="high"
         />
         <img
           src="/hero-dark.webp"
           alt=""
-          className="hero-img-dark hidden sm:block absolute inset-0 w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
+          className="hero-img-dark hidden sm:block xl:hidden absolute inset-0 w-full h-full object-cover sm:[object-position:85%_48%] md:[object-position:88%_40%] lg:[object-position:88%_40%]"
           draggable={false}
         />
+        {/* Desktop video (xl+) */}
+        <video
+          ref={desktopVideoRef}
+          className="hidden xl:block absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ objectPosition: '88% 40%' }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/hero-dark.webp"
+          aria-hidden
+        >
+          <source src={HERO_DESKTOP_VIDEO} type="video/mp4" />
+        </video>
       </div>
 
 
-      {/* ── Overlays — light theme ── */}
-      {/* Desktop */}
-      <div className="hero-overlay-light absolute inset-0 hidden xl:block" style={{
-        background: 'linear-gradient(90deg, rgba(240,245,250,0.95) 0%, rgba(235,242,248,0.88) 12%, rgba(215,230,245,0.62) 24%, rgba(215,230,245,0.28) 38%, rgba(255,255,255,0) 58%)'
-      }} />
-      {/* Mobile/tablet including large tablet */}
+      {/* ── Overlays — light theme (mobile + tablet, follows site theme) ── */}
       <div className="hero-overlay-light absolute inset-0 xl:hidden" style={{
         background: 'linear-gradient(165deg, rgba(220,232,245,0.89) 0%, rgba(210,228,244,0.74) 18%, rgba(180,215,240,0.36) 36%, rgba(180,215,240,0.08) 54%, rgba(255,255,255,0) 74%)'
       }} />
 
-      {/* ── Overlays — dark theme ── */}
-      {/* Desktop */}
-      <div className="hero-overlay-dark absolute inset-0 hidden xl:block" style={{
-        background: 'linear-gradient(90deg, rgba(8,12,22,0.92) 0%, rgba(10,14,24,0.82) 14%, rgba(11,16,28,0.55) 30%, rgba(11,16,28,0.20) 46%, rgba(11,16,28,0) 66%)'
-      }} />
-      {/* Mobile/tablet */}
+      {/* ── Overlays — dark theme (mobile + tablet, follows site theme) ── */}
       <div className="hero-overlay-dark absolute inset-0 xl:hidden" style={{
         background: 'linear-gradient(165deg, rgba(8,12,22,0.92) 0%, rgba(10,14,24,0.80) 18%, rgba(11,16,28,0.45) 38%, rgba(11,16,28,0.12) 58%, rgba(11,16,28,0) 78%)'
+      }} />
+      {/* Desktop (xl+) — always dark */}
+      <div className="absolute inset-0 hidden xl:block pointer-events-none" style={{
+        background: 'linear-gradient(90deg, rgba(8,12,22,0.92) 0%, rgba(10,14,24,0.82) 14%, rgba(11,16,28,0.55) 30%, rgba(11,16,28,0.20) 46%, rgba(11,16,28,0) 66%)'
       }} />
 
       {/* ── Main content ── */}
@@ -70,13 +101,13 @@ export default function Hero() {
         <div className="flex flex-col">
 
           {/* H1 — TextReveal splits words */}
-          <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] leading-[1.08] mb-4 text-gray-900 text-center xl:text-left">
-            <span className="block">Smarter <span className="gradient-text">Fleets</span></span>
-            <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime">Delivery</span></span>
+          <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] xl:text-[3.4rem] leading-[1.08] mb-4 text-gray-900 xl:text-white text-center xl:text-left">
+            <span className="block">Smarter <span className="gradient-text xl:hidden">Fleets</span><span className="gradient-text-lime-light hidden xl:inline">Fleets</span></span>
+            <span className="block pb-[0.1em]">Faster <span className="gradient-text-lime xl:hidden">Delivery</span><span className="gradient-text-lime-light hidden xl:inline">Delivery</span></span>
           </h1>
 
           {/* Description — TextReveal splits words */}
-          <p className="hero-desc-shadow text-black text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
+          <p className="hero-desc text-black hero-desc-shadow xl:text-white/70 xl:[text-shadow:none] text-base sm:text-lg leading-relaxed max-w-lg text-center xl:text-left mx-auto xl:mx-0">
             Enterprise fleet operations, linehaul logistics, and driver management.
             Built for businesses that keep India's supply chain moving.
           </p>
@@ -96,7 +127,7 @@ export default function Hero() {
             </a>
             <a href="/investor-program"
               onClick={e => { e.preventDefault(); navigate('/investor-program') }}
-              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 border border-[#A3E635]/60 bg-white/70 backdrop-blur-sm text-[#65a30d] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap">
+              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 border border-[#A3E635]/60 bg-white/10 backdrop-blur-sm text-[#A3E635] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 whitespace-nowrap">
               Become an Investor
             </a>
           </motion.div>
@@ -122,7 +153,7 @@ export default function Hero() {
             </a>
             <a href="/investor-program"
               onClick={e => { e.preventDefault(); navigate('/investor-program') }}
-              className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 border border-[#A3E635]/60 bg-white/70 backdrop-blur-sm text-[#65a30d] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 flex-1 whitespace-nowrap">
+              className="btn-shine flex items-center justify-center gap-2.5 px-5 py-2.5 border border-[#A3E635]/60 bg-white/70 backdrop-blur-sm text-[#65a30d] dark:bg-white/10 dark:text-[#A3E635] font-semibold rounded-xl text-sm transition-all duration-300 hover:scale-105 flex-1 whitespace-nowrap">
               Become an Investor
             </a>
           </div>
