@@ -129,10 +129,10 @@ function InvestmentForm({ form, setForm, errors, status, onSubmit }) {
             <IconSend size={22} className="text-[#65a30d] dark:text-[#A3E635]" />
           </div>
           <h3 className="font-heading font-bold text-gray-900 dark:text-white text-lg sm:text-xl mb-3">
-            You&apos;re on the list.
+            Thank You
           </h3>
-          <p className="text-black dark:text-white/60 text-base leading-relaxed max-w-[260px]">
-            Our team will send the investor brochure and reach out within 24 hours.
+          <p className="text-black dark:text-white/60 text-base leading-relaxed max-w-[280px]">
+            We appreciate your interest in DrivTech. Your Investor Brochure is now downloading.
           </p>
         </motion.div>
       ) : (
