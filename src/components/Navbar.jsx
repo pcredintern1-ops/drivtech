@@ -53,21 +53,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  /* Hero zone: home (xl+) or investor (all sizes) — dark navbar until scroll past hero */
+  /* Hero zone: home or investor (all sizes) — dark navbar until scroll past hero */
   useEffect(() => {
     if (!isHome && !isInvestor) {
       setInHeroZone(false)
       return
     }
 
-    const mq = window.matchMedia('(min-width: 1280px)')
     const heroId = isHome ? 'home' : 'investor-hero'
 
     const update = () => {
-      if (isHome && !mq.matches) {
-        setInHeroZone(false)
-        return
-      }
       const hero = document.getElementById(heroId)
       if (!hero) {
         setInHeroZone(false)
@@ -79,11 +74,9 @@ export default function Navbar() {
     update()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
-    mq.addEventListener('change', update)
     return () => {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
-      mq.removeEventListener('change', update)
     }
   }, [isHome, isInvestor])
 

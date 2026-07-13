@@ -173,62 +173,13 @@ html.dark .gradient-text-orange {
 html.dark ::-webkit-scrollbar-track { background: #0f1623; }
 html.dark ::selection { background: rgba(163,230,53,0.30); color: #f1f5f9; }
 
-/* ── Hero theme image swap (opacity so breakpoint display classes still work) ── */
-.hero-img-dark  { opacity: 0; }
-.hero-img-light { opacity: 1; }
-html.dark .hero-img-light { opacity: 0; }
-html.dark .hero-img-dark  { opacity: 1; }
-
 /* ── About network image swap ── */
 .about-img-dark { display: none; }
 html.dark .about-img-light { display: none; }
 html.dark .about-img-dark  { display: block; }
 
-/* ── Hero overlay swap ──
-   Light overlays visible by default, hidden in dark.
-   Dark overlays hidden by default, shown in dark.
-   The element's own responsive class (hidden / xl:hidden)
-   controls breakpoint; opacity here controls theme. */
-html:not(.dark) .hero-overlay-dark { opacity: 0; }
-html.dark .hero-overlay-light { opacity: 0; }
-
-/* Hero description — sharp shadow in light mode only */
-html:not(.dark) .hero-desc-shadow { text-shadow: 0 1px 2px rgba(0,0,0,0.45); }
-
-/* Desktop home hero (xl+) — locked dark look regardless of site theme toggle */
-@media (min-width: 1280px) {
-  #home h1 {
-    color: #ffffff !important;
-  }
-  #home .hero-desc {
-    color: rgba(255, 255, 255, 0.7) !important;
-    text-shadow: none !important;
-  }
-  #home .gradient-text-lime-light {
-    background: linear-gradient(135deg, #d9f99d 0%, #A3E635 55%, #84cc16 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  #home .hero-desktop-ctas a[href="/contact"] {
-    background-color: #A3E635 !important;
-    color: #000000 !important;
-  }
-  #home .hero-desktop-ctas a[href="/contact"] * {
-    color: #000000 !important;
-  }
-  #home .hero-desktop-ctas a[href="/services"] {
-    background-color: #111827 !important;
-    color: #ffffff !important;
-    border-color: #6b7280 !important;
-  }
-  #home .hero-desktop-ctas a[href="/investor-program"] {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: #A3E635 !important;
-    border-color: rgba(163, 230, 53, 0.6) !important;
-  }
-}
-
+/* Home hero — locked dark look at every breakpoint regardless of site theme toggle;
+   text colors are hardcoded white in Hero.jsx since the video background is always dark. */
 
 /* Investor hero — locked dark look at all breakpoints regardless of site theme toggle */
 #investor-hero .investor-hero-title {
