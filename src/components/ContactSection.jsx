@@ -7,6 +7,12 @@ import { SectionHeader, SECTION_SHELL, SECTION_CONTAINER } from './SectionHeader
 const EJS_SERVICE  = import.meta.env.VITE_EJS_SERVICE_ID       || ''
 const EJS_TEMPLATE = import.meta.env.VITE_EJS_CONTACT_TEMPLATE || ''
 const EJS_KEY      = import.meta.env.VITE_EJS_PUBLIC_KEY       || ''
+const SHEETS_URL   = import.meta.env.VITE_SHEETS_WEBHOOK_URL   || ''
+
+function saveToSheets(payload) {
+  if (!SHEETS_URL) return
+  fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }).catch(() => {})
+}
 
 const inquiryTypes = [
   { value: 'enterprise', label: 'Enterprise Inquiry' },
@@ -25,23 +31,27 @@ export default function ContactSection() {
     e.preventDefault()
     setStatus('sending')
     try {
-      await emailjs.send(
-        EJS_SERVICE,
-        EJS_TEMPLATE,
-        {
-          from_name:    form.name,
-          from_email:   form.email,
-          phone:        form.phone || 'N/A',
-          inquiry_type: inquiryTypes.find(t => t.value === form.type)?.label || form.type,
-          message:      form.message,
-        },
-        EJS_KEY
-      )
-      setStatus('success')
-      setForm(INITIAL)
-    } catch {
-      setStatus('error')
+      if (EJS_SERVICE && EJS_TEMPLATE && EJS_KEY) {
+        await emailjs.send(
+          EJS_SERVICE,
+          EJS_TEMPLATE,
+          {
+            from_name:    form.name,
+            from_email:   form.email,
+            phone:        form.phone || 'N/A',
+            inquiry_type: inquiryTypes.find(t => t.value === form.type)?.label || form.type,
+            message:      form.message,
+          },
+          EJS_KEY
+        )
+      }
+    } catch (err) {
+      console.error('Email send failed:', err)
     }
+
+    saveToSheets({ form: 'contact', name: form.name, email: form.email, phone: form.phone || '', type: inquiryTypes.find(t => t.value === form.type)?.label || form.type, message: form.message })
+    setStatus('success')
+    setForm(INITIAL)
   }
 
   return (
@@ -119,7 +129,7 @@ export default function ContactSection() {
           <div className="order-1 md:order-2">
             {status === 'success' ? (
               <div className="bg-white border border-[#A3E635]/25 rounded-3xl p-10 flex flex-col items-center justify-center text-center h-full min-h-[400px] shadow-sm">
-                <div className="w-14 h-14 rounded-2xl bg-[#A3E635]/12 flex items-center justify-center mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-[#A3E635]/[0.12] flex items-center justify-center mb-5">
                   <IconSend size={22} className="text-[#65a30d]" />
                 </div>
                 <h3 className="font-heading font-bold text-gray-900 text-lg sm:text-xl mb-3">Message Received!</h3>

@@ -132,8 +132,8 @@ export default function Navbar() {
               <button key={link.href} onClick={() => handleNav(link.href)}
                 className={`nav-link relative px-3.5 py-2.5 text-[0.92rem] font-medium tracking-wide transition-all duration-200 rounded-lg whitespace-nowrap ${
                   active === link.href
-                    ? barDark ? 'text-[#A3E635] bg-[#A3E635]/10' : 'text-[#65a30d] bg-[#A3E635]/8'
-                    : barDark ? 'text-gray-300 hover:text-[#A3E635] hover:bg-[#A3E635]/10' : 'text-gray-500 hover:text-[#4d7c0f] hover:bg-[#A3E635]/8'
+                    ? barDark ? 'text-[#A3E635] bg-[#A3E635]/10' : 'text-[#65a30d] bg-[#A3E635]/[0.08]'
+                    : barDark ? 'text-gray-300 hover:text-[#A3E635] hover:bg-[#A3E635]/10' : 'text-gray-500 hover:text-[#4d7c0f] hover:bg-[#A3E635]/[0.08]'
                 }`}>
                 {active === link.href && (
                   <motion.span layoutId="nav-pill"

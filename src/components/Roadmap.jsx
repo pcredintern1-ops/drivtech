@@ -77,7 +77,7 @@ function MilestoneCard({ item, index, side }) {
       animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
       transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8, transition: { type: 'spring', stiffness: 340, damping: 22 } }}
-      className={`group relative rounded-3xl border bg-white/90 backdrop-blur-sm overflow-hidden transition-colors duration-300 ${st.card}`}
+      className={`group relative rounded-3xl border bg-white dark:bg-[#111827] backdrop-blur-sm overflow-hidden transition-colors duration-300 ${st.card}`}
     >
       {/* colour top bar */}
       <div className="h-[3px]" style={{ background: st.bar }} />

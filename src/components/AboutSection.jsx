@@ -41,7 +41,7 @@ export default function AboutSection({ continuation = false }) {
             {/* Heading */}
             <div className="w-full text-center lg:text-left mb-5 md:mb-6">
               <span className="inline-block text-center lg:text-left">
-                <SectionTitle as="h2" className="text-center lg:text-left lg:whitespace-nowrap mb-2">
+                <SectionTitle as={continuation ? 'h2' : 'h1'} className="text-center lg:text-left lg:whitespace-nowrap mb-2">
                   Powering Enterprise<br/>
                   <span className="gradient-text">Logistics End-to-End</span>
                 </SectionTitle>

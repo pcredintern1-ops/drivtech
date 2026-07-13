@@ -122,7 +122,7 @@ export default function Hero() {
             </a>
             <a href="/services"
               onClick={e => { e.preventDefault(); navigate('/services') }}
-              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gray-900 border border-gray-500 text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
+              className="btn-shine flex items-center justify-center gap-2.5 px-7 py-3.5 bg-[#060b14] border border-[#4b5563] text-white font-semibold rounded-xl text-sm transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105">
               Explore Services
             </a>
             <a href="/investor-program"

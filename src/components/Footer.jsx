@@ -39,7 +39,7 @@ function FacebookLogo() {
 export default function Footer() {
   const navigate = useNavigate()
   return (
-    <footer className="relative border-t border-white/8 bg-[#111827]">
+    <footer className="relative border-t border-white/[0.08] bg-[#111827]">
       {/* Subtle dot pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.025]"
         style={{ backgroundImage: 'radial-gradient(circle, #A3E635 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
@@ -66,7 +66,7 @@ export default function Footer() {
                 { Logo: FacebookLogo,  title: 'Facebook',  href: 'https://www.facebook.com/share/1B28W9bziJ/?mibextid=wwXIfr' },
               ].map(({ Logo, title, href }) => (
                 <a key={title} href={href} title={title} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center hover:border-[#A3E635]/40 hover:bg-[#A3E635]/8 hover:shadow-[0_4px_16px_rgba(163,230,53,0.12)] hover:-translate-y-1 transition-all duration-300">
+                  className="w-10 h-10 rounded-xl bg-white/[0.08] border border-white/[0.12] flex items-center justify-center hover:border-[#A3E635]/40 hover:bg-[#A3E635]/[0.08] hover:shadow-[0_4px_16px_rgba(163,230,53,0.12)] hover:-translate-y-1 transition-all duration-300">
                   <Logo />
                 </a>
               ))}

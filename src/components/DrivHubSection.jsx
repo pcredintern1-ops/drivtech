@@ -156,7 +156,7 @@ export default function DrivHubSection() {
     </>
   ), [])
   const heroDescription = useMemo(() => (
-    <>India&apos;s fleet operations, unified at one address —{' '}
+    <>India&apos;s fleet operations, unified at one address:{' '}
       <span className="font-semibold text-slate-900 dark:text-white/85">Bhiwandi Logistics Park</span>, where
       washing, parking, GPS monitoring, dispatch, and driver support run around the clock.</>
   ), [])
